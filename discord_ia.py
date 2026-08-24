@@ -29,11 +29,41 @@ import urllib.request
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-# Flash es el modelo rápido y barato: para traducir un titular sobra, y es el que
-# más cuota gratis tiene.
-MODELO = "gemini-2.0-flash"
-URL = (f"https://generativelanguage.googleapis.com/v1beta/models/"
-       f"{MODELO}:generateContent?key=")
+BASE = "https://generativelanguage.googleapis.com/v1beta/models"
+
+# **El modelo NO se escribe a mano.** La primera versión fijaba `gemini-2.0-flash`
+# y no traducía nada: ese modelo **se apagó el 1 de junio de 2026** y la API
+# devolvía 404 en silencio. Google jubila modelos cada pocos meses, así que
+# escribir uno concreto es garantizarse que esto se rompa solo con el tiempo.
+#
+# Ahora se le **pregunta a Google** qué hay vivo y se coge un Flash — el rápido y
+# el que más cuota gratis tiene. Si algún día no hay ninguno, vale cualquiera que
+# sepa generar texto.
+_ELEGIDO = None
+
+
+def modelo():
+    """El nombre de un modelo que exista hoy. Se pregunta una vez por ejecución."""
+    global _ELEGIDO
+    if _ELEGIDO:
+        return _ELEGIDO
+    try:
+        req = urllib.request.Request(f"{BASE}?key={clave()}&pageSize=100")
+        with urllib.request.urlopen(req, timeout=20) as r:
+            todos = json.loads(r.read().decode("utf-8")).get("models", [])
+    except Exception as e:                       # noqa: BLE001
+        print(f"      (no puedo listar modelos: {type(e).__name__})", file=sys.stderr)
+        return None
+
+    sirven = [m["name"].split("/")[-1] for m in todos
+              if "generateContent" in (m.get("supportedGenerationMethods") or [])]
+    # los flash primero, y de esos el de número más alto: es el más nuevo
+    flash = sorted([m for m in sirven if "flash" in m and "thinking" not in m],
+                   reverse=True)
+    _ELEGIDO = (flash or sirven or [None])[0]
+    if _ELEGIDO:
+        print(f"      (IA: usando {_ELEGIDO})", file=sys.stderr)
+    return _ELEGIDO
 
 AVISO = "Resumen automático · puede equivocarse"
 
@@ -55,12 +85,16 @@ def pedir(instruccion, texto, tope=300, temperatura=0.3):
     k = clave()
     if not k or not texto:
         return None
+    m = modelo()
+    if not m:
+        return None
     cuerpo = json.dumps({
         "contents": [{"parts": [{"text": instruccion + "\n\n" + texto}]}],
         "generationConfig": {"temperature": temperatura, "maxOutputTokens": tope},
     }).encode("utf-8")
     try:
-        req = urllib.request.Request(URL + k, data=cuerpo,
+        req = urllib.request.Request(f"{BASE}/{m}:generateContent?key={k}",
+                                     data=cuerpo,
                                      headers={"Content-Type": "application/json"})
         with urllib.request.urlopen(req, timeout=30) as r:
             d = json.loads(r.read().decode("utf-8"))

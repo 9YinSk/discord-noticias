@@ -31,10 +31,17 @@ jobs:
 
       # Sin esto, cada ejecucion empezaria de cero y volveria a publicar lo
       # mismo: la memoria de lo ya visto vive en el repo.
+      #
+      # **El `pull --rebase` no es opcional.** Si alguien ha subido algo desde
+      # que este trabajo hizo checkout, el push falla, la memoria NO se guarda, y
+      # a la siguiente vuelta se republica todo. Paso en la primera prueba de
+      # verdad: salieron noticias duplicadas.
       - name: Recordar lo publicado
         run: |
           git config user.name "noticias-bot"
           git config user.email "noticias-bot@users.noreply.github.com"
           git add .noticias_vistas.json
-          git diff --staged --quiet || git commit -m "memoria de noticias"
+          git diff --staged --quiet && echo "nada nuevo que recordar" && exit 0
+          git commit -m "memoria de noticias"
+          git pull --rebase --autostash origin main
           git push
