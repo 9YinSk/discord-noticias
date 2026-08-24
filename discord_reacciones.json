@@ -1,0 +1,229 @@
+{
+  "_que_es": "Paneles de reaccion que reparte nuestro propio bot con discord_reacciones.py. Los IDs de mensaje se sacan con: discord_servidor.py leer <guild> <canal>",
+  "guild": "1539896304178823282",
+  "paneles": [
+    {
+      "que_es": "Paso 2 y ultimo — aceptar las reglas abre el servidor",
+      "canal_id": "1540616189967994920",
+      "mensaje": "1541463271742382181",
+      "quitar": false,
+      "reacciones": {
+        "✅": "✅ Verificado"
+      }
+    },
+    {
+      "que_es": "Zonas de trabajo — solo añade. Cerrar una zona se hace quitandose el interes en Canales y roles",
+      "canal_id": "1541110942417297439",
+      "mensaje": "1541466678498426930",
+      "quitar": false,
+      "reacciones": {
+        "🎭": "🔓 Zona doblaje",
+        "🎵": "🔓 Zona canto",
+        "🎓": "🔓 Zona clases",
+        "🎚️": "🔓 Zona edición",
+        "🎮": "🔓 Zona juegos"
+      }
+    },
+    {
+      "que_es": "Colores del nombre. Solo uno a la vez.",
+      "canal_id": "1540616201716367402",
+      "mensaje": "1541464185056264335",
+      "exclusivo": true,
+      "quitar": true,
+      "reacciones": {
+        "🔴": "🔴 Rojo",
+        "🟠": "🟠 Naranja",
+        "🟡": "🟡 Amarillo",
+        "🟢": "🟢 Verde",
+        "🩵": "🩵 Turquesa",
+        "🔵": "🔵 Azul",
+        "🟣": "🟣 Morado",
+        "🩷": "🩷 Rosa",
+        "🤍": "🤍 Blanco",
+        "🖤": "🖤 Negro",
+        "🤎": "🤎 Marron",
+        "💗": "💗 Pastel"
+      }
+    },
+    {
+      "que_es": "De dónde eres. Solo uno a la vez.",
+      "canal_id": "1540616201716367402",
+      "mensaje": "1541464246976516126",
+      "exclusivo": true,
+      "quitar": true,
+      "reacciones": {
+        "🇲🇽": "🇲🇽 México",
+        "🇬🇹": "🇬🇹 Centroamérica",
+        "🇨🇴": "🇨🇴 Colombia",
+        "🇻🇪": "🇻🇪 Venezuela",
+        "🇪🇨": "🇪🇨 Ecuador",
+        "🇵🇪": "🇵🇪 Perú",
+        "🇧🇴": "🇧🇴 Bolivia",
+        "🇨🇱": "🇨🇱 Chile",
+        "🇦🇷": "🇦🇷 Argentina",
+        "🇺🇾": "🇺🇾 Uruguay",
+        "🇵🇾": "🇵🇾 Paraguay",
+        "🇩🇴": "🇩🇴 Rep. Dominicana",
+        "🇪🇸": "🇪🇸 España",
+        "🌎": "🌎 Otro país"
+      }
+    },
+    {
+      "que_es": "Paso 1 del recorrido — abre 📜 reglas",
+      "canal_id": "1540616201716367402",
+      "mensaje": "1541464328916574218",
+      "quitar": false,
+      "reacciones": {
+        "➡️": "🚪 Paso 1"
+      }
+    }
+  ],
+  "al_publicar": [
+    {
+      "que_es": "Red de seguridad: si alguien se presenta sin haber aceptado las reglas, tambien entra",
+      "canal_id": "1540964179714777128",
+      "rol": "✅ Verificado",
+      "minimo_caracteres": 40,
+      "avisar_en": "1540617774450081828"
+    }
+  ],
+  "zonas": {
+    "_que_es": "Red de seguridad, no el mecanismo principal. Desde que el cuestionario reparte las llaves el solo, esto solo sirve para ponerle la zona a quien la eligio antes del cambio, o a quien se puso el interes a mano. Nunca quita.",
+    "requiere": "✅ Verificado",
+    "reglas": [
+      {
+        "intereses": [
+          "🎭 Doblaje"
+        ],
+        "llave": "🔓 Zona doblaje"
+      },
+      {
+        "intereses": [
+          "😹 Fandub de memes"
+        ],
+        "llave": "🔓 Zona fandub memes"
+      },
+      {
+        "intereses": [
+          "🎙️ Locución"
+        ],
+        "llave": "🔓 Zona locución"
+      },
+      {
+        "intereses": [
+          "🎵 Canto"
+        ],
+        "llave": "🔓 Zona canto"
+      },
+      {
+        "intereses": [
+          "🎚️ Edición"
+        ],
+        "llave": "🔓 Zona edición"
+      },
+      {
+        "intereses": [
+          "🎨 Arte"
+        ],
+        "llave": "🔓 Zona arte"
+      },
+      {
+        "intereses": [
+          "✍️ Escritor"
+        ],
+        "llave": "🔓 Zona escritura"
+      },
+      {
+        "intereses": [
+          "🎓 Clases"
+        ],
+        "llave": "🔓 Zona clases"
+      },
+      {
+        "intereses": [
+          "🔍 Mirón"
+        ],
+        "llave": "🔓 Zona mirar"
+      },
+      {
+        "intereses": [
+          "🍿 Cine"
+        ],
+        "llave": "🔓 Zona cine"
+      },
+      {
+        "intereses": [
+          "🎤 Karaoke"
+        ],
+        "llave": "🔓 Zona karaoke"
+      },
+      {
+        "intereses": [
+          "📸 Fotos"
+        ],
+        "llave": "🔓 Zona fotos"
+      },
+      {
+        "intereses": [
+          "🎮 Gamer"
+        ],
+        "llave": "🔓 Zona juegos"
+      },
+      {
+        "intereses": [
+          "🎪 En vivo"
+        ],
+        "llave": "🔓 Zona en vivo"
+      },
+      {
+        "intereses": [
+          "😂 Ocio"
+        ],
+        "llave": "🔓 Zona ocio"
+      },
+      {
+        "intereses": [
+          "📰 Noticias"
+        ],
+        "llave": "🔓 Zona noticias"
+      }
+    ],
+    "nunca_quitar": true
+  },
+  "limpiar": [
+    {
+      "que_es": "🙋 si-te-atascas — no debe acumular conversacion",
+      "canal_id": "1541109361286451231",
+      "minutos": 60
+    }
+  ],
+  "todos_llevan": {
+    "_que_es": "Que ninguna persona se quede sin rol destacado y acabe en el grupo de los bots. El cuestionario ya lo reparte; esto cubre a quien lo cierre sin contestar.",
+    "rol": "🌱 Nuevo por aquí"
+  },
+  "antiguedad": {
+    "_que_es": "Roles por tiempo dentro. Solo se lleva el mas alto que haya alcanzado: los de abajo se le quitan, como una escalera.",
+    "escalones": [
+      {
+        "rol": "🕐 Una semana aquí",
+        "dias": 7
+      },
+      {
+        "rol": "📅 Un mes aquí",
+        "dias": 30
+      },
+      {
+        "rol": "🗓️ Tres meses aquí",
+        "dias": 90
+      },
+      {
+        "rol": "🎗️ Medio año aquí",
+        "dias": 180
+      },
+      {
+        "rol": "🎉 Un año aquí",
+        "dias": 365
+      }
+    ]
+  }
+}

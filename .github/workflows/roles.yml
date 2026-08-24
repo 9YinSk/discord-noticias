@@ -1,0 +1,23 @@
+name: Roles
+
+# Cada 10 minutos. Discord no deja escuchar reacciones sin estar conectado las
+# 24 h, asi que esto **pregunta** quien ha reaccionado y reparte los roles. Es lo
+# que hace que elegir tu color o abrir una zona funcione con el PC de casa
+# apagado — y por eso va mas seguido que las noticias.
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  repartir:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Poner los roles al dia
+        env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+        run: python discord_reacciones.py

@@ -167,43 +167,7 @@ FUENTES = {
 }
 
 
-GEMINI = ("https://generativelanguage.googleapis.com/v1beta/models/"
-          "gemini-2.0-flash:generateContent?key=")
-
-INSTRUCCION = (
-    "Traduce este titular de noticias al español de forma natural, como lo "
-    "escribiría un medio hispanohablante. No añadas nada, no opines, no pongas "
-    "comillas ni explicaciones: devuelve SOLO el titular traducido. Si ya está "
-    "en español, devuélvelo igual.\n\nTitular: ")
-
-
-def traducir(texto):
-    """El titular en español, si hay clave de Gemini. Si no, tal cual.
-
-    Es **opcional a propósito**: sin `GEMINI_API_KEY` esto no se llama y las
-    noticias salen en su idioma. Con clave, los titulares de Anime News Network
-    —que publica en inglés— salen traducidos.
-
-    Y si la API falla, se devuelve el original: una noticia en inglés es mejor
-    que ninguna noticia.
-    """
-    clave = os.environ.get("GEMINI_API_KEY", "").strip()
-    if not clave or not texto:
-        return texto
-    cuerpo = json.dumps({
-        "contents": [{"parts": [{"text": INSTRUCCION + texto}]}],
-        "generationConfig": {"temperature": 0.2, "maxOutputTokens": 200},
-    }).encode("utf-8")
-    try:
-        req = urllib.request.Request(GEMINI + clave, data=cuerpo,
-                                     headers={"Content-Type": "application/json"})
-        with urllib.request.urlopen(req, timeout=25) as r:
-            d = json.loads(r.read().decode("utf-8"))
-        salida = d["candidates"][0]["content"]["parts"][0]["text"].strip()
-        return salida or texto
-    except Exception as e:                       # noqa: BLE001 — da igual por qué
-        print(f"      (sin traducir: {type(e).__name__})")
-        return texto
+import discord_ia as ia  # noqa: E402  — todo lo que escribe la IA, en un sitio
 
 
 def embed(item, url_feed):
@@ -213,7 +177,7 @@ def embed(item, url_feed):
     e = {
         "author": {"name": nombre,
                    "icon_url": f"https://icons.duckduckgo.com/ip3/{dominio}.ico"},
-        "title": traducir(limpio(item["titulo"], 250)),
+        "title": ia.traducir(limpio(item["titulo"], 250)),
         "url": item["enlace"],
         "color": color,
     }
@@ -223,8 +187,16 @@ def embed(item, url_feed):
     if item["imagen"]:
         e["image"] = {"url": item["imagen"]}
     pie = [x for x in (item["categoria"], item["autor"]) if x]
+
+    # La línea de «por qué te importa esto a ti, que doblas». La IA puede
+    # **callarse** si la noticia no da para nada, y se calla a menudo: es lo que
+    # evita que cada noticia lleve una frase de relleno pegada.
+    porque = ia.por_que_importa(e["title"], desc) if ia.disponible() else None
+    if porque:
+        e["fields"] = [{"name": "Por qué te puede interesar", "value": porque}]
+        pie.append(ia.AVISO)
     if pie:
-        e["footer"] = {"text": limpio(" · ".join(pie), 80)}
+        e["footer"] = {"text": limpio(" · ".join(pie), 100)}
     return e
 
 

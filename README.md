@@ -5,13 +5,26 @@ ejecuta GitHub cada 30 minutos, gratis.
 
 ## Que hay aqui
 
+## Los tres trabajos
+
+| Cuando | Que hace |
+|---|---|
+| **cada 10 min** | Reparte los **roles por reaccion**: colores, paises, zonas |
+| **cada 30 min** | Publica las **noticias** nuevas de los 8 feeds |
+| **los lunes** | Lo mejor valorado de la **temporada de anime** |
+
+El de los roles es el mas importante de los tres. Discord no deja que un bot
+escuche reacciones sin estar conectado las 24 h, asi que este pregunta quien ha
+reaccionado y reparte. Sin el, elegir tu color o abrir una zona **no hace nada**
+mientras el PC de casa este apagado.
+
 | Archivo | Que hace |
 |---|---|
-| `discord_noticias.py` | Lee los feeds y publica lo nuevo |
-| `discord_feeds.py` | La lista de feeds y su canal |
+| `discord_reacciones.py` + `.json` | El reparto de roles y sus paneles |
+| `discord_noticias.py` + `discord_feeds.py` | Los feeds y donde va cada uno |
 | `discord_opiniones.py` | El veredicto de la gente sobre un anime o un juego |
+| `discord_temporada.py` | El repaso semanal de la temporada |
 | `discord_servidor.py` | Hablar con la API de Discord |
-| `.github/workflows/noticias.yml` | El cron que lo lanza |
 
 ## Los pasos, una sola vez
 
@@ -63,6 +76,13 @@ Si no lo haces, no pasa nada: publica igual, en el idioma original.
   nunca dentro de un archivo.
 - **GitHub apaga el cron de un repo sin actividad tras 60 dias.** Si un dia dejan
   de llegar noticias, entra en *Actions* y dale a *Run workflow*: se reactiva.
+
+## Ojo con una cosa
+
+`discord_reacciones.json` guarda **los ids de los mensajes** de cada panel. Si se
+vuelven a publicar los paneles de `autoroles` o de `reglas`, esos ids cambian y
+hay que volver a subir el archivo, o el reparto de roles apuntara a mensajes que
+ya no existen. Se hace con `python herramientas/discord_nube.py` y un push.
 
 ## Para actualizarlo cuando cambien los scripts
 

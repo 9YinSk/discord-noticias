@@ -35,6 +35,7 @@ import urllib.request
 AQUI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, AQUI)
 from discord_servidor import api  # noqa: E402
+import discord_ia as ia  # noqa: E402
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -88,6 +89,9 @@ def opinion_anime(nombre):
             "value": f"[{limpio(r['summary'], 170)}]({r['siteUrl']})",
             "inline": False,
         })
+    resumen = ia.resumir_opiniones([r["summary"] for r in m["reviews"]["nodes"]])
+    if resumen:
+        campos.insert(0, {"name": "En resumen", "value": resumen, "inline": False})
     return {
         "author": {"name": "Lo que opina la gente  ·  AniList"},
         "title": titulo,
@@ -98,7 +102,9 @@ def opinion_anime(nombre):
                         .replace(",", ".")),
         "thumbnail": {"url": m["coverImage"]["large"]},
         "fields": campos,
-        "footer": {"text": limpio(" · ".join(m.get("genres") or [])[:90])},
+        "footer": {"text": limpio(" · ".join(
+            [x for x in [" · ".join(m.get("genres") or []),
+                         ia.AVISO if resumen else ""] if x])[:100])},
     }
 
 
@@ -136,10 +142,15 @@ def opinion_juego(nombre):
             "value": limpio(r["review"], 200) or "*(sin texto)*",
             "inline": False,
         })
+    resumen = ia.resumir_opiniones([r["review"] for r in (d.get("reviews") or [])])
+    if resumen:
+        campos.insert(0, {"name": "En resumen", "value": resumen, "inline": False})
     precio = (j.get("price") or {}).get("final")
     pie = [VEREDICTO.get(s.get("review_score_desc", ""), s.get("review_score_desc", ""))]
     if precio is not None:
         pie.append("Gratis" if precio == 0 else f"S/ {precio / 100:.2f}")
+    if resumen:
+        pie.append(ia.AVISO)
     return {
         "author": {"name": "Lo que opina la gente  ·  Steam"},
         "title": j["name"],
