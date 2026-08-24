@@ -24,6 +24,7 @@ import time
 AQUI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, AQUI)
 from discord_servidor import api  # noqa: E402
+from discord_botones import boton, enlace_canal, enlace_mensaje, publicar  # noqa: E402
 import discord_ia as ia  # noqa: E402
 
 if hasattr(sys.stdout, "reconfigure"):
@@ -75,12 +76,18 @@ def main():
                 continue
             n = sum(r["count"] for r in m.get("reactions") or [])
             if n:
-                mejor.append((n, m, c["name"]))
+                mejor.append((n, m, c))
         time.sleep(0.15)
     mejor.sort(key=lambda x: -x[0])
 
     print(f"  {len(hilos)} hilos · {len(nuevos)} personas nuevas · "
           f"{len(mejor)} mensajes con reacciones")
+
+    # Los botones del resumen no llevan fuera del servidor: llevan **dentro**, a
+    # lo que se acaba de nombrar. Un resumen que cuenta que hubo un mensaje con
+    # 20 reacciones y no deja ir a verlo obliga a buscarlo a mano, y entonces no
+    # lo busca nadie.
+    extra = []
 
     # **Si no ha pasado nada, se dice.** Un resumen que rellena para parecer vivo
     # se nota a la segunda semana, y entonces ya no lo lee nadie.
@@ -110,13 +117,25 @@ def main():
                     t["name"][:38] for t in lista[:3]))
             campos.append({"name": f"{len(hilos)} hilos nuevos",
                            "value": "\n".join(lineas)[:1020], "inline": False})
+            # el canal donde más se movió la cosa, con botón para ir
+            cid_top = max(por_canal, key=lambda k: len(por_canal[k]))
+            extra.append(boton(enlace_canal(GUILD, cid_top),
+                               nombre.get(cid_top, "?").split("・")[-1][:24], "🧵"))
         if mejor:
             n, m, canal = mejor[0]
             texto = (m.get("content") or "").strip() or "*(una imagen)*"
             campos.append({
                 "name": f"Lo más reaccionado · {n} reacciones",
-                "value": f"En **{canal.split('・')[-1]}**, de <@{m['author']['id']}>\n"
-                         f"> {texto[:160]}", "inline": False})
+                "value": f"En **{canal['name'].split('・')[-1]}**, "
+                         f"de <@{m['author']['id']}>\n> {texto[:160]}",
+                "inline": False})
+            extra.append(boton(enlace_mensaje(GUILD, canal["id"], m["id"]),
+                               "Ver ese mensaje", "💬"))
+        if nuevos:
+            pres = next((c["id"] for c in canales if "presentaciones" in c["name"]),
+                        None)
+            extra.append(boton(enlace_canal(GUILD, pres) if pres else None,
+                               "Presentarse", "🪪"))
 
     # la frase de arriba la escribe la IA si hay clave; si no, una fija
     resumen = None
@@ -152,7 +171,7 @@ def main():
     cid = next((c["id"] for c in canales if c["name"] == CANAL), None)
     if not cid:
         sys.exit(f"No encuentro {CANAL}")
-    api("POST", f"/channels/{cid}/messages", {"embeds": [e]})
+    publicar(cid, e, extra)
     print("\npublicado en general")
 
 

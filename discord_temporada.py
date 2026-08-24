@@ -28,6 +28,7 @@ import urllib.request
 AQUI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, AQUI)
 from discord_servidor import api  # noqa: E402
+from discord_botones import boton, publicar  # noqa: E402
 import discord_ia as ia  # noqa: E402
 
 if hasattr(sys.stdout, "reconfigure"):
@@ -92,15 +93,23 @@ def main():
         sys.exit("AniList no da notas todavía para esta temporada.")
 
     campos = []
+    extra = []
     for i, m in enumerate(medios):
         titulo = m["title"].get("english") or m["title"]["romaji"]
         estudio = (m["studios"]["nodes"] or [{}])[0].get("name", "")
         nota = m["averageScore"]
         detalle = " · ".join(x for x in (estudio, ", ".join(m["genres"][:2])) if x)
+        valor = f"**{nota}/100**  `{barra(nota)}`\n-# {detalle}"
+        if i < 3:
+            # El podio lleva **botón propio** con su medalla. Los de abajo se
+            # quedan con el enlace en el texto: tres botones se leen de un
+            # vistazo, ocho ya son una pared de cajitas.
+            extra.append(boton(m["siteUrl"], titulo[:28], MEDALLA[i]))
+        else:
+            valor += f"\n[Ver en AniList]({m['siteUrl']})"
         campos.append({
             "name": f"{MEDALLA[i] if i < 3 else f'{i + 1}.'}  {titulo}",
-            "value": f"**{nota}/100**  `{barra(nota)}`\n-# {detalle}"
-                     f"\n[Ver en AniList]({m['siteUrl']})",
+            "value": valor,
             "inline": False,
         })
 
@@ -113,6 +122,9 @@ def main():
     e = {
         "author": {"name": "Lo que está gustando  ·  AniList"},
         "title": f"Temporada de {EN_CASTELLANO[est]} {anio}",
+        # el listado entero de la temporada en curso; AniList mantiene esta ruta
+        # al día sola, así que no hay que calcular la estación en la URL
+        "url": "https://anilist.co/search/anime/this-season",
         "color": 0x02A9FF,
         "description": descripcion,
         "fields": campos,
@@ -132,7 +144,7 @@ def main():
                 if CANAL in c["name"]), None)
     if not cid:
         sys.exit(f"No encuentro el canal «{CANAL}»")
-    api("POST", f"/channels/{cid}/messages", {"embeds": [e]})
+    publicar(cid, e, extra)
     print(f"\npublicado en {CANAL}")
 
 

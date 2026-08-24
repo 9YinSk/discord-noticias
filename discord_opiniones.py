@@ -35,6 +35,7 @@ import urllib.request
 AQUI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, AQUI)
 from discord_servidor import api  # noqa: E402
+from discord_botones import boton, buscar_en_youtube, publicar  # noqa: E402
 import discord_ia as ia  # noqa: E402
 
 if hasattr(sys.stdout, "reconfigure"):
@@ -178,14 +179,17 @@ def main():
     if not e:
         sys.exit(f"No encuentro «{args.nombre}» como {args.que}.")
 
-    # Botones en vez de una URL suelta: dicen a dónde llevan antes de pulsarlos.
-    fila = [{"type": 2, "style": 5,
-             "label": "Ver la ficha" if args.que == "anime" else "Ver en Steam",
-             "emoji": {"name": "📺" if args.que == "anime" else "🎮"},
-             "url": e["url"]}]
+    # El botón de la ficha **sale solo** del `url` del embed (lo pone `publicar`).
+    # Aquí van los de al lado: las reseñas enteras y el tráiler, que es lo que
+    # más se busca después de leer una nota.
     if args.que == "anime":
-        fila.append({"type": 2, "style": 5, "label": "Leer las reseñas",
-                     "emoji": {"name": "💬"}, "url": e["url"] + "/reviews"})
+        extra = [boton(e["url"] + "/reviews", "Leer las reseñas", "💬"),
+                 boton(buscar_en_youtube(f"{e['title']} anime trailer"),
+                       "Ver el tráiler", "▶️")]
+    else:
+        extra = [boton(e["url"] + "#app_reviews_hash", "Todas las reseñas", "💬"),
+                 boton(buscar_en_youtube(f"{e['title']} gameplay"),
+                       "Ver cómo se juega", "▶️")]
 
     print(f"  {e['title']}")
     print(f"  {limpio(e['description'])}")
@@ -201,7 +205,7 @@ def main():
                 if trozo in c["name"]), None)
     if not cid:
         sys.exit(f"No encuentro un canal con «{trozo}» en el nombre.")
-    api("POST", f"/channels/{cid}/messages", {"embeds": [e]})
+    publicar(cid, e, extra)
     print(f"\npublicado en el canal de «{trozo}»")
 
 

@@ -44,6 +44,7 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, AQUI)
 from discord_servidor import api  # noqa: E402
 from discord_feeds import FEEDS  # noqa: E402  — la misma lista, un solo sitio
+from discord_botones import boton, publicar  # noqa: E402  — el enlace, como botón
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -252,22 +253,6 @@ def _steam(titulo):
     }
 
 
-def botones(item, url_feed, extra=None):
-    """Botones de enlace en vez de una URL pelada debajo del texto.
-
-    Un enlace suelto en el cuerpo del mensaje se ve como lo que es: texto azul
-    largo. Un botón se lee de un vistazo y **dice a dónde va antes de pulsarlo**.
-    Son de estilo 5 (enlace), así que no necesitan que el bot esté escuchando.
-    """
-    fila = [{"type": 2, "style": 5, "label": "Leer la noticia",
-             "emoji": {"name": "📄"}, "url": item["enlace"]}]
-    for etiqueta, emoji, url in (extra or []):
-        if url:
-            fila.append({"type": 2, "style": 5, "label": etiqueta,
-                         "emoji": {"name": emoji}, "url": url})
-    return [{"type": 1, "components": fila[:5]}]
-
-
 def embed(item, url_feed):
     """La noticia con cara: fuente, titular, extracto, imagen y fecha."""
     dominio = url_feed.split("/")[2]
@@ -292,7 +277,7 @@ def embed(item, url_feed):
         j = _steam(item["titulo"])
         if j:
             imagen = j["imagen"]
-            extra.append(("Ver en Steam", "🎮", j["url"]))
+            extra.append(boton(j["url"]))            # «Ver en Steam», por dominio
             if j["precio"] == 0:
                 e["title"] = f"{j['nombre']} — GRATIS"
             elif j["precio"]:
@@ -303,7 +288,7 @@ def embed(item, url_feed):
         imagen = de_la_pagina if util(de_la_pagina) else None
     if imagen:
         e["image"] = {"url": imagen}
-    e["_botones"] = botones(item, url_feed, extra)
+    e["_extra"] = extra
     pie = [x for x in (item["categoria"], item["autor"]) if x]
 
     # La línea de «por qué te importa esto a ti, que doblas». La IA puede
@@ -364,11 +349,7 @@ def main():
 
             for item in reversed(nuevos):               # de vieja a nueva
                 e = embed(item, url)
-                comp = e.pop("_botones", None)
-                cuerpo = {"embeds": [e]}
-                if comp:
-                    cuerpo["components"] = comp
-                api("POST", f"/channels/{cid}/messages", cuerpo)
+                publicar(cid, e, e.pop("_extra", None))
                 publicados += 1
                 time.sleep(1.2)
             # se guardan TODOS los enlaces del feed, no solo los publicados: si no,
