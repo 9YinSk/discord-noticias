@@ -178,6 +178,15 @@ def main():
     if not e:
         sys.exit(f"No encuentro «{args.nombre}» como {args.que}.")
 
+    # Botones en vez de una URL suelta: dicen a dónde llevan antes de pulsarlos.
+    fila = [{"type": 2, "style": 5,
+             "label": "Ver la ficha" if args.que == "anime" else "Ver en Steam",
+             "emoji": {"name": "📺" if args.que == "anime" else "🎮"},
+             "url": e["url"]}]
+    if args.que == "anime":
+        fila.append({"type": 2, "style": 5, "label": "Leer las reseñas",
+                     "emoji": {"name": "💬"}, "url": e["url"] + "/reviews"})
+
     print(f"  {e['title']}")
     print(f"  {limpio(e['description'])}")
     for c in e["fields"]:

@@ -36,6 +36,7 @@ import re
 import sys
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 
@@ -94,6 +95,44 @@ def _texto(elem, *nombres):
 _CONTROL = re.compile(rb"[\x00-\x08\x0b\x0c\x0e-\x1f]")
 _IMG = re.compile(r'<img[^>]+src="([^"]+)"', re.I)
 _TAG = re.compile(r"<[^>]+>")
+
+
+_OG = re.compile(rb'<meta[^>]+property="og:image"[^>]+content="([^"]+)"', re.I)
+_OG2 = re.compile(rb'<meta[^>]+content="([^"]+)"[^>]+property="og:image"', re.I)
+
+# lo que ya se ha mirado, para no pedir la misma página dos veces en una corrida
+_PORTADAS = {}
+
+
+def portada(enlace):
+    """La imagen de la noticia, sacada de **la propia página**.
+
+    La mitad de los feeds no manda imagen: Anime News Network, Nintenderos y las
+    ofertas venían a cero, y el canal quedaba descompensado — unas noticias con
+    foto y otras sin. Pero todas esas páginas tienen `og:image`, que es la
+    etiqueta que usan WhatsApp y Twitter para la vista previa.
+
+    Solo se pide la página **cuando el feed no trae nada**, y como mucho tres
+    veces por feed. No es un rastreo: es completar lo que falta.
+    """
+    if enlace in _PORTADAS:
+        return _PORTADAS[enlace]
+    img = None
+    try:
+        req = urllib.request.Request(enlace, headers=CABECERAS)
+        with urllib.request.urlopen(req, timeout=15) as r:
+            crudo = r.read(80000)      # con el <head> basta, no hace falta la página
+            if (r.headers.get("Content-Encoding") or "").lower() == "gzip":
+                import gzip
+                import io as _io
+                crudo = gzip.GzipFile(fileobj=_io.BytesIO(crudo)).read()
+        m = _OG.search(crudo) or _OG2.search(crudo)
+        if m:
+            img = html.unescape(m.group(1).decode("utf-8", "replace"))
+    except Exception:                                   # noqa: BLE001
+        pass                                            # sin imagen se vive
+    _PORTADAS[enlace] = img
+    return img
 
 
 def _imagen(it, descripcion):
@@ -170,6 +209,65 @@ FUENTES = {
 import discord_ia as ia  # noqa: E402  — todo lo que escribe la IA, en un sitio
 
 
+# Trozos que delatan una imagen **genérica del sitio**, no de la noticia: el
+# logo, la portada por defecto, la tarjeta de compartir de la sección. Ponerla es
+# peor que no poner ninguna — es la que «no tiene nada que ver».
+_GENERICA = ("/socials/", "/og/og_", "default", "placeholder", "/logo",
+             "share-image", "twitter-card")
+
+
+def util(url_imagen):
+    return bool(url_imagen) and not any(x in url_imagen.lower() for x in _GENERICA)
+
+
+def _steam(titulo):
+    """La ficha de Steam de un juego, por su nombre. Para las ofertas.
+
+    Los feeds de ofertas no traen ni imagen ni precio: solo «Nombre free on
+    Steam». Buscando el nombre en la tienda salen **la portada y el precio en
+    soles**, que es lo que convierte una línea de texto en algo que apetece
+    mirar.
+    """
+    nombre = re.split(r"\s+(?:free on|on)\s+", titulo)[0].strip()
+    if not nombre:
+        return None
+    try:
+        req = urllib.request.Request(
+            "https://store.steampowered.com/api/storesearch/?term="
+            + urllib.parse.quote(nombre) + "&cc=pe&l=spanish", headers=CABECERAS)
+        with urllib.request.urlopen(req, timeout=15) as r:
+            items = json.loads(r.read().decode("utf-8")).get("items") or []
+    except Exception:                                   # noqa: BLE001
+        return None
+    if not items:
+        return None
+    j = items[0]
+    # la cabecera grande de la tienda, que es la buena; `tiny_image` es diminuta
+    return {
+        "nombre": j["name"],
+        "imagen": f"https://cdn.cloudflare.steamstatic.com/steam/apps/"
+                  f"{j['id']}/header.jpg",
+        "url": f"https://store.steampowered.com/app/{j['id']}/",
+        "precio": (j.get("price") or {}).get("final"),
+    }
+
+
+def botones(item, url_feed, extra=None):
+    """Botones de enlace en vez de una URL pelada debajo del texto.
+
+    Un enlace suelto en el cuerpo del mensaje se ve como lo que es: texto azul
+    largo. Un botón se lee de un vistazo y **dice a dónde va antes de pulsarlo**.
+    Son de estilo 5 (enlace), así que no necesitan que el bot esté escuchando.
+    """
+    fila = [{"type": 2, "style": 5, "label": "Leer la noticia",
+             "emoji": {"name": "📄"}, "url": item["enlace"]}]
+    for etiqueta, emoji, url in (extra or []):
+        if url:
+            fila.append({"type": 2, "style": 5, "label": etiqueta,
+                         "emoji": {"name": emoji}, "url": url})
+    return [{"type": 1, "components": fila[:5]}]
+
+
 def embed(item, url_feed):
     """La noticia con cara: fuente, titular, extracto, imagen y fecha."""
     dominio = url_feed.split("/")[2]
@@ -184,8 +282,28 @@ def embed(item, url_feed):
     desc = limpio(item["desc"], 300)
     if desc and desc.lower() != e["title"].lower():
         e["description"] = desc
-    if item["imagen"]:
-        e["image"] = {"url": item["imagen"]}
+    extra = []
+    imagen = item["imagen"] if util(item["imagen"]) else None
+
+    # Las ofertas son un caso aparte: su feed no trae ni imagen ni precio, y la
+    # `og:image` del sitio es una tarjeta generica. La ficha de Steam si tiene
+    # portada de verdad y el precio en soles.
+    if "isthereanydeal" in dominio:
+        j = _steam(item["titulo"])
+        if j:
+            imagen = j["imagen"]
+            extra.append(("Ver en Steam", "🎮", j["url"]))
+            if j["precio"] == 0:
+                e["title"] = f"{j['nombre']} — GRATIS"
+            elif j["precio"]:
+                e["title"] = f"{j['nombre']} — S/ {j['precio'] / 100:.2f}"
+
+    if not imagen:
+        de_la_pagina = portada(item["enlace"])
+        imagen = de_la_pagina if util(de_la_pagina) else None
+    if imagen:
+        e["image"] = {"url": imagen}
+    e["_botones"] = botones(item, url_feed, extra)
     pie = [x for x in (item["categoria"], item["autor"]) if x]
 
     # La línea de «por qué te importa esto a ti, que doblas». La IA puede
@@ -245,8 +363,12 @@ def main():
                 continue
 
             for item in reversed(nuevos):               # de vieja a nueva
-                api("POST", f"/channels/{cid}/messages",
-                    {"embeds": [embed(item, url)]})
+                e = embed(item, url)
+                comp = e.pop("_botones", None)
+                cuerpo = {"embeds": [e]}
+                if comp:
+                    cuerpo["components"] = comp
+                api("POST", f"/channels/{cid}/messages", cuerpo)
                 publicados += 1
                 time.sleep(1.2)
             # se guardan TODOS los enlaces del feed, no solo los publicados: si no,
