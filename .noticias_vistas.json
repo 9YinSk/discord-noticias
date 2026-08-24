@@ -42,6 +42,7 @@
   "https://www.animenewsnetwork.com/daily-briefs/2026-08-23/the-moon-on-the-rainy-night-anime-listed-for-2027/.240854"
  ],
  "https://www.animenewsnetwork.com/all/rss.xml": [
+  "https://www.animenewsnetwork.com/review/daemons-of-the-shadow-realm/episode-20/.240896",
   "https://www.animenewsnetwork.com/news/2026-08-24/k-manga-adds-daiki-yamazaki-golden-phantom-manga/.240929",
   "https://www.animenewsnetwork.com/review/sparks-of-tomorrow/episode-8/.240892",
   "https://www.animenewsnetwork.com/news/2026-08-24/japanese-animation-tv-ranking-august-10-16/.240918",
@@ -208,8 +209,6 @@
   "https://www.animenewsnetwork.com/news/2026-08-17/liar-game-anime-adds-4-cast-members/.240668",
   "https://www.animenewsnetwork.com/news/2026-08-17/actress-hayden-panettiere-dies-at-36/.240660",
   "https://www.animenewsnetwork.com/review/sparks-of-tomorrow/episode-7/.240653",
-  "https://www.animenewsnetwork.com/review/daemons-of-the-shadow-realm/episode-19/.240638",
-  "https://www.animenewsnetwork.com/news/2026-08-17/kakao-entertainment-to-merge-3-story-content-subsidiaries/.240641",
   "https://www.animenewsnetwork.com/review/mobile-suit-gundam-hathaway/the-sorcery-of-nymph-circe-anime-film/.233634"
  ],
  "https://vandal.elespanol.com/xml.cgi": [
@@ -300,6 +299,8 @@
   "https://www.sensacine.com/noticias/cine/noticia-1000218901/"
  ],
  "https://isthereanydeal.com/feeds/PE/giveaways.rss": [
+  "https://isthereanydeal.com/giveaways/16510/",
+  "https://isthereanydeal.com/giveaways/16509/",
   "https://isthereanydeal.com/giveaways/16503/",
   "https://isthereanydeal.com/giveaways/16499/",
   "https://isthereanydeal.com/giveaways/16478/",
@@ -313,6 +314,13 @@
   "https://isthereanydeal.com/giveaways/7433/"
  ],
  "https://isthereanydeal.com/feeds/PE/USD/deals.rss": [
+  "https://isthereanydeal.com/game/peg-champ-and-core/info/",
+  "https://isthereanydeal.com/game/fun-with-ragdolls-plus/info/",
+  "https://isthereanydeal.com/game/enlisted-stg-45-m-squad/info/",
+  "https://isthereanydeal.com/game/enlisted-svd-30-squad/info/",
+  "https://isthereanydeal.com/game/enlisted-m3a1-squad/info/",
+  "https://isthereanydeal.com/game/game-and-soundtrack--102/info/",
+  "https://isthereanydeal.com/game/angel-essence/info/",
   "https://isthereanydeal.com/game/smashing-bottles-gold-edition/info/",
   "https://isthereanydeal.com/game/we-were-here-too/info/",
   "https://isthereanydeal.com/game/puzzle-quest-immortal-edition/info/",
@@ -455,13 +463,6 @@
   "https://isthereanydeal.com/game/battle-of-rebels/info/",
   "https://isthereanydeal.com/game/super-killer-hornets-resurrection/info/",
   "https://isthereanydeal.com/game/incoming-forces/info/",
-  "https://isthereanydeal.com/game/crime-boss-rockay-city/info/",
-  "https://isthereanydeal.com/game/serial-cleaners-dino-park/info/",
-  "https://isthereanydeal.com/game/assetto-corsa-competizione-2023-gt-world-challenge-pack/info/",
-  "https://isthereanydeal.com/game/retro-3d-platformer-bundle/info/",
-  "https://isthereanydeal.com/game/fluffy-fantasy/info/",
-  "https://isthereanydeal.com/game/planet-harvester-x-void-salvage/info/",
-  "https://isthereanydeal.com/game/temperhall-1402-and-dice-carnival/info/",
-  "https://isthereanydeal.com/game/planet-harvester-x-incremental-fishing/info/"
+  "https://isthereanydeal.com/game/crime-boss-rockay-city/info/"
  ]
 }
