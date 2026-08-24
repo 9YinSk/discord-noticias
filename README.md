@@ -19,10 +19,19 @@ ejecuta GitHub cada 30 minutos, gratis.
    *New repository*. Nombre: `discord-noticias`. **Ponlo en Private.**
    No marques nada mas. *Create repository*.
 
-2. **Sube esta carpeta.** En la pagina que sale, *uploading an existing file*, y
-   arrastra **todo lo que hay dentro de `discord-nube`**. Ojo: tiene que subir
-   tambien la carpeta oculta `.github`. Si al arrastrar no aparece, usa los
-   comandos que estan al final.
+2. **Sube esta carpeta.** Ya viene con el repo de git hecho y el remoto puesto,
+   asi que es un solo comando desde aqui:
+
+   ```bash
+   git push -u origin main
+   ```
+
+   La primera vez se abre una ventana del navegador para entrar en GitHub. Se
+   hace una sola vez: despues quedan guardadas las credenciales.
+
+   *(Si prefieres arrastrar archivos: en la pagina del repo, «uploading an
+   existing file». Ojo, tiene que subir tambien la carpeta oculta `.github`, y
+   por eso el comando es mas fiable.)*
 
 3. **Guarda el token del bot.** En el repo: *Settings* » *Secrets and variables*
    » *Actions* » **New repository secret**.
@@ -54,18 +63,6 @@ Si no lo haces, no pasa nada: publica igual, en el idioma original.
   nunca dentro de un archivo.
 - **GitHub apaga el cron de un repo sin actividad tras 60 dias.** Si un dia dejan
   de llegar noticias, entra en *Actions* y dale a *Run workflow*: se reactiva.
-
-## Si prefieres subirlo por comandos
-
-```bash
-cd discord-nube
-git init
-git add .
-git commit -m "noticias en automatico"
-git branch -M main
-git remote add origin https://github.com/TU-USUARIO/discord-noticias.git
-git push -u origin main
-```
 
 ## Para actualizarlo cuando cambien los scripts
 
