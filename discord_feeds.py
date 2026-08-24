@@ -70,10 +70,14 @@ FEEDS = [
         ("IsThereAnyDeal · ofertas — región Perú, precios en USD",
          "https://isthereanydeal.com/feeds/PE/USD/deals.rss"),
     ]),
+    # **El RSS de MusicButler es privado y NO va en el código.** Su política dice
+    # que compartir ese enlace puede costar la cuenta: quien lo tenga ve tu feed.
+    # Por eso sale de la variable de entorno `MUSICBUTLER_RSS`, que en la nube es
+    # un secret de GitHub. Sin ella, el canal de música se salta y ya está.
     ("Readybot", "ıı・🎵・musica-nueva", [
-        ("MusicButler — cuenta gratis, sigue a los artistas y copia TU RSS desde "
-         "Ajustes. Avisa **solo de lanzamientos**, que era el requisito",
-         "https://www.musicbutler.io/users/rss-feed/"),
+        ("MusicButler — tu RSS personal, desde la variable MUSICBUTLER_RSS",
+         os.environ.get("MUSICBUTLER_RSS", "").strip()
+         or "https://www.musicbutler.io/users/rss-feed/"),
     ]),
 ]
 

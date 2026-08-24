@@ -221,10 +221,11 @@ def main():
             print(f"  no existe {canal}")
             continue
         for que, url in lista:
-            if "musicbutler.io/users/rss-feed" in url:
-                # es la página de ayuda, no un feed: el RSS de verdad es personal
-                # y sale de la cuenta de cada uno
-                print(f"  {canal}: MusicButler necesita tu RSS personal, lo salto")
+            if url.rstrip("/").endswith("musicbutler.io/users/rss-feed"):
+                # esa es la PAGINA DE AYUDA de MusicButler, no un feed. El RSS de
+                # verdad es personal: sale de la cuenta de cada uno y lleva un
+                # identificador dentro. Mientras siga puesta la de ayuda, se salta.
+                print(f"  {canal}: falta tu RSS personal de MusicButler, lo salto")
                 continue
             try:
                 items = entradas(bajar(url))

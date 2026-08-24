@@ -69,6 +69,18 @@ espanol y con una linea de contexto.
 
 Si no lo haces, no pasa nada: publica igual, en el idioma original.
 
+## Opcional: el canal de musica
+
+MusicButler avisa **solo cuando un artista saca algo** — nada de vida personal.
+
+1. Cuenta gratis en **musicbutler.io** y sigue a unos cuantos artistas.
+   El enlace RSS **solo aparece cuando ya sigues a alguien**.
+2. Settings » copia tu **RSS feed**.
+3. Guardalo como secret con el nombre `MUSICBUTLER_RSS`.
+
+**Ese enlace es privado.** Su politica dice que compartirlo publicamente puede
+costar la cuenta, y por eso va como secret y no dentro del codigo.
+
 ## Cuidado con dos cosas
 
 - **El token es la llave del bot.** Quien lo tenga puede hacer lo que quiera en

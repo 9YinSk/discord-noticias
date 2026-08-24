@@ -26,6 +26,7 @@ jobs:
         env:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          MUSICBUTLER_RSS: ${{ secrets.MUSICBUTLER_RSS }}
         run: python discord_noticias.py --enserio --max 3
 
       # Sin esto, cada ejecucion empezaria de cero y volveria a publicar lo
