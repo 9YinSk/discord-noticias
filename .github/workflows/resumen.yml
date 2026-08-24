@@ -1,0 +1,22 @@
+name: Resumen
+
+# Los domingos a las 23:00 UTC — las 6 de la tarde en Peru, que es cuando hay
+# gente conectada.
+on:
+  schedule:
+    - cron: "0 23 * * 0"
+  workflow_dispatch:
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: La semana en el servidor
+        env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python discord_resumen.py --enserio

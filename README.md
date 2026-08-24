@@ -12,6 +12,7 @@ ejecuta GitHub cada 30 minutos, gratis.
 | **cada 10 min** | Reparte los **roles por reaccion**: colores, paises, zonas |
 | **cada 30 min** | Publica las **noticias** nuevas de los 8 feeds |
 | **los lunes** | Lo mejor valorado de la **temporada de anime** |
+| **los domingos** | **El resumen de la semana**: quien entro, que hilos se abrieron |
 
 El de los roles es el mas importante de los tres. Discord no deja que un bot
 escuche reacciones sin estar conectado las 24 h, asi que este pregunta quien ha
@@ -24,6 +25,8 @@ mientras el PC de casa este apagado.
 | `discord_noticias.py` + `discord_feeds.py` | Los feeds y donde va cada uno |
 | `discord_opiniones.py` | El veredicto de la gente sobre un anime o un juego |
 | `discord_temporada.py` | El repaso semanal de la temporada |
+| `discord_resumen.py` | Lo que paso en el servidor esta semana |
+| `discord_ia.py` | Lo que escribe la IA — traduce, comenta y resume |
 | `discord_servidor.py` | Hablar con la API de Discord |
 
 ## Los pasos, una sola vez

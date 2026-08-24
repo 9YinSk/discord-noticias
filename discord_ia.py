@@ -42,8 +42,13 @@ BASE = "https://generativelanguage.googleapis.com/v1beta/models"
 _ELEGIDO = None
 
 
-def modelo():
-    """El nombre de un modelo que exista hoy. Se pregunta una vez por ejecución."""
+def modelos():
+    """Los modelos a probar, en orden. Se pregunta una vez por ejecución.
+
+    Devuelve **varios** a propósito: el alias `-latest` apunta al modelo de moda
+    y por eso es justo el que se satura. Cuando devuelve 503 —«high demand»— hay
+    que tener a dónde caer, o la IA se apaga cada vez que hay pico.
+    """
     global _ELEGIDO
     if _ELEGIDO:
         return _ELEGIDO
@@ -57,12 +62,32 @@ def modelo():
 
     sirven = [m["name"].split("/")[-1] for m in todos
               if "generateContent" in (m.get("supportedGenerationMethods") or [])]
-    # los flash primero, y de esos el de número más alto: es el más nuevo
-    flash = sorted([m for m in sirven if "flash" in m and "thinking" not in m],
-                   reverse=True)
-    _ELEGIDO = (flash or sirven or [None])[0]
+
+    # **`gemini-flash-latest` es la respuesta buena**: Google mantiene ese alias
+    # apuntando siempre al Flash más nuevo, así que no caduca nunca. Es lo que
+    # había que usar desde el principio.
+    orden = [a for a in ("gemini-flash-latest", "gemini-flash-lite-latest")
+             if a in sirven]
+
+    # Y si algún día no existiera el alias: el Flash **estable** de número más
+    # alto. Se filtran los `preview` —la primera versión eligió uno y devolvía
+    # error 400 en cada llamada— y los que no son de texto: image, tts, robotics.
+    def version(nombre):
+        num = "".join(c for c in nombre if c.isdigit() or c == ".")
+        try:
+            return float(num.strip(".").split(".")[0] + "." +
+                         (num.strip(".").split(".") + ["0"])[1])
+        except (ValueError, IndexError):
+            return 0.0
+
+    estables = [m for m in sirven
+                if "flash" in m
+                and not any(x in m for x in ("preview", "exp", "image", "tts",
+                                             "thinking", "robotics", "computer"))]
+    estables.sort(key=version, reverse=True)
+    _ELEGIDO = (orden + estables + sirven)[:4]
     if _ELEGIDO:
-        print(f"      (IA: usando {_ELEGIDO})", file=sys.stderr)
+        print(f"      (IA: probaré {', '.join(_ELEGIDO)})", file=sys.stderr)
     return _ELEGIDO
 
 AVISO = "Resumen automático · puede equivocarse"
@@ -85,26 +110,43 @@ def pedir(instruccion, texto, tope=300, temperatura=0.3):
     k = clave()
     if not k or not texto:
         return None
-    m = modelo()
-    if not m:
+    lista = modelos()
+    if not lista:
         return None
+
+    # El tope va **holgado**: los modelos nuevos gastan tokens pensando antes de
+    # contestar, y con el tope justo la respuesta sale cortada a media frase.
     cuerpo = json.dumps({
         "contents": [{"parts": [{"text": instruccion + "\n\n" + texto}]}],
-        "generationConfig": {"temperature": temperatura, "maxOutputTokens": tope},
+        "generationConfig": {"temperature": temperatura,
+                             "maxOutputTokens": max(tope, 800)},
     }).encode("utf-8")
-    try:
-        req = urllib.request.Request(f"{BASE}/{m}:generateContent?key={k}",
-                                     data=cuerpo,
-                                     headers={"Content-Type": "application/json"})
-        with urllib.request.urlopen(req, timeout=30) as r:
-            d = json.loads(r.read().decode("utf-8"))
-        salida = d["candidates"][0]["content"]["parts"][0]["text"].strip()
-        # a veces devuelve el texto entre comillas aunque se le diga que no
-        return salida.strip('"').strip() or None
-    except (urllib.error.HTTPError, urllib.error.URLError, KeyError, IndexError,
-            TimeoutError, json.JSONDecodeError) as e:
-        print(f"      (IA no disponible: {type(e).__name__})", file=sys.stderr)
-        return None
+
+    for m in lista:
+        try:
+            req = urllib.request.Request(f"{BASE}/{m}:generateContent?key={k}",
+                                         data=cuerpo,
+                                         headers={"Content-Type": "application/json"})
+            with urllib.request.urlopen(req, timeout=30) as r:
+                d = json.loads(r.read().decode("utf-8"))
+            salida = d["candidates"][0]["content"]["parts"][0]["text"].strip()
+            # a veces devuelve el texto entre comillas aunque se le diga que no
+            return salida.strip('"').strip() or None
+        except urllib.error.HTTPError as e:
+            # 503 es «high demand» y 429 es cuota: los dos se arreglan probando
+            # otro modelo, y justo el alias `-latest` es el que más se satura
+            # porque apunta al de moda. El resto de errores no se arreglan
+            # insistiendo, así que se corta.
+            if e.code in (429, 503) and m != lista[-1]:
+                print(f"      ({m} saturado, pruebo el siguiente)", file=sys.stderr)
+                continue
+            print(f"      (IA: HTTP {e.code} en {m})", file=sys.stderr)
+            return None
+        except (urllib.error.URLError, KeyError, IndexError, TimeoutError,
+                json.JSONDecodeError) as e:
+            print(f"      (IA no disponible: {type(e).__name__})", file=sys.stderr)
+            return None
+    return None
 
 
 # ─────────────────────────────────────────────────────────────── titulares
