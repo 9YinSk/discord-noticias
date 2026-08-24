@@ -1,0 +1,296 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+discord_noticias.py — lee los feeds y los publica. Sin bots de terceros.
+
+**Por qué existe esto.** Los bots de RSS (MonitoRSS, Readybot) se configuran desde
+su panel web, con login de Discord: eso no lo puede hacer nuestro bot por API. Y
+MonitoRSS además solo admite 3 feeds gratis.
+
+Así que esto hace lo mismo por el camino corto: **lee los RSS y publica lo nuevo**
+con nuestro propio bot, que ya tiene permisos en esos canales. Solo stdlib —
+`urllib` para bajar y `xml` para parsear; nada de `feedparser`.
+
+Lo que ya se ha publicado se guarda en `.noticias_vistas.json`, así que correrlo
+dos veces no repite nada. La primera vez publica **solo las 3 últimas de cada
+feed**, para no vaciar el historial entero de golpe en el canal.
+
+    python discord_noticias.py                 # simulacro: dice qué publicaría
+    python discord_noticias.py --enserio
+    python discord_noticias.py --enserio --max 5
+
+Si existe la variable `GEMINI_API_KEY`, los titulares se **traducen al español**
+antes de publicarlos — Anime News Network publica en inglés. Sin esa clave, salen
+en su idioma y no pasa nada: es opcional.
+
+**Corre sin el PC encendido.** `discord_nube.py` arma la carpeta `discord-nube/`
+para subirla a GitHub, donde **GitHub Actions lo ejecuta cada 30 minutos gratis**.
+Los pasos están en el README que genera. Aquí en local sigue funcionando igual,
+que es lo cómodo para probar.
+"""
+import argparse
+import html
+import json
+import os
+import re
+import sys
+import time
+import urllib.error
+import urllib.request
+import xml.etree.ElementTree as ET
+
+AQUI = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, AQUI)
+from discord_servidor import api  # noqa: E402
+from discord_feeds import FEEDS  # noqa: E402  — la misma lista, un solo sitio
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
+GUILD = "1539896304178823282"
+VISTAS = os.path.join(AQUI, ".noticias_vistas.json")
+
+# Sin esto, varios servidores devuelven 403: un User-Agent de Python huele a bot
+# de scraping. Con uno normal, responden.
+CABECERAS = {
+    "User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                   "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36"),
+    "Accept": "application/rss+xml, application/atom+xml, application/xml, text/xml",
+}
+
+
+def bajar(url, timeout=25):
+    """Baja el feed, **descomprimiéndolo si hace falta**.
+
+    Vandal devuelve gzip aunque no se pida (su cabecera empieza por `1f 8b`), y
+    pasarle eso al parser da un `ParseError` en la columna 1 que despista mucho:
+    parece XML roto y es XML comprimido.
+    """
+    req = urllib.request.Request(url, headers=CABECERAS)
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        crudo = r.read()
+        codif = (r.headers.get("Content-Encoding") or "").lower()
+    if crudo[:2] == b"\x1f\x8b" or codif == "gzip":
+        import gzip
+        crudo = gzip.decompress(crudo)
+    elif codif == "deflate":
+        import zlib
+        crudo = zlib.decompress(crudo, -zlib.MAX_WBITS)
+    return crudo
+
+
+def _texto(elem, *nombres):
+    """El primer hijo que exista, sea RSS o Atom (que usan nombres distintos)."""
+    for n in nombres:
+        hijo = elem.find(n)
+        if hijo is not None:
+            if hijo.text:
+                return hijo.text.strip()
+            if hijo.get("href"):            # Atom pone el enlace en un atributo
+                return hijo.get("href")
+    return ""
+
+
+_CONTROL = re.compile(rb"[\x00-\x08\x0b\x0c\x0e-\x1f]")
+_IMG = re.compile(r'<img[^>]+src="([^"]+)"', re.I)
+_TAG = re.compile(r"<[^>]+>")
+
+
+def _imagen(it, descripcion):
+    """La imagen del artículo, de donde la haya puesto cada feed.
+
+    No hay un sitio único: unos usan `media:thumbnail`, otros `enclosure`, y
+    Espinof la mete **dentro del HTML de la descripción**. Se miran los tres.
+    """
+    M = "{http://search.yahoo.com/mrss/}"
+    for tag in (f"{M}thumbnail", f"{M}content", "enclosure"):
+        h = it.find(tag)
+        if h is not None and h.get("url"):
+            return h.get("url")
+    m = _IMG.search(descripcion or "")
+    return m.group(1) if m else None
+
+
+def entradas(xml_bytes):
+    """Una lista de dicts con lo que se puede sacar de cada item.
+
+    Antes de parsear se quitan los **bytes de control**: Vandal cuela alguno en
+    sus descripciones y `ElementTree` revienta con `ParseError` por un carácter
+    que ni se ve. Un feed no se descarta por eso.
+    """
+    xml_bytes = _CONTROL.sub(b" ", xml_bytes)
+    raiz = ET.fromstring(xml_bytes)
+    A = "{http://www.w3.org/2005/Atom}"
+    D = "{http://purl.org/dc/elements/1.1/}"
+    items = raiz.findall(".//item") or raiz.findall(f".//{A}entry")
+    out = []
+    for it in items:
+        titulo = _texto(it, "title", f"{A}title")
+        enlace = _texto(it, "link", f"{A}link")
+        if not (titulo and enlace):
+            continue
+        desc = _texto(it, "description", "summary", f"{A}summary", f"{A}content")
+        out.append({
+            "titulo": html.unescape(titulo),
+            "enlace": enlace.strip(),
+            "desc": desc,
+            "imagen": _imagen(it, desc),
+            "autor": _texto(it, f"{D}creator", "author", f"{A}author"),
+            "categoria": _texto(it, "category"),
+            "fecha": _texto(it, "pubDate", "published", f"{A}published", f"{A}updated"),
+        })
+    return out
+
+
+def limpio(t, tope=None):
+    """Sin etiquetas ni espacios de más: casi todos los feeds meten HTML dentro.
+
+    Vandal además abre sus descripciones con un `<!--cache-->` que hay que tirar.
+    """
+    t = html.unescape(_TAG.sub(" ", t or "").replace("<!--cache-->", ""))
+    t = " ".join(t.split())
+    if tope and len(t) > tope:
+        t = t[:tope].rsplit(" ", 1)[0] + "…"
+    return t
+
+
+# Cada fuente con su color y su nombre bonito. Sin esto, cuatro canales de
+# noticias son cuatro muros de enlaces iguales: es lo que les da cara.
+FUENTES = {
+    "www.animenewsnetwork.com": ("Anime News Network", 0xE67E22),
+    "vandal.elespanol.com": ("Vandal", 0x1F8FE5),
+    "www.nintenderos.com": ("Nintenderos", 0xE60012),
+    "www.espinof.com": ("Espinof", 0xE91E63),
+    "www.sensacine.com": ("SensaCine", 0xF5C518),
+    "isthereanydeal.com": ("IsThereAnyDeal", 0x2ECC71),
+    "www.musicbutler.io": ("MusicButler", 0x00B8D4),
+}
+
+
+GEMINI = ("https://generativelanguage.googleapis.com/v1beta/models/"
+          "gemini-2.0-flash:generateContent?key=")
+
+INSTRUCCION = (
+    "Traduce este titular de noticias al español de forma natural, como lo "
+    "escribiría un medio hispanohablante. No añadas nada, no opines, no pongas "
+    "comillas ni explicaciones: devuelve SOLO el titular traducido. Si ya está "
+    "en español, devuélvelo igual.\n\nTitular: ")
+
+
+def traducir(texto):
+    """El titular en español, si hay clave de Gemini. Si no, tal cual.
+
+    Es **opcional a propósito**: sin `GEMINI_API_KEY` esto no se llama y las
+    noticias salen en su idioma. Con clave, los titulares de Anime News Network
+    —que publica en inglés— salen traducidos.
+
+    Y si la API falla, se devuelve el original: una noticia en inglés es mejor
+    que ninguna noticia.
+    """
+    clave = os.environ.get("GEMINI_API_KEY", "").strip()
+    if not clave or not texto:
+        return texto
+    cuerpo = json.dumps({
+        "contents": [{"parts": [{"text": INSTRUCCION + texto}]}],
+        "generationConfig": {"temperature": 0.2, "maxOutputTokens": 200},
+    }).encode("utf-8")
+    try:
+        req = urllib.request.Request(GEMINI + clave, data=cuerpo,
+                                     headers={"Content-Type": "application/json"})
+        with urllib.request.urlopen(req, timeout=25) as r:
+            d = json.loads(r.read().decode("utf-8"))
+        salida = d["candidates"][0]["content"]["parts"][0]["text"].strip()
+        return salida or texto
+    except Exception as e:                       # noqa: BLE001 — da igual por qué
+        print(f"      (sin traducir: {type(e).__name__})")
+        return texto
+
+
+def embed(item, url_feed):
+    """La noticia con cara: fuente, titular, extracto, imagen y fecha."""
+    dominio = url_feed.split("/")[2]
+    nombre, color = FUENTES.get(dominio, (dominio, 0x9B59B6))
+    e = {
+        "author": {"name": nombre,
+                   "icon_url": f"https://icons.duckduckgo.com/ip3/{dominio}.ico"},
+        "title": traducir(limpio(item["titulo"], 250)),
+        "url": item["enlace"],
+        "color": color,
+    }
+    desc = limpio(item["desc"], 300)
+    if desc and desc.lower() != e["title"].lower():
+        e["description"] = desc
+    if item["imagen"]:
+        e["image"] = {"url": item["imagen"]}
+    pie = [x for x in (item["categoria"], item["autor"]) if x]
+    if pie:
+        e["footer"] = {"text": limpio(" · ".join(pie), 80)}
+    return e
+
+
+def main():
+    p = argparse.ArgumentParser(description=__doc__,
+                                formatter_class=argparse.RawDescriptionHelpFormatter)
+    p.add_argument("--enserio", action="store_true")
+    p.add_argument("--max", type=int, default=3,
+                   help="cuántas publicar por feed como mucho (por defecto 3)")
+    args = p.parse_args()
+
+    vistas = {}
+    if os.path.exists(VISTAS):
+        vistas = json.load(open(VISTAS, encoding="utf-8"))
+
+    ch = {c["name"]: c["id"] for c in api("GET", f"/guilds/{GUILD}/channels")}
+    publicados = 0
+
+    for _bot, canal, lista in FEEDS:
+        cid = ch.get(canal)
+        if not cid:
+            print(f"  no existe {canal}")
+            continue
+        for que, url in lista:
+            if "musicbutler.io/users/rss-feed" in url:
+                # es la página de ayuda, no un feed: el RSS de verdad es personal
+                # y sale de la cuenta de cada uno
+                print(f"  {canal}: MusicButler necesita tu RSS personal, lo salto")
+                continue
+            try:
+                items = entradas(bajar(url))
+            except (urllib.error.URLError, urllib.error.HTTPError, ET.ParseError,
+                    TimeoutError) as e:
+                print(f"  {canal}: falla {url.split('/')[2]} — {type(e).__name__}")
+                continue
+
+            ya = set(vistas.get(url, []))
+            nuevos = [x for x in items if x["enlace"] not in ya][:args.max]
+            print(f"  {canal[:26]:26} {url.split('/')[2][:24]:24} "
+                  f"{len(items):3} items, {len(nuevos)} nuevos")
+            if not args.enserio:
+                for x in nuevos[:2]:
+                    marca = "🖼" if x["imagen"] else " "
+                    print(f"      {marca} {limpio(x['titulo'])[:76]}")
+                continue
+
+            for item in reversed(nuevos):               # de vieja a nueva
+                api("POST", f"/channels/{cid}/messages",
+                    {"embeds": [embed(item, url)]})
+                publicados += 1
+                time.sleep(1.2)
+            # se guardan TODOS los enlaces del feed, no solo los publicados: si no,
+            # la próxima corrida trataría como nuevo lo que hoy se dejó fuera del
+            # tope y acabaría publicando el historial entero a trozos
+            vistas[url] = [x["enlace"] for x in items][:200]
+
+    if args.enserio:
+        t = json.dumps(vistas, ensure_ascii=False, indent=1)
+        json.loads(t)
+        with open(VISTAS, "w", encoding="utf-8") as f:
+            f.write(t + "\n")
+        print(f"\n{publicados} noticias publicadas. Memoria en "
+              f"{os.path.basename(VISTAS)}")
+    else:
+        print("\n>>> SIMULACRO. Agrega --enserio.")
+
+
+if __name__ == "__main__":
+    main()
