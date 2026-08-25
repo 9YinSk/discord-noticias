@@ -1,12 +1,21 @@
 name: Roles
 
-# Cada 10 minutos. Discord no deja escuchar reacciones sin estar conectado las
+# **Cada 5 minutos.** Discord no deja escuchar reacciones sin estar conectado las
 # 24 h, asi que esto **pregunta** quien ha reaccionado y reparte los roles. Es lo
-# que hace que elegir tu color o abrir una zona funcione con el PC de casa
-# apagado — y por eso va mas seguido que las noticias.
+# que hace que elegir tu color funcione con el PC de casa apagado, y ademas
+# actualiza los contadores y saluda a quien acaba de entrar.
+#
+# Estuvo en 10 minutos mientras el repositorio era privado, porque GitHub solo
+# regala 2.000 minutos al mes ahi y cada vuelta se factura redondeando al minuto:
+# a este ritmo serian 8.640. Desde que el repo es **publico** los minutos son
+# ilimitados, asi que la unica razon para esperar era una factura que ya no
+# existe. Lo que se gana: la tarjeta de bienvenida tarda la mitad.
+#
+# Ojo, GitHub cumple los cron **a su ritmo**: cuando tiene cola, un */5 se
+# retrasa. Es best-effort, no un reloj.
 on:
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "*/5 * * * *"
   workflow_dispatch:
 
 jobs:
