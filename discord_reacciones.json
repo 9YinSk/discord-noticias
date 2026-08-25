@@ -5,7 +5,7 @@
     {
       "que_es": "Paso 2 y ultimo — aceptar las reglas abre el servidor",
       "canal_id": "1540616189967994920",
-      "mensaje": "1541691279937773589",
+      "mensaje": "1541695329248878614",
       "quitar": false,
       "reacciones": {
         "✅": "✅ Verificado"
@@ -66,15 +66,6 @@
         "🇩🇴": "🇩🇴 Rep. Dominicana",
         "🇪🇸": "🇪🇸 España",
         "🌎": "🌎 Otro país"
-      }
-    },
-    {
-      "que_es": "Paso 1 del recorrido — abre 📜 reglas",
-      "canal_id": "1540616201716367402",
-      "mensaje": "1541691225134993498",
-      "quitar": false,
-      "reacciones": {
-        "➡️": "🚪 Paso 1"
       }
     }
   ],
@@ -187,7 +178,9 @@
         ],
         "llave": "🔓 Zona noticias"
       }
-    ]
+    ],
+    "nunca_quitar": true,
+    "_por_que": "El cuestionario vuelve a repartir las llaves el solo, para que quien entra vea sus canales al instante. Esto queda de red de seguridad: solo AÑADE lo que falte. Quitar seria deshacer lo que acaba de hacer Discord."
   },
   "limpiar": [
     {
@@ -224,5 +217,6 @@
         "dias": 365
       }
     ]
-  }
+  },
+  "_nota_paso1": "El panel de Paso 1 se quito el 25-ago: existia para abrir reglas, y reglas ya se ve desde el principio porque Discord obliga a aceptarlas en la puerta. Era un peaje sin puerta detras."
 }
