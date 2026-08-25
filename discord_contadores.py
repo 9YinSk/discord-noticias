@@ -123,6 +123,21 @@ def crear(enserio):
         time.sleep(0.5)
 
 
+def toca_ahora():
+    """Si esta vuelta le toca a los contadores.
+
+    **Discord solo deja 2 cambios de nombre cada 10 minutos por canal**, y
+    cuando te pasas no da error: deja la petición esperando. Mientras el cron
+    iba cada 10 minutos esto encajaba solo. Al bajarlo a 5 —cosa que se hizo
+    por la bienvenida, no por esto— «En línea» cambia casi cada vuelta y se
+    comería el cupo.
+
+    Así que el trabajo corre cada 5 y **los contadores se saltan las vueltas
+    impares**: siguen a su ritmo de 10 sin frenar a los demás.
+    """
+    return datetime.datetime.now(datetime.timezone.utc).minute % 10 < 5
+
+
 def poner_al_dia(enserio):
     """Renombra **solo lo que cambió**. Ver el límite de 2 cada 10 minutos."""
     canales = api("GET", f"/guilds/{GUILD}/channels")
@@ -161,6 +176,10 @@ def main():
 
     if args.crear:
         crear(args.enserio)
+    elif args.enserio and not toca_ahora():
+        print("  esta vuelta no toca (el nombre de un canal solo se puede "
+              "cambiar 2 veces cada 10 min)")
+        return
     n = poner_al_dia(args.enserio)
     if not args.enserio:
         print("\n>>> SIMULACRO. Agrega --enserio.")
