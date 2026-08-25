@@ -62,7 +62,16 @@ about after all also and are as at be been but by can for from has have his how
 in into is it its just like more new not now of on one or out over new season
 that the their there they this to trailer up was were what when which who will
 with you your
+
+anime animes manga mangas serie series pelicula peliculas film movie juego
+juegos game games video videos capitulo capitulos episodio episodios episode
+episodes temporada temporadas doblaje dub dubs sub subs estreno estrenos
+parche parches actualizacion update oficial official
 """.split())
+# Ese segundo bloque son las palabras **del tema**, no del titular: salen en casi
+# todos y no distinguen nada. Peor aún, enganchan: buscando «Manga» a secas,
+# AniList devuelve una serie que se llama literalmente así, y la noticia acababa
+# con la nota de una obra que no tenía nada que ver.
 
 _LIMPIA = re.compile(r"[^\w\sáéíóúüñÁÉÍÓÚÜÑ']", re.U)
 
@@ -239,6 +248,147 @@ def debate(titular, tema="anime", horas=72, paginas=2, callado=True):
     if len(suyos) < 4:
         return None, []          # cuatro frases no son «en qué se dividió la gente»
     return mejor, suyos
+
+
+def _pedir_json(url, cuerpo=None, cabeceras=None):
+    import json as _json
+    import urllib.request as _u
+    req = _u.Request(url, data=cuerpo,
+                     headers={"User-Agent": "Mozilla/5.0", **(cabeceras or {})})
+    with _u.urlopen(req, timeout=20) as r:
+        return _json.loads(r.read().decode("utf-8"))
+
+
+_ANILIST = """
+query($s:String){ Media(search:$s, type:ANIME){
+  title{romaji english} averageScore popularity siteUrl
+  bannerImage coverImage{extraLarge}
+  reviews(perPage:1, sort:RATING_DESC){ nodes{ summary score user{name} } }
+}}"""
+
+
+def veredicto(titular, tema):
+    """La nota que le pone la gente, cuando no hay hilo del que sacar debate.
+
+    **Por qué hace falta.** Medido: de 14 noticias, **solo 2 tenían hilo** en
+    Reddit. La mayoría de titulares —un anuncio de reparto, una fecha, un
+    manga licenciado— no generan discusión, y quedarse ahí deja la sección
+    apareciendo una vez de cada siete.
+
+    Pero «qué opina internet» no es solo Reddit. De casi cualquier anime hay
+    **nota y reseñas en AniList**, y de casi cualquier juego, **el veredicto de
+    Steam**. Eso no es debate, es puntuación — así que se etiqueta distinto y no
+    se hace pasar por lo que no es.
+
+    Devuelve `(texto, url, arte)` — el arte es la ilustracion buena del
+    juego o del anime, para usarla de fondo. Todo `None` si no hay nada.
+    """
+    import json as _json
+    import urllib.parse as _p
+    ks = claves(titular, minimo=3)
+    if not ks:
+        return None, None, None
+    # **El título no siempre va al principio.** «Crunchyroll Adds English Dubs
+    # for One Piece» lo lleva al final, y probando solo por delante se pierde.
+    # Se prueban los dos extremos, de más palabras a menos, y se para en el
+    # primer acierto: cinco consultas como mucho.
+    #
+    # **Nunca con una sola palabra.** Se probó y es donde salen todos los falsos:
+    # «One Piece» enganchaba un anime llamado «Piece» con 1.062 seguidores, y
+    # «Golden Phantom» enganchaba «Phantom: Requiem for the Phantom». Una nota
+    # equivocada pegada a una noticia es peor que ninguna nota — la primera vez
+    # que alguien lo pilla, deja de creerse la sección entera.
+    intentos = []
+    for q in (ks[:3], ks[:2], ks[-2:], ks[1:3]):
+        q = " ".join(q)
+        if q and q not in intentos:
+            intentos.append(q)
+    try:
+        if tema in ("anime", "cine"):
+            # **De más palabras a menos, hasta que enganche.** Con el titular
+            # entero no encuentra nada nunca: «Frieren Beyond Journeys End nueva
+            # temporada» da 404 y «Frieren» da la ficha. Y ojo — AniList
+            # responde **404 cuando no hay resultado**, no una respuesta vacía,
+            # así que un `try` que se lo trague hace creer que no existe nada.
+            m = None
+            for q in intentos:
+                try:
+                    d = _pedir_json(
+                        "https://graphql.anilist.co",
+                        _json.dumps({"query": _ANILIST,
+                                     "variables": {"s": q}}).encode(),
+                        {"Content-Type": "application/json"})
+                except Exception:                       # noqa: BLE001
+                    continue                            # 404 = no está, sigo
+                m = (d.get("data") or {}).get("Media")
+                if m:
+                    break
+            if not m or not m.get("averageScore"):
+                return None, None, None
+            # **El guardia contra el falso positivo.** Buscando con una sola
+            # palabra, un titular sobre «Manga» engancharía cualquier serie. Se
+            # exige que el título encontrado comparta algo con el titular; si no,
+            # es que la búsqueda se fue por otro lado.
+            titulos = " ".join(str(v) for v in m["title"].values() if v).lower()
+            if not any(k.lower() in titulos for k in ks):
+                return None, None, None
+            t = m["title"].get("english") or m["title"]["romaji"]
+            linea = (f"**{t}** — {m['averageScore']}/100 en AniList, con "
+                     f"{m.get('popularity', 0):,} personas siguiéndolo"
+                     .replace(",", "."))
+            nodos = (m.get("reviews") or {}).get("nodes") or []
+            if nodos and nodos[0].get("summary"):
+                linea += (f"\n-# «{nodos[0]['summary'][:150]}» — "
+                          f"{nodos[0]['user']['name']}")
+            # El banner es apaisado y es la ilustración buena para un fondo; la
+            # portada es vertical y solo sirve de reserva.
+            arte = (m.get("bannerImage")
+                    or (m.get("coverImage") or {}).get("extraLarge"))
+            return linea, m["siteUrl"], arte
+
+        if tema in ("juegos", "ofertas"):
+            j = None
+            for q in intentos:
+                b = _pedir_json("https://store.steampowered.com/api/storesearch/"
+                                f"?term={_p.quote(q)}&cc=pe&l=spanish")
+                items = b.get("items") or []
+                if items:
+                    j = items[0]
+                    break
+            if not j:
+                return None, None, None
+            if not any(k.lower() in j["name"].lower() for k in ks):
+                return None, None, None  # la búsqueda se fue por otro lado
+            d = _pedir_json(f"https://store.steampowered.com/appreviews/{j['id']}"
+                            f"?json=1&language=all&num_per_page=0")
+            s = d.get("query_summary") or {}
+            total = s.get("total_reviews") or 0
+            if total < 50:            # con veinte reseñas no se opina de nada
+                return None, None, None
+            pct = round((s.get("total_positive", 0) / total) * 100)
+            cual = VEREDICTO_STEAM.get(s.get("review_score_desc", ""),
+                                       s.get("review_score_desc", ""))
+            # `library_hero` es la ilustracion grande y apaisada de la ficha —
+            # 1920 de ancho. `header` es la miniatura de 460 y se ve pastosa al
+            # estirarla, asi que solo sirve de reserva.
+            arte = (f"https://cdn.cloudflare.steamstatic.com/steam/apps/"
+                    f"{j['id']}/library_hero.jpg")
+            return (f"**{j['name']}** — reseñas **{cual.lower()}** en Steam: "
+                    f"{pct}% positivas de {total:,}".replace(",", "."),
+                    f"https://store.steampowered.com/app/{j['id']}/", arte)
+    except Exception:                                   # noqa: BLE001
+        return None, None, None
+    return None, None, None
+
+
+VEREDICTO_STEAM = {
+    "Overwhelmingly Positive": "Abrumadoramente positivas",
+    "Very Positive": "Muy positivas", "Positive": "Positivas",
+    "Mostly Positive": "Mayormente positivas", "Mixed": "Variadas",
+    "Mostly Negative": "Mayormente negativas", "Negative": "Negativas",
+    "Very Negative": "Muy negativas",
+    "Overwhelmingly Negative": "Abrumadoramente negativas",
+}
 
 
 def main():

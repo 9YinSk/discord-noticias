@@ -805,7 +805,8 @@ def _parrafo(d, texto, fuente_ruta, tam, ancho, lineas_max):
     return ImageFont.truetype(fuente_ruta, tam), lineas[:lineas_max]
 
 
-def tarjeta_noticia(titular, fuente, color, archivo, w=1200, h=630, etiqueta=None):
+def tarjeta_noticia(titular, fuente, color, archivo, w=1200, h=630, etiqueta=None,
+                    arte_url=None):
     """La imagen de una noticia **que no trae imagen**.
 
     Media docena de feeds publican sin foto, y esas noticias salían como lo que
@@ -825,10 +826,29 @@ def tarjeta_noticia(titular, fuente, color, archivo, w=1200, h=630, etiqueta=Non
     Discord manda el ancho, que es el lado bueno: se ve entera sin abrirla.
     """
     titular = sin_emoji(titular or "")
-    img = degradado(w, h, (26, 18, 46), (14, 16, 34))
-    img = brillo(img, (int(w * 0.82), int(h * 0.22)), 340, color, 55)
+
+    # **Si se sabe de qué juego o anime habla la noticia, se usa SU ilustración.**
+    # Es la diferencia entre una tarjeta genérica bonita y una portada que
+    # enseña de qué va la cosa. Va muy oscurecida —el titular tiene que leerse
+    # encima— pero el arte se reconoce igual, que es lo que hace falta.
+    arte = _bajar_imagen(arte_url) if arte_url else None
+    if arte:
+        base = arte.convert("RGB")
+        escala = max(w / base.width, h / base.height)
+        base = base.resize((max(w, int(base.width * escala)),
+                            max(h, int(base.height * escala))), Image.LANCZOS)
+        # se recorta por arriba, no por el centro: en las portadas de juego el
+        # personaje suele estar en la mitad de arriba y centrar le corta la cara
+        izq = (base.width - w) // 2
+        img = base.crop((izq, 0, izq + w, h))
+        img = Image.blend(img, Image.new("RGB", (w, h), (10, 9, 22)), 0.62)
+        img = brillo(img, (int(w * 0.82), int(h * 0.22)), 340, color, 35)
+    else:
+        img = degradado(w, h, (26, 18, 46), (14, 16, 34))
+        img = brillo(img, (int(w * 0.82), int(h * 0.22)), 340, color, 55)
     d = ImageDraw.Draw(img)
-    polvo(d, w, h, (255, 255, 255), 120, semilla=len(titular))
+    if not arte:                       # sobre una ilustración, el polvo estorba
+        polvo(d, w, h, (255, 255, 255), 120, semilla=len(titular))
     onda(d, int(w * 0.06), int(w * 0.94), int(h * 0.86), 54, color,
          semilla=len(titular) * 5)
     d.rectangle([0, 0, 10, h], fill=color)

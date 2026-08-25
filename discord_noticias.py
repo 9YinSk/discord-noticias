@@ -290,7 +290,7 @@ def sin_repetir_tienda(titulo):
     return titulo
 
 
-def tarjeta(titular, fuente, color_int, etiqueta=None):
+def tarjeta(titular, fuente, color_int, etiqueta=None, arte_url=None):
     """Dibuja la portada de una noticia sin imagen. `None` si no se puede.
 
     El dibujo se importa **aquí dentro y no arriba**: `discord_banners` trae
@@ -304,7 +304,8 @@ def tarjeta(titular, fuente, color_int, etiqueta=None):
     rgb = ((color_int >> 16) & 255, (color_int >> 8) & 255, color_int & 255)
     try:
         return db.tarjeta_noticia(titular, fuente, rgb, "_noticia.png",
-                                  etiqueta=limpio(etiqueta or "", 22) or None)
+                                  etiqueta=limpio(etiqueta or "", 22) or None,
+                                  arte_url=arte_url)
     except Exception:                                   # noqa: BLE001
         return None
 
@@ -314,7 +315,7 @@ def tema_de(canal):
     return next((t for k, t in TEMA_DEL_CANAL.items() if k in (canal or "")), None)
 
 
-def con_la_gente(e, titulo, tema, extra):
+def con_la_gente(e, titulo, tema, extra, ver=None):
     """Le añade a la noticia **en qué se dividió la gente**, si es que se dividió.
 
     Es lo que separa un tablón de titulares de algo que apetece leer: la noticia
@@ -322,16 +323,29 @@ def con_la_gente(e, titulo, tema, extra):
     de Reddit —no de lo que la IA se imagine— y **si no hay debate, no se pone
     nada**: el hueco vacío es información, el relleno no.
     """
-    if not (tema and ia.disponible()):
+    if not tema:
         return
-    try:
-        hilo, coments = publico.debate(titulo, tema)
-    except Exception:                                   # noqa: BLE001
-        return                          # el archivo es gratis: puede no estar
-    if not coments:
-        return
-    dividio = ia.como_se_dividio(titulo, [c["texto"] for c in coments[:30]])
+    hilo, coments = None, []
+    if ia.disponible():
+        try:
+            hilo, coments = publico.debate(titulo, tema)
+        except Exception:                               # noqa: BLE001
+            pass                        # el archivo es gratis: puede no estar
+
+    dividio = (ia.como_se_dividio(titulo, [c["texto"] for c in coments[:30]])
+               if coments else None)
+
     if not dividio:
+        # Sin hilo no hay debate, pero **sigue habiendo opinión**: la nota de
+        # AniList o el veredicto de Steam. Es lo que sube la sección de aparecer
+        # en 2 de cada 14 noticias a aparecer en la mayoría.
+        texto, url, _arte = ver if ver else publico.veredicto(titulo, tema)
+        if not texto:
+            return
+        e.setdefault("fields", []).append({
+            "name": "La nota que le pone la gente",
+            "value": texto[:1020], "inline": False})
+        extra.append(boton(url))
         return
     # El título se adapta a la respuesta. La IA tiene permiso para decir que NO
     # hubo división —y lo usa—, y entonces «En qué se dividió la gente» encima de
@@ -369,6 +383,13 @@ def embed(item, url_feed, canal=""):
     extra = []
     imagen = item["imagen"] if util(item["imagen"]) else None
 
+    # **La ficha se busca aquí, antes de dibujar nada.** De ella salen dos cosas
+    # que se necesitan en momentos distintos: la nota que opina la gente (va
+    # abajo, en un campo) y **la ilustración del juego o del anime**, que va de
+    # fondo de la portada. Buscándola una sola vez sirve para las dos.
+    tema = tema_de(canal)
+    ver = publico.veredicto(e["title"], tema) if tema else (None, None, None)
+
     # Las ofertas son un caso aparte: su feed no trae ni imagen ni precio, y la
     # `og:image` del sitio es una tarjeta generica. La ficha de Steam si tiene
     # portada de verdad y el precio en soles.
@@ -392,7 +413,8 @@ def embed(item, url_feed, canal=""):
         # Ni el feed ni la página tienen foto. En vez de dejar la noticia como un
         # renglón de texto con un enlace azul —que al lado de una con portada se
         # ve huérfana—, se le dibuja una con la cara del servidor.
-        ruta = tarjeta(e["title"], nombre, color, item.get("categoria"))
+        ruta = tarjeta(e["title"], nombre, color, item.get("categoria"),
+                       arte_url=ver[2])
         if ruta:
             e["image"] = {"url": "attachment://" + os.path.basename(ruta)}
             e["_tarjeta"] = ruta
@@ -406,7 +428,7 @@ def embed(item, url_feed, canal=""):
     if porque:
         e["fields"] = [{"name": "Por qué te puede interesar", "value": porque}]
         pie.append(ia.AVISO)
-    con_la_gente(e, e["title"], tema_de(canal), extra)
+    con_la_gente(e, e["title"], tema, extra, ver)
     if any(c["name"].startswith(("En qué se dividió", "Lo que dijo")) for c in e.get("fields", [])) \
             and ia.AVISO not in pie:
         pie.append(ia.AVISO)

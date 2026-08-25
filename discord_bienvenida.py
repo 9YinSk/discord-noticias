@@ -101,10 +101,54 @@ def saludar(canal_id, miembro, numero, ids_canales, enserio):
     return True
 
 
+# La pantalla que Discord enseña **dentro del propio Discord** al entrar y en la
+# vista previa de la invitación. Es gratis y es de las pocas cosas que ve alguien
+# **antes de decidir si se queda**. Estaba sin configurar.
+PANTALLA = {
+    "texto": ("Un sitio para doblar, cantar y aprender a hacerlo. "
+              "Se empieza sin saber: aquí no juzga nadie."),
+    # **Solo canales que vea @everyone.** Discord rechaza el resto con
+    # `WELCOME_CHANNEL_PERMISSIONS_REQUIRED`, y tiene sentido: esta pantalla se
+    # enseña a quien todavía no ha entrado. `presentaciones` no vale desde que
+    # se cerró tras el 🚪 Paso 1.
+    "canales": [
+        ("ıı・⭐・autoroles", "⭐", "Elige qué te interesa y se te abre"),
+        ("ıı・🗺️・guia", "🗺️", "El mapa: qué hay en cada zona"),
+        ("ıı・🙋・si-te-atascas", "🙋", "Si algo no se entiende, aquí"),
+        ("ıı・👋・bienvenidas", "👋", "Aquí saludamos a cada persona nueva"),
+    ],
+}
+
+
+def pantalla(ids, enserio):
+    """Configura la pantalla de bienvenida de Discord. Solo servidores Comunidad.
+
+    **No confundir con el fondo decorado** que se ve en las capturas de otros
+    servidores: eso es el *splash* de invitación y **pide nivel 1 de mejoras**
+    (2 boosts). Esto es la parte de texto, que sí es gratis.
+    """
+    cuerpo = {
+        "enabled": True,
+        "description": PANTALLA["texto"],
+        "welcome_channels": [
+            {"channel_id": ids[n], "description": d, "emoji_name": e}
+            for n, e, d in PANTALLA["canales"] if n in ids
+        ][:5],                       # Discord admite 5 como mucho
+    }
+    print(f"  «{PANTALLA['texto'][:60]}...»")
+    for c in cuerpo["welcome_channels"]:
+        print(f"    {c['emoji_name']}  {c['description']}")
+    if enserio:
+        api("PATCH", f"/guilds/{GUILD}/welcome-screen", cuerpo)
+        print("\n  pantalla de bienvenida activada")
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--enserio", action="store_true")
+    p.add_argument("--pantalla", action="store_true",
+                   help="configura la pantalla de bienvenida de Discord y sale")
     p.add_argument("--dias", type=int, default=7,
                    help="hasta cuándo mirar hacia atrás (por defecto 7 días)")
     p.add_argument("--max", type=int, default=4,
@@ -124,6 +168,12 @@ def main():
     # el número que hace cada uno: por orden de llegada, que es lo que significa
     personas.sort(key=lambda m: m.get("joined_at") or "")
     puesto = {m["user"]["id"]: i + 1 for i, m in enumerate(personas)}
+
+    if args.pantalla:
+        pantalla(ids, args.enserio)
+        if not args.enserio:
+            print("\n>>> SIMULACRO. Agrega --enserio.")
+        return
 
     if args.prueba:
         m = next((x for x in miembros if x["user"]["id"] == args.prueba), None)
