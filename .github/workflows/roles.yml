@@ -17,6 +17,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      # Hace falta para dibujar la tarjeta de bienvenida del ultimo paso.
+      - name: Instalar Pillow
+        run: pip install --quiet pillow
+
       - name: Poner los roles al dia
         env:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
@@ -31,3 +35,12 @@ jobs:
         env:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         run: python discord_contadores.py --enserio
+
+      # La tarjeta de bienvenida. `--dias 1` a proposito: asi solo saluda a quien
+      # entro de verdad hace poco. Con una ventana mas ancha, el dia que se
+      # reactive el cron despues de una pausa mencionaria de golpe a gente que
+      # lleva semanas dentro — y una bienvenida a destiempo es peor que ninguna.
+      - name: Saludar a quien entro
+        env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+        run: python discord_bienvenida.py --enserio --dias 1

@@ -865,6 +865,88 @@ def tarjeta_noticia(titular, fuente, color, archivo, w=1200, h=630, etiqueta=Non
     return ruta
 
 
+def _circular(img, tam):
+    """Recorta una imagen a un círculo, con borde suave. Para el avatar."""
+    img = img.convert("RGB").resize((tam, tam), Image.LANCZOS)
+    # la máscara se dibuja al cuádruple y se reduce: así el borde sale liso en
+    # vez de con los dientes de sierra que deja un círculo dibujado a pelo
+    mascara = Image.new("L", (tam * 4, tam * 4), 0)
+    ImageDraw.Draw(mascara).ellipse([0, 0, tam * 4, tam * 4], fill=255)
+    mascara = mascara.resize((tam, tam), Image.LANCZOS)
+    salida = Image.new("RGBA", (tam, tam), (0, 0, 0, 0))
+    salida.paste(img, (0, 0), mascara)
+    return salida
+
+
+def _bajar_imagen(url):
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "YinX/1.0"})
+        with urllib.request.urlopen(req, timeout=20) as r:
+            return Image.open(io.BytesIO(r.read()))
+    except Exception:                                   # noqa: BLE001
+        return None
+
+
+def tarjeta_bienvenida(nombre, avatar_url, numero, color, archivo,
+                       lema=None, w=1200, h=420):
+    """La tarjeta de quien acaba de entrar: su cara, su nombre y qué número hace.
+
+    Un «bienvenido @fulano» de texto se pierde entre los mensajes en diez
+    minutos. Una tarjeta con **su propia cara dentro** se queda, y al que entra
+    le dice que alguien preparó el sitio antes de que llegara — que es justo la
+    diferencia entre un servidor y una sala vacía.
+
+    El número no es decoración: **«eres la persona 41» convierte una cifra en un
+    sitio en la fila**. En un servidor pequeño eso juega a favor, no en contra.
+    """
+    img = degradado(w, h, (26, 18, 46), (14, 16, 34))
+    img = brillo(img, (int(w * 0.18), h // 2), 300, color, 70)
+    d = ImageDraw.Draw(img)
+    polvo(d, w, h, (255, 255, 255), 90, semilla=len(nombre or "x"))
+    onda(d, int(w * 0.34), int(w * 0.97), int(h * 0.86), 46, color,
+         semilla=len(nombre or "x") * 3)
+    d.rectangle([0, 0, 10, h], fill=color)
+    detalles(d, w, h, color)
+
+    # el avatar, con un aro del color del servidor
+    tam, cx, cy = 210, 150, h // 2
+    d.ellipse([cx - tam // 2 - 7, cy - tam // 2 - 7,
+               cx + tam // 2 + 7, cy + tam // 2 + 7], outline=color, width=5)
+    cara = _bajar_imagen(avatar_url) if avatar_url else None
+    if cara:
+        img.paste(_circular(cara, tam), (cx - tam // 2, cy - tam // 2),
+                  _circular(cara, tam))
+    else:
+        # sin avatar no se deja el hueco: se pone la inicial
+        d.ellipse([cx - tam // 2, cy - tam // 2, cx + tam // 2, cy + tam // 2],
+                  fill=(38, 33, 62))
+        f = ImageFont.truetype(FUENTE_TIT, 110)
+        letra = (sin_emoji(nombre or "?").strip() or "?")[0].upper()
+        ancho = d.textlength(letra, font=f)
+        d.text((cx - ancho / 2, cy - 76), letra, font=f, fill=color)
+
+    x = cx + tam // 2 + 54
+    f_arriba = ImageFont.truetype(FUENTE, 30)
+    d.text((x, 92), "TE ESTÁBAMOS ESPERANDO", font=f_arriba, fill=color)
+
+    f_nom = _encoge(d, [sin_emoji(nombre or "")], FUENTE_TIT, 76, w - x - 60,
+                    minimo=40)
+    d.text((x, 136), sin_emoji(nombre or ""), font=f_nom, fill=(255, 255, 255))
+    d.rectangle([x + 2, 232, x + 90, 238], fill=color)
+
+    f_pie = ImageFont.truetype(FUENTE_FINA, 32)
+    d.text((x, 258), f"Eres la persona número {numero}", font=f_pie,
+           fill=(198, 200, 214))
+    if lema:
+        f_lema = ImageFont.truetype(FUENTE_CURSIVA, 28)
+        d.text((x, 306), f"«{sin_emoji(lema)}»", font=f_lema, fill=(150, 152, 170))
+
+    os.makedirs(SALIDA, exist_ok=True)
+    ruta = os.path.join(SALIDA, archivo)
+    img.convert("RGB").save(ruta, "PNG")
+    return ruta
+
+
 def subir_con_imagen(canal_id, ruta, payload, endpoint="messages", metodo="POST"):
     """Multipart: Discord necesita esto para adjuntar un archivo.
 
