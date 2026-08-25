@@ -156,11 +156,10 @@ def detalles(d, w, h, color):
             y = h - 92 + fila * 20
             d.ellipse([x, y, x + 3, y + 3], fill=tenue)
 
-    # raya diagonal de luz cruzando el fondo, muy suave
-    for k in range(3):
-        off = k * 26
-        d.line([(w * 0.30 + off, h), (w * 0.46 + off, 0)],
-               fill=tuple(int(v * (0.13 - k * 0.03)) for v in color), width=2)
+    # Aquí había tres rayas diagonales cruzando el fondo. Se quitaron: con una
+    # textura de zona detrás sumaban un segundo patrón de franjas y la lámina
+    # acababa pareciendo un mantel. El fondo ya tiene algo que mirar; esto solo
+    # competía con el título.
 
 
 def banner(titulo, subtitulo, emoji_txt, color, archivo, w=1200, h=444):

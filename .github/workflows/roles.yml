@@ -21,3 +21,13 @@ jobs:
         env:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         run: python discord_reacciones.py
+
+      # Los numeros del servidor, escritos en el nombre de unos canales de arriba.
+      # Va aqui y no en su propio trabajo porque Discord solo deja 2 cambios de
+      # nombre cada 10 minutos por canal: atado a este cron, encaja justo. El
+      # script solo renombra lo que cambio, asi que la mayoria de vueltas no
+      # gastan ninguna peticion.
+      - name: Los contadores del servidor
+        env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+        run: python discord_contadores.py --enserio
