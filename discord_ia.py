@@ -229,8 +229,16 @@ def resumen_temporada(lineas):
 # fingir polémica donde todos estaban de acuerdo es la manera más rápida de que
 # nadie se vuelva a fiar de esta sección.
 _DIVIDIO = (
-    "Te doy comentarios reales de un hilo de Reddit sobre una noticia, del más "
-    "votado al menos. Cuenta en qué se dividió la gente.\n"
+    "Te doy opiniones reales sobre una noticia, recogidas de varios sitios: "
+    "comentarios de Reddit, reseñas de Steam marcadas «a favor» o «en contra», "
+    "y reseñas de AniList con su nota. Cuenta en qué se dividió la gente.\n"
+    # **La regla del lenguaje no es remilgo, es necesidad.** Las reseñas de
+    # Steam en español vienen con barbaridades y con memes, y esto se publica en
+    # un servidor donde hay gente de menos de 16. Se resume lo que dicen; no se
+    # reproduce cómo lo dicen.
+    "- **No copies ni imites el lenguaje soez, los insultos ni las bromas "
+    "sexuales** que puedan traer los textos. Di la idea en lenguaje normal.\n"
+    "- No cites literalmente a nadie: resume.\n"
     "Reglas estrictas:\n"
     "- Máximo DOS o TRES posturas, cada una en una línea que empieza por «— ».\n"
     "- Cada línea: la postura y el porqué, con lo que de verdad dicen.\n"
@@ -238,8 +246,13 @@ _DIVIDIO = (
     "a dato inventado. Vale «varios», «unos cuantos», «los que más votos tienen».\n"
     "- **Si no hubo división, dilo en una sola línea** y no te inventes un bando "
     "que no existe. Es un resultado perfectamente bueno.\n"
-    "- Si los comentarios no hablan de la noticia sino de otra cosa, responde "
-    "exactamente NADA.\n"
+    # Esta es la regla que más trabaja. Al cruzar comentarios por palabras
+    # sueltas se cuela material de otro tema, y la IA, si no se le prohíbe,
+    # **lo resume igual**: salió publicado «los comentarios hablan sobre otra
+    # saga», que es una frase perfectamente cierta y perfectamente inútil.
+    "- Si los textos no hablan de ESTA noticia sino de otra cosa, responde "
+    "exactamente NADA. No expliques que van de otra cosa: responde NADA.\n"
+    "- Si dudas de si hablan de la noticia, responde NADA.\n"
     "- Español neutro, menos de 480 caracteres en total, sin emojis.")
 
 

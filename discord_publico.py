@@ -235,6 +235,14 @@ def debate(titular, tema="anime", horas=72, paginas=2, callado=True):
     # los comentarios de cada candidato**, y por eso solo se miran los 3 que
     # mejor casan — no los 40.
     mejores.sort(key=lambda x: -x[0])
+    # **Solo compiten los que empatan en la mejor coincidencia.** Antes se
+    # miraban los tres primeros y ganaba el que más comentarios tuviera, así que
+    # un hilo que encajaba regular pero era muy comentado le ganaba a uno que
+    # hablaba justo de la noticia. Resultado medido: una noticia de The Witcher
+    # acabó resumiendo una discusión sobre Bethesda.
+    tope = mejores[0][0]
+    mejores = [x for x in mejores if x[0] == tope]
+
     mejor, suyos = None, []
     for _, p in mejores[:3]:
         if not queda_tiempo():
@@ -263,7 +271,7 @@ _ANILIST = """
 query($s:String){ Media(search:$s, type:ANIME){
   title{romaji english} averageScore popularity siteUrl
   bannerImage coverImage{extraLarge}
-  reviews(perPage:1, sort:RATING_DESC){ nodes{ summary score user{name} } }
+  reviews(perPage:5, sort:RATING_DESC){ nodes{ summary score user{name} } }
 }}"""
 
 
@@ -280,8 +288,9 @@ def veredicto(titular, tema):
     Steam**. Eso no es debate, es puntuación — así que se etiqueta distinto y no
     se hace pasar por lo que no es.
 
-    Devuelve `(texto, url, arte)` — el arte es la ilustracion buena del
-    juego o del anime, para usarla de fondo. Todo `None` si no hay nada.
+    Devuelve un dict con `nota`, `url`, `arte`, `voces` y `tienda`, o `None`.
+    `voces` son opiniones **con texto** —reseñas de Steam a favor y en
+    contra, reseñas de AniList—: la materia prima del resumen.
     """
     import json as _json
     import urllib.parse as _p
@@ -324,27 +333,30 @@ def veredicto(titular, tema):
                 if m:
                     break
             if not m or not m.get("averageScore"):
-                return None, None, None
+                return None
             # **El guardia contra el falso positivo.** Buscando con una sola
             # palabra, un titular sobre «Manga» engancharía cualquier serie. Se
             # exige que el título encontrado comparta algo con el titular; si no,
             # es que la búsqueda se fue por otro lado.
             titulos = " ".join(str(v) for v in m["title"].values() if v).lower()
             if not any(k.lower() in titulos for k in ks):
-                return None, None, None
+                return None
             t = m["title"].get("english") or m["title"]["romaji"]
             linea = (f"**{t}** — {m['averageScore']}/100 en AniList, con "
                      f"{m.get('popularity', 0):,} personas siguiéndolo"
                      .replace(",", "."))
+            # Las reseñas no se citan: se le pasan a la IA para que cuente en
+            # qué se dividieron. La nota va con la puntuación de cada una, que
+            # es lo que deja ver si el desacuerdo es real o son matices.
             nodos = (m.get("reviews") or {}).get("nodes") or []
-            if nodos and nodos[0].get("summary"):
-                linea += (f"\n-# «{nodos[0]['summary'][:150]}» — "
-                          f"{nodos[0]['user']['name']}")
+            voces = [f"[{n.get('score', '?')}/100] {n['summary']}"
+                     for n in nodos if n.get("summary")]
             # El banner es apaisado y es la ilustración buena para un fondo; la
             # portada es vertical y solo sirve de reserva.
             arte = (m.get("bannerImage")
                     or (m.get("coverImage") or {}).get("extraLarge"))
-            return linea, m["siteUrl"], arte
+            return {"nota": linea, "url": m["siteUrl"], "arte": arte,
+                    "voces": voces, "tienda": None}
 
         if tema in ("juegos", "ofertas"):
             j = None
@@ -356,15 +368,15 @@ def veredicto(titular, tema):
                     j = items[0]
                     break
             if not j:
-                return None, None, None
+                return None
             if not any(k.lower() in j["name"].lower() for k in ks):
-                return None, None, None  # la búsqueda se fue por otro lado
+                return None  # la búsqueda se fue por otro lado
             d = _pedir_json(f"https://store.steampowered.com/appreviews/{j['id']}"
                             f"?json=1&language=all&num_per_page=0")
             s = d.get("query_summary") or {}
             total = s.get("total_reviews") or 0
             if total < 50:            # con veinte reseñas no se opina de nada
-                return None, None, None
+                return None
             pct = round((s.get("total_positive", 0) / total) * 100)
             cual = VEREDICTO_STEAM.get(s.get("review_score_desc", ""),
                                        s.get("review_score_desc", ""))
@@ -373,12 +385,29 @@ def veredicto(titular, tema):
             # estirarla, asi que solo sirve de reserva.
             arte = (f"https://cdn.cloudflare.steamstatic.com/steam/apps/"
                     f"{j['id']}/library_hero.jpg")
-            return (f"**{j['name']}** — reseñas **{cual.lower()}** en Steam: "
-                    f"{pct}% positivas de {total:,}".replace(",", "."),
-                    f"https://store.steampowered.com/app/{j['id']}/", arte)
+            # **Las dos caras, a propósito.** Pidiendo solo las mejores sale un
+            # panegírico; pidiendo positivas y negativas por separado sale la
+            # división de verdad, que es lo que se quiere contar.
+            voces = []
+            for tipo in ("positive", "negative"):
+                try:
+                    r = _pedir_json(
+                        f"https://store.steampowered.com/appreviews/{j['id']}"
+                        f"?json=1&language=spanish&num_per_page=4"
+                        f"&review_type={tipo}&purchase_type=all&filter=all")
+                except Exception:                       # noqa: BLE001
+                    continue
+                for x in (r.get("reviews") or []):
+                    t = (x.get("review") or "").strip()
+                    if len(t) > 40:      # dos palabras no son una opinión
+                        voces.append(f"[{'a favor' if tipo == 'positive' else 'en contra'}] {t[:600]}")
+            tienda = f"https://store.steampowered.com/app/{j['id']}/"
+            return {"nota": f"**{j['name']}** — reseñas **{cual.lower()}** en "
+                            f"Steam: {pct}% positivas de {total:,}".replace(",", "."),
+                    "url": tienda, "arte": arte, "voces": voces, "tienda": tienda}
     except Exception:                                   # noqa: BLE001
-        return None, None, None
-    return None, None, None
+        return None
+    return None
 
 
 VEREDICTO_STEAM = {

@@ -316,50 +316,57 @@ def tema_de(canal):
 
 
 def con_la_gente(e, titulo, tema, extra, ver=None):
-    """Le añade a la noticia **en qué se dividió la gente**, si es que se dividió.
+    """Le añade a la noticia **en qué se dividió la gente**, si se dividió.
 
     Es lo que separa un tablón de titulares de algo que apetece leer: la noticia
-    dice qué pasó, esto dice qué le pareció al mundo. Sale de comentarios reales
-    de Reddit —no de lo que la IA se imagine— y **si no hay debate, no se pone
-    nada**: el hueco vacío es información, el relleno no.
+    dice qué pasó, esto dice qué le pareció al mundo.
+
+    **Se juntan todas las fuentes antes de resumir**, no una sola. Los
+    comentarios del hilo de Reddit, las reseñas de Steam a favor y en contra, y
+    las de AniList con su nota. Cada fuente por su cuenta da una foto parcial —
+    Reddit solo cubre 2 de cada 14 noticias, y las reseñas de una tienda tiran a
+    favorables; juntas se parecen bastante a «qué opina internet».
+
+    Y **si no hay nada, no se escribe nada**: el hueco vacío es información, el
+    relleno no.
     """
     if not tema:
         return
-    hilo, coments = None, []
+    voces = []
+
     if ia.disponible():
         try:
-            hilo, coments = publico.debate(titulo, tema)
+            _hilo, coments = publico.debate(titulo, tema)
+            voces += [c["texto"] for c in coments[:25]]
         except Exception:                               # noqa: BLE001
             pass                        # el archivo es gratis: puede no estar
 
-    dividio = (ia.como_se_dividio(titulo, [c["texto"] for c in coments[:30]])
-               if coments else None)
+    if ver and ver.get("voces"):
+        voces += ver["voces"]
 
-    if not dividio:
-        # Sin hilo no hay debate, pero **sigue habiendo opinión**: la nota de
-        # AniList o el veredicto de Steam. Es lo que sube la sección de aparecer
-        # en 2 de cada 14 noticias a aparecer en la mayoría.
-        texto, url, _arte = ver if ver else publico.veredicto(titulo, tema)
-        if not texto:
+    # **El enlace a la tienda es el único botón que se añade aquí.** Nada de
+    # botones a Reddit ni a la ficha: la discusión se lee dentro de Discord, y
+    # los botones son para lo que se hace fuera — leer la noticia o ir a
+    # comprar. Un botón que saca a la gente del servidor a leer lo mismo que ya
+    # tiene delante es tirarse piedras al tejado.
+    if ver and ver.get("tienda"):
+        extra.append(boton(ver["tienda"]))
+
+    if voces and ia.disponible():
+        dividio = ia.como_se_dividio(titulo, voces[:40])
+        if dividio:
+            hubo_bandos = dividio.lstrip().startswith("—")
+            e.setdefault("fields", []).append({
+                "name": ("En qué se dividió la gente" if hubo_bandos
+                         else "Lo que dice la gente") + f"  ·  {len(voces)} opiniones",
+                "value": dividio[:1020], "inline": False})
             return
+
+    # Sin material para resumir, queda la nota pelada: mejor eso que nada.
+    if ver and ver.get("nota"):
         e.setdefault("fields", []).append({
             "name": "La nota que le pone la gente",
-            "value": texto[:1020], "inline": False})
-        extra.append(boton(url))
-        return
-    # El título se adapta a la respuesta. La IA tiene permiso para decir que NO
-    # hubo división —y lo usa—, y entonces «En qué se dividió la gente» encima de
-    # «no hubo división» se contradice solo. Los bandos vienen en líneas que
-    # empiezan por raya; si no hay ninguna, es que no hubo bandos.
-    hubo_bandos = dividio.lstrip().startswith("—")
-    e.setdefault("fields", []).append({
-        "name": ("En qué se dividió la gente" if hubo_bandos
-                 else "Lo que dijo la gente") + f"  ·  {len(coments)} comentarios",
-        "value": dividio[:1020],
-        "inline": False,
-    })
-    extra.append(boton(f"https://reddit.com/comments/{hilo['id']}",
-                       "Ver el debate", "💬"))
+            "value": ver["nota"][:1020], "inline": False})
 
 
 def embed(item, url_feed, canal=""):
@@ -388,7 +395,7 @@ def embed(item, url_feed, canal=""):
     # abajo, en un campo) y **la ilustración del juego o del anime**, que va de
     # fondo de la portada. Buscándola una sola vez sirve para las dos.
     tema = tema_de(canal)
-    ver = publico.veredicto(e["title"], tema) if tema else (None, None, None)
+    ver = publico.veredicto(e["title"], tema) if tema else None
 
     # Las ofertas son un caso aparte: su feed no trae ni imagen ni precio, y la
     # `og:image` del sitio es una tarjeta generica. La ficha de Steam si tiene
@@ -414,7 +421,7 @@ def embed(item, url_feed, canal=""):
         # renglón de texto con un enlace azul —que al lado de una con portada se
         # ve huérfana—, se le dibuja una con la cara del servidor.
         ruta = tarjeta(e["title"], nombre, color, item.get("categoria"),
-                       arte_url=ver[2])
+                       arte_url=(ver or {}).get("arte"))
         if ruta:
             e["image"] = {"url": "attachment://" + os.path.basename(ruta)}
             e["_tarjeta"] = ruta
