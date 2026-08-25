@@ -5,7 +5,7 @@
     {
       "que_es": "Paso 2 y ultimo — aceptar las reglas abre el servidor",
       "canal_id": "1540616189967994920",
-      "mensaje": "1541463271742382181",
+      "mensaje": "1541691279937773589",
       "quitar": false,
       "reacciones": {
         "✅": "✅ Verificado"
@@ -27,7 +27,7 @@
     {
       "que_es": "Colores del nombre. Solo uno a la vez.",
       "canal_id": "1540616201716367402",
-      "mensaje": "1541464185056264335",
+      "mensaje": "1541691082503495761",
       "exclusivo": true,
       "quitar": true,
       "reacciones": {
@@ -48,7 +48,7 @@
     {
       "que_es": "De dónde eres. Solo uno a la vez.",
       "canal_id": "1540616201716367402",
-      "mensaje": "1541464246976516126",
+      "mensaje": "1541691135121166456",
       "exclusivo": true,
       "quitar": true,
       "reacciones": {
@@ -71,7 +71,7 @@
     {
       "que_es": "Paso 1 del recorrido — abre 📜 reglas",
       "canal_id": "1540616201716367402",
-      "mensaje": "1541464328916574218",
+      "mensaje": "1541691225134993498",
       "quitar": false,
       "reacciones": {
         "➡️": "🚪 Paso 1"
