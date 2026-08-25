@@ -1,5 +1,7 @@
 {
  "https://www.animenewsnetwork.com/newsroom/rss.xml": [
+  "https://www.animenewsnetwork.com/press-release/2026-08-25/comic-con-india-the-greatest-pop-culture-celebration-is-back-with-vizag-debuting-as-the-first-host-/.240958",
+  "https://www.animenewsnetwork.com/news/2026-08-25/fall-in-love-you-false-angels-manga-goes-on-hiatus/.240940",
   "https://www.animenewsnetwork.com/press-release/2026-08-25/spindle-coming-to-steam/.240953",
   "https://www.animenewsnetwork.com/press-release/2026-08-25/doudou-debut-new-song-a-rusty-dream-from-cyberpunk-edgerunners-2/.240952",
   "https://www.animenewsnetwork.com/news/2026-08-25/ubel-blatt-ii-manga-ends-on-october-23/.240944",
@@ -37,9 +39,7 @@
   "https://www.animenewsnetwork.com/news/2026-08-23/webtoon-acquires-60-percent-stake-in-game-company-ri-games-holdings-to-expand-webtoons-into-games/.240541",
   "https://www.animenewsnetwork.com/news/2026-08-23/hanashi-media-licenses-the-hated-prince-do-over-the-sage-of-the-forbidden-library-6-more-light-/.240838",
   "https://www.animenewsnetwork.com/interest/2026-08-23/2nd-global-one-piece-character-poll-results-are-in/.240871",
-  "https://www.animenewsnetwork.com/news/2026-08-23/amasian-tv-streams-chiikawa-anime-for-free-in-u.s/.240856",
-  "https://www.animenewsnetwork.com/news/2026-08-23/uma-musume-franchise-announces-new-umayuru-full-gate-short-anime/.240876",
-  "https://www.animenewsnetwork.com/news/2026-08-23/gacha-girls-corps-anime-casts-ai-kayano-rie-kugimiya/.240884"
+  "https://www.animenewsnetwork.com/news/2026-08-23/amasian-tv-streams-chiikawa-anime-for-free-in-u.s/.240856"
  ],
  "https://www.animenewsnetwork.com/all/rss.xml": [
   "https://www.animenewsnetwork.com/news/2026-08-25/ubel-blatt-ii-manga-ends-on-october-23/.240944",
@@ -214,8 +214,6 @@
   "https://www.animenewsnetwork.com/review/mobile-suit-gundam-hathaway/the-sorcery-of-nymph-circe-anime-film/.233634"
  ],
  "https://vandal.elespanol.com/xml.cgi": [
-  "https://vandal.elespanol.com/noticia/2026237002/solucion-wordle-en-espanol-y-tildes-hoy-25-de-agosto-y-pistas-a-la-palabra-oculta/",
-  "https://vandal.elespanol.com/noticia/2026237001/free-fire-max-codigos-de-hoy-martes-25-de-agosto-de-2026-recompensas-gratis/",
   "https://vandal.elespanol.com/noticia/2026236019/cd-projekt-lo-confirma-the-witcher-4-tiene-ya-ventana-de-lanzamiento-pero-hay-una-mala-noticia/",
   "https://vandal.elespanol.com/noticia/2026236018/okami-2-presenta-a-su-equipo-de-sonido-y-estara-formado-por-grandes-veteranos-de-platinumgames/",
   "https://vandal.elespanol.com/noticia/2026236017/how-to-fish-vende-un-millon-de-copias-en-solo-dos-dias-y-se-convierte-en-el-nuevo-fenomeno-de-steam/",
@@ -243,7 +241,9 @@
   "https://vandal.elespanol.com/noticia/1350792521/geoff-keighley-lo-confirma-estos-son-todos-los-juegos-confirmados-para-la-onl-de-gamescom-2026/",
   "https://vandal.elespanol.com/noticia/1350792520/se-veia-venir-steam-recibe-su-primer-juego-absurdo-de-farmear-aura/",
   "https://vandal.elespanol.com/noticia/1350792519/los-creadores-de-orbitals-explican-por-que-tomaron-la-dificil-decision-de-prescindir-de-los-combates/",
-  "https://vandal.elespanol.com/noticia/1350792518/postal-2-redux-llegara-en-primavera-de-2027-a-ps4-ps5-pc-y-realidad-virtual-saldra-en-mas-consolas/"
+  "https://vandal.elespanol.com/noticia/1350792518/postal-2-redux-llegara-en-primavera-de-2027-a-ps4-ps5-pc-y-realidad-virtual-saldra-en-mas-consolas/",
+  "https://vandal.elespanol.com/noticia/1350792517/entre-rumores-de-un-nuevo-ori-el-director-de-los-originales-dice-que-la-informacion-es-falsa-no-tiene-sentido/",
+  "https://vandal.elespanol.com/noticia/1350792516/free-fire-max-codigos-de-hoy-lunes-24-de-agosto-de-2026-recompensas-gratis/"
  ],
  "https://www.nintenderos.com/feed/": [
   "https://www.nintenderos.com/2026/08/danganronpa-y-sanrio-anuncian-colaboracion-en-forma-de-merchandise/",
@@ -279,6 +279,8 @@
   "https://www.espinof.com/otras-cadenas/esta-noche-tv-sensacional-pelicula-aventuras-ciencia-ficcion-aroma-a-western"
  ],
  "https://www.sensacine.com/rss/noticias.xml": [
+  "https://www.sensacine.com/noticias/cine/noticia-1000219437/",
+  "https://www.sensacine.com/noticias/cine/noticia-1000219507/",
   "https://www.sensacine.com/noticias/cine/noticia-1000219445/",
   "https://www.sensacine.com/noticias/series/noticia-1000219488/",
   "https://www.sensacine.com/noticias/cine/noticia-1000219495/",
@@ -296,9 +298,7 @@
   "https://www.sensacine.com/noticias/cine/noticia-1000219409/",
   "https://www.sensacine.com/noticias/cine/noticia-1000219408/",
   "https://www.sensacine.com/noticias/series/noticia-1000219407/",
-  "https://www.sensacine.com/noticias/series/noticia-1000219406/",
-  "https://www.sensacine.com/noticias/cine/noticia-1000219375/",
-  "https://www.sensacine.com/noticias/cine/noticia-1000218901/"
+  "https://www.sensacine.com/noticias/series/noticia-1000219406/"
  ],
  "https://isthereanydeal.com/feeds/PE/giveaways.rss": [
   "https://isthereanydeal.com/giveaways/16510/",
@@ -316,6 +316,22 @@
   "https://isthereanydeal.com/giveaways/7433/"
  ],
  "https://isthereanydeal.com/feeds/PE/USD/deals.rss": [
+  "https://isthereanydeal.com/game/dead-by-daylight-steady-pulse/info/",
+  "https://isthereanydeal.com/game/dead-by-daylight-silent-hill-chapter/info/",
+  "https://isthereanydeal.com/game/dead-by-daylight-leatherface/info/",
+  "https://isthereanydeal.com/game/dead-by-daylight-the-saw-chapter/info/",
+  "https://isthereanydeal.com/game/dead-by-daylight-ash-vs-evil-dead/info/",
+  "https://isthereanydeal.com/game/dead-by-daylight-a-nightmare-on-elm-street/info/",
+  "https://isthereanydeal.com/game/dead-by-daylight-sadako-rising-chapter/info/",
+  "https://isthereanydeal.com/game/dead-by-daylight-end-transmission-chapter/info/",
+  "https://isthereanydeal.com/game/dead-by-daylight-nicolas-cage-chapter/info/",
+  "https://isthereanydeal.com/game/dead-by-daylight-alien-chapter-pack/info/",
+  "https://isthereanydeal.com/game/dead-by-daylight-alan-wake-chapter/info/",
+  "https://isthereanydeal.com/game/dead-by-daylight-all-things-wicked-chapter/info/",
+  "https://isthereanydeal.com/game/dead-by-daylight-dungeons-and-dragons/info/",
+  "https://isthereanydeal.com/game/dead-by-daylight-castlevania-chapter/info/",
+  "https://isthereanydeal.com/game/dead-by-daylight-doomed-course-chapter/info/",
+  "https://isthereanydeal.com/game/dead-by-daylight/info/",
   "https://isthereanydeal.com/game/smells-like-burnt-rubber/info/",
   "https://isthereanydeal.com/game/angel-legion-cheongsam-series/info/",
   "https://isthereanydeal.com/game/umami-grove/info/",
@@ -449,23 +465,7 @@
   "https://isthereanydeal.com/game/forza-motorsport-premium-edition/info/",
   "https://isthereanydeal.com/game/forza-motorsport-deluxe-edition/info/",
   "https://isthereanydeal.com/game/forza-horizon-5-deluxe-edition/info/",
-  "https://isthereanydeal.com/game/aliens-fireteam-elite-into-the-hive-edition/info/",
-  "https://isthereanydeal.com/game/milos-escape/info/",
-  "https://isthereanydeal.com/game/forza-horizon-6-premium-upgrade-bundle/info/",
-  "https://isthereanydeal.com/game/boxed-beasts/info/",
-  "https://isthereanydeal.com/game/apocryphoid/info/",
-  "https://isthereanydeal.com/game/carrot-smash/info/",
-  "https://isthereanydeal.com/game/arc-raiders-deluxe-edition/info/",
-  "https://isthereanydeal.com/game/frobbutt-3d/info/",
-  "https://isthereanydeal.com/game/run-elric/info/",
-  "https://isthereanydeal.com/game/avowed-premium-edition/info/",
-  "https://isthereanydeal.com/game/hellblade-ii-senuas-saga-deluxe-edition/info/",
-  "https://isthereanydeal.com/game/age-of-mythology-retold-premium-edition/info/",
-  "https://isthereanydeal.com/game/tomb-raider-definitive-edition/info/",
-  "https://isthereanydeal.com/game/rise-of-the-tomb-raider/info/",
-  "https://isthereanydeal.com/game/forza-horizon-6-premium-edition/info/",
-  "https://isthereanydeal.com/game/forza-horizon-6-deluxe-edition/info/",
-  "https://isthereanydeal.com/game/project-motor-racing/info/"
+  "https://isthereanydeal.com/game/aliens-fireteam-elite-into-the-hive-edition/info/"
  ],
  "https://www.musicbutler.io/users/feeds/95f44df4-78eb-4ed1-b2e2-85b9003b9540/": []
 }
