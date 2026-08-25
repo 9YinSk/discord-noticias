@@ -264,6 +264,51 @@ def _steam(titulo):
     }
 
 
+# El `.*` glotón de delante es lo que hace que enganche el ÚLTIMO «on», no el
+# primero: sin él, en «… on Epic Games on Epic Game Store» la coletilla capturada
+# era «Epic Games on Epic Game Store» entera y no coincidía con nada.
+# `en` va también, que el feed de itch.io publica en español.
+_TIENDA = re.compile(r"^(.*)\s+(?:on|en)\s+([\w'.\- ]+?)\s*$", re.I)
+
+
+def sin_repetir_tienda(titulo):
+    """Quita el «on Epic Game Store» que el feed de ofertas pega al final.
+
+    Ese feed compone el título como «Juego - FREE on Epic Games» y luego le añade
+    la tienda otra vez: queda **«… on Epic Games on Epic Game Store»**, que se lee
+    como un error de programa. Solo se corta cuando la coletilla repite algo que
+    ya estaba en el título — si la tienda se nombra una sola vez, se respeta.
+    """
+    m = _TIENDA.match(titulo or "")
+    if not m:
+        return titulo
+    delante, cola = m.group(1).strip(), m.group(2).strip()
+    # basta con que compartan la primera palabra: «Epic Games» vs «Epic Game Store»
+    raiz = cola.split()[0].lower() if cola.split() else ""
+    if raiz and raiz in delante.lower():
+        return delante.strip()
+    return titulo
+
+
+def tarjeta(titular, fuente, color_int, etiqueta=None):
+    """Dibuja la portada de una noticia sin imagen. `None` si no se puede.
+
+    El dibujo se importa **aquí dentro y no arriba**: `discord_banners` trae
+    Pillow detrás, y las noticias tienen que poder publicarse aunque Pillow no
+    esté instalado. Sin imagen se vive; sin noticias, no.
+    """
+    try:
+        import discord_banners as db
+    except ImportError:
+        return None
+    rgb = ((color_int >> 16) & 255, (color_int >> 8) & 255, color_int & 255)
+    try:
+        return db.tarjeta_noticia(titular, fuente, rgb, "_noticia.png",
+                                  etiqueta=limpio(etiqueta or "", 22) or None)
+    except Exception:                                   # noqa: BLE001
+        return None
+
+
 def tema_de(canal):
     """El tema de un canal. Por trozo, que el nombre real lleva `ıı・📰・` delante."""
     return next((t for k, t in TEMA_DEL_CANAL.items() if k in (canal or "")), None)
@@ -328,6 +373,7 @@ def embed(item, url_feed, canal=""):
     # `og:image` del sitio es una tarjeta generica. La ficha de Steam si tiene
     # portada de verdad y el precio en soles.
     if "isthereanydeal" in dominio:
+        e["title"] = sin_repetir_tienda(e["title"])
         j = _steam(item["titulo"])
         if j:
             imagen = j["imagen"]
@@ -342,6 +388,14 @@ def embed(item, url_feed, canal=""):
         imagen = de_la_pagina if util(de_la_pagina) else None
     if imagen:
         e["image"] = {"url": imagen}
+    else:
+        # Ni el feed ni la página tienen foto. En vez de dejar la noticia como un
+        # renglón de texto con un enlace azul —que al lado de una con portada se
+        # ve huérfana—, se le dibuja una con la cara del servidor.
+        ruta = tarjeta(e["title"], nombre, color, item.get("categoria"))
+        if ruta:
+            e["image"] = {"url": "attachment://" + os.path.basename(ruta)}
+            e["_tarjeta"] = ruta
     e["_extra"] = extra
     pie = [x for x in (item["categoria"], item["autor"]) if x]
 
@@ -407,7 +461,22 @@ def main():
 
             for item in reversed(nuevos):               # de vieja a nueva
                 e = embed(item, url, canal)
-                publicar(cid, e, e.pop("_extra", None))
+                extra = e.pop("_extra", None)
+                ruta = e.pop("_tarjeta", None)
+                if ruta:
+                    # Con adjunto no vale el POST de siempre: la imagen y el
+                    # embed tienen que ir en la MISMA peticion multipart, o el
+                    # `attachment://` del embed apunta a un archivo que no existe
+                    # y Discord deja el hueco en blanco.
+                    import discord_banners as db
+                    from discord_botones import componentes
+                    cuerpo = {"embeds": [e]}
+                    comp = componentes(e, extra)
+                    if comp:
+                        cuerpo["components"] = comp
+                    db.subir_con_imagen(cid, ruta, cuerpo)
+                else:
+                    publicar(cid, e, extra)
                 publicados += 1
                 time.sleep(1.2)
             # se guardan TODOS los enlaces del feed, no solo los publicados: si no,

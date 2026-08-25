@@ -1,3 +1,7 @@
 __pycache__/
 *.pyc
 .discord_token
+
+# La portada que se dibuja para una noticia sin imagen es de usar y tirar: se
+# sube a Discord en la misma peticion y no hace falta guardarla.
+banners/

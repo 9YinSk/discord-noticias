@@ -22,6 +22,12 @@ jobs:
         with:
           python-version: "3.12"
 
+      # Lo unico que no es libreria estandar en todo el paquete. Hace falta para
+      # dibujar la portada de las noticias que llegan sin imagen; si fallara, el
+      # script lo detecta y publica igual, solo que sin esa portada.
+      - name: Instalar Pillow
+        run: pip install --quiet pillow
+
       - name: Publicar lo nuevo
         env:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
