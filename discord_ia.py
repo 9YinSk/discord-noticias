@@ -217,6 +217,44 @@ def resumen_temporada(lineas):
     return pedir(_TEMPORADA, "\n".join(lineas)[:2000], tope=250, temperatura=0.4)
 
 
+# ──────────────────────────────────────────────── en qué se dividió la gente
+#
+# Lo que hace interesante una noticia no es la noticia: es la bronca de después.
+# Esto lee los comentarios de verdad de un hilo y cuenta **en qué bandos se
+# partió**, con lo que dice cada uno.
+#
+# Las dos reglas duras son las que evitan el desastre típico de estos resúmenes:
+# **nada de porcentajes** (no hay forma de contarlos con 40 comentarios y quedan
+# como un dato falso pero convincente), y **decirlo cuando NO hubo división** —
+# fingir polémica donde todos estaban de acuerdo es la manera más rápida de que
+# nadie se vuelva a fiar de esta sección.
+_DIVIDIO = (
+    "Te doy comentarios reales de un hilo de Reddit sobre una noticia, del más "
+    "votado al menos. Cuenta en qué se dividió la gente.\n"
+    "Reglas estrictas:\n"
+    "- Máximo DOS o TRES posturas, cada una en una línea que empieza por «— ».\n"
+    "- Cada línea: la postura y el porqué, con lo que de verdad dicen.\n"
+    "- **Nada de porcentajes ni de «la mayoría»**: no se pueden contar y suenan "
+    "a dato inventado. Vale «varios», «unos cuantos», «los que más votos tienen».\n"
+    "- **Si no hubo división, dilo en una sola línea** y no te inventes un bando "
+    "que no existe. Es un resultado perfectamente bueno.\n"
+    "- Si los comentarios no hablan de la noticia sino de otra cosa, responde "
+    "exactamente NADA.\n"
+    "- Español neutro, menos de 480 caracteres en total, sin emojis.")
+
+
+def como_se_dividio(titular, comentarios):
+    """«— Unos dicen X porque… / — Otros que Y». De comentarios de verdad."""
+    junto = "\n\n---\n\n".join(c for c in comentarios if c)[:7000]
+    if not junto:
+        return None
+    r = pedir(_DIVIDIO, f"NOTICIA: {titular}\n\nCOMENTARIOS:\n{junto}",
+              tope=420, temperatura=0.4)
+    if not r or r.strip().upper().startswith("NADA"):
+        return None
+    return r
+
+
 if __name__ == "__main__":
     if not disponible():
         sys.exit("No hay GEMINI_API_KEY. Sácala gratis en aistudio.google.com/apikey\n"

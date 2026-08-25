@@ -208,6 +208,17 @@ FUENTES = {
 
 
 import discord_ia as ia  # noqa: E402  — todo lo que escribe la IA, en un sitio
+import discord_publico as publico  # noqa: E402  — lo que dice la gente
+
+# De qué se habla en cada canal, para saber en qué subreddits mirar. Los que no
+# están aquí —la música— no llevan sección de debate: nadie discute en Reddit el
+# single nuevo de un artista que sigues tú.
+TEMA_DEL_CANAL = {
+    "noticias-anime": "anime",
+    "noticias-gaming": "juegos",
+    "noticias-series": "cine",
+    "ofertas-y-gratis": "ofertas",
+}
 
 
 # Trozos que delatan una imagen **genérica del sitio**, no de la noticia: el
@@ -253,8 +264,51 @@ def _steam(titulo):
     }
 
 
-def embed(item, url_feed):
-    """La noticia con cara: fuente, titular, extracto, imagen y fecha."""
+def tema_de(canal):
+    """El tema de un canal. Por trozo, que el nombre real lleva `ıı・📰・` delante."""
+    return next((t for k, t in TEMA_DEL_CANAL.items() if k in (canal or "")), None)
+
+
+def con_la_gente(e, titulo, tema, extra):
+    """Le añade a la noticia **en qué se dividió la gente**, si es que se dividió.
+
+    Es lo que separa un tablón de titulares de algo que apetece leer: la noticia
+    dice qué pasó, esto dice qué le pareció al mundo. Sale de comentarios reales
+    de Reddit —no de lo que la IA se imagine— y **si no hay debate, no se pone
+    nada**: el hueco vacío es información, el relleno no.
+    """
+    if not (tema and ia.disponible()):
+        return
+    try:
+        hilo, coments = publico.debate(titulo, tema)
+    except Exception:                                   # noqa: BLE001
+        return                          # el archivo es gratis: puede no estar
+    if not coments:
+        return
+    dividio = ia.como_se_dividio(titulo, [c["texto"] for c in coments[:30]])
+    if not dividio:
+        return
+    # El título se adapta a la respuesta. La IA tiene permiso para decir que NO
+    # hubo división —y lo usa—, y entonces «En qué se dividió la gente» encima de
+    # «no hubo división» se contradice solo. Los bandos vienen en líneas que
+    # empiezan por raya; si no hay ninguna, es que no hubo bandos.
+    hubo_bandos = dividio.lstrip().startswith("—")
+    e.setdefault("fields", []).append({
+        "name": ("En qué se dividió la gente" if hubo_bandos
+                 else "Lo que dijo la gente") + f"  ·  {len(coments)} comentarios",
+        "value": dividio[:1020],
+        "inline": False,
+    })
+    extra.append(boton(f"https://reddit.com/comments/{hilo['id']}",
+                       "Ver el debate", "💬"))
+
+
+def embed(item, url_feed, canal=""):
+    """La noticia con cara: fuente, titular, extracto, imagen y fecha.
+
+    `canal` solo sirve para saber en qué subreddits buscar el debate: el tema
+    lo marca el canal de destino, no el dominio del feed.
+    """
     dominio = url_feed.split("/")[2]
     nombre, color = FUENTES.get(dominio, (dominio, 0x9B59B6))
     e = {
@@ -297,6 +351,10 @@ def embed(item, url_feed):
     porque = ia.por_que_importa(e["title"], desc) if ia.disponible() else None
     if porque:
         e["fields"] = [{"name": "Por qué te puede interesar", "value": porque}]
+        pie.append(ia.AVISO)
+    con_la_gente(e, e["title"], tema_de(canal), extra)
+    if any(c["name"].startswith(("En qué se dividió", "Lo que dijo")) for c in e.get("fields", [])) \
+            and ia.AVISO not in pie:
         pie.append(ia.AVISO)
     if pie:
         e["footer"] = {"text": limpio(" · ".join(pie), 100)}
@@ -348,7 +406,7 @@ def main():
                 continue
 
             for item in reversed(nuevos):               # de vieja a nueva
-                e = embed(item, url)
+                e = embed(item, url, canal)
                 publicar(cid, e, e.pop("_extra", None))
                 publicados += 1
                 time.sleep(1.2)
