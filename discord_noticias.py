@@ -352,13 +352,18 @@ def con_la_gente(e, titulo, tema, extra, ver=None):
     if ver and ver.get("tienda"):
         extra.append(boton(ver["tienda"]))
 
-    if voces and ia.disponible():
+    # **Con menos de tres no se resume.** Salió publicado «En qué se dividió la
+    # gente · 1 opiniones», que además de no concordar es falso: una persona no
+    # se divide. Por debajo de tres, la nota pelada dice más y no finge nada.
+    if len(voces) >= 3 and ia.disponible():
         dividio = ia.como_se_dividio(titulo, voces[:40])
         if dividio:
             hubo_bandos = dividio.lstrip().startswith("—")
+            cuantas = (f"{len(voces)} opiniones" if len(voces) != 1
+                       else "1 opinión")
             e.setdefault("fields", []).append({
                 "name": ("En qué se dividió la gente" if hubo_bandos
-                         else "Lo que dice la gente") + f"  ·  {len(voces)} opiniones",
+                         else "Lo que dice la gente") + f"  ·  {cuantas}",
                 "value": dividio[:1020], "inline": False})
             return
 
