@@ -30,7 +30,15 @@ jobs:
       - name: Instalar Pillow
         run: pip install --quiet pillow
 
+      # Cada paso va con `continue-on-error`. Los tres son independientes
+      # --repartir roles, renombrar contadores, saludar-- y estaban en fila
+      # sin red: el 2 de septiembre una regla de limpieza apuntaba a un canal
+      # borrado, el primer paso moria con un 404, y los otros dos no llegaban
+      # a ejecutarse. Resultado: durante dias nadie recibio roles, los
+      # contadores se congelaron y NUNCA se saludo a nadie. Un fallo, tres
+      # funciones caidas, y ni un aviso.
       - name: Poner los roles al dia
+        continue-on-error: true
         env:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         run: python discord_reacciones.py
@@ -41,6 +49,7 @@ jobs:
       # script solo renombra lo que cambio, asi que la mayoria de vueltas no
       # gastan ninguna peticion.
       - name: Los contadores del servidor
+        continue-on-error: true
         env:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         run: python discord_contadores.py --enserio
@@ -50,6 +59,7 @@ jobs:
       # reactive el cron despues de una pausa mencionaria de golpe a gente que
       # lleva semanas dentro — y una bienvenida a destiempo es peor que ninguna.
       - name: Saludar a quien entro
+        continue-on-error: true
         env:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         run: python discord_bienvenida.py --enserio --dias 1
