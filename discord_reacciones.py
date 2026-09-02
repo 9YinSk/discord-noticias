@@ -171,7 +171,24 @@ def limpiar(cfg, enserio):
     for regla in cfg.get("limpiar", []):
         minutos = int(regla.get("minutos", 60))
         ahora = datetime.now(timezone.utc)
-        for m in api("GET", f"/channels/{regla['canal_id']}/messages?limit=100") or []:
+        # ── UN CANAL BORRADO NO PUEDE TUMBAR EL REPARTO DE ROLES ──────────
+        #
+        # Aqui se cayo todo. `si-te-atascas` desaparecio en la poda de agosto y
+        # su regla de limpieza se quedo escrita; la llamada devolvia
+        # `404 Unknown Channel`, `api()` lo convierte en SystemExit, y el
+        # proceso moria. Como esto corre en GitHub Actions cada diez minutos,
+        # el trabajo fallaba entero **y nadie recibia sus roles** -- ni el color
+        # del nombre, ni el pais, ni el paso 1. Sin un solo error a la vista
+        # para quien mira el servidor.
+        #
+        # La limpieza es lo ULTIMO que importa de este script: repartir roles es
+        # lo primero. Que un canal que ya no existe se salte, y punto.
+        try:
+            mensajes = api("GET", f"/channels/{regla['canal_id']}/messages?limit=100") or []
+        except SystemExit:
+            print(f"  (el canal {regla.get('que_es', regla['canal_id'])} ya no existe; me lo salto)")
+            continue
+        for m in mensajes:
             if m.get("pinned"):
                 continue
             cuando = datetime.fromisoformat(m["timestamp"])

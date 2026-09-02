@@ -29,7 +29,7 @@ import time
 AQUI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, AQUI)
 from discord_servidor import api  # noqa: E402
-import discord_banners as db  # noqa: E402
+import discord_tarjetas_neon as db  # noqa: E402
 from discord_botones import boton, componentes  # noqa: E402
 
 if hasattr(sys.stdout, "reconfigure"):

@@ -1007,6 +1007,48 @@ def subir_con_imagen(canal_id, ruta, payload, endpoint="messages", metodo="POST"
                          f"{e.read().decode('utf-8', 'replace')[:400]}")
 
 
+def reemplazar_adjunto(canal_id, mensaje_id, ruta, nombre):
+    """Cambia el adjunto de un mensaje que ya existe. En DOS pasos, a la fuerza.
+
+    Discord **no deja reemplazar un adjunto en un solo PATCH**. Mandando el PNG
+    en multipart con `attachments: [{id: 0}]` sobre un mensaje que ya tenía
+    imagen, contesta 200, marca el mensaje como editado... y devuelve CERO
+    adjuntos. Ni error, ni imagen. Siete foros llevaban así sin lámina y nadie
+    se enteró, porque no fallaba nada.
+
+    Comprobado sobre un hilo de la guía:
+
+        PATCH con el archivo, id numérico   -> 0 adjuntos
+        PATCH con el archivo, id como texto -> 0 adjuntos
+        PATCH vaciando y LUEGO otro con el archivo -> 1 adjunto
+
+    Así que primero se vacía --eso sí funciona-- y después se sube. Dos viajes
+    en vez de uno, y a cambio la imagen entra.
+    """
+    # Y hay un caso que rompe el paso de vaciar: **un mensaje que solo tiene la
+    # imagen**. Al quitarle el adjunto se queda sin nada, y Discord contesta
+    # `50006 Cannot send an empty message`. Pasa justo con las laminas que
+    # publica este mismo repositorio, que van sin texto.
+    #
+    # La salida es darle un texto invisible mientras dura la maniobra --un
+    # espacio de ancho cero-- y quitarselo al final, cuando ya tiene imagen y
+    # por tanto ya no esta vacio.
+    m = ds.api("GET", f"/channels/{canal_id}/messages/{mensaje_id}") or {}
+    vacio = not (m.get("content") or "").strip()
+
+    ds.api("PATCH", f"/channels/{canal_id}/messages/{mensaje_id}",
+           {"attachments": [], **({"content": "​"} if vacio else {})})
+    time.sleep(0.6)
+    r = subir_con_imagen(canal_id, ruta,
+                         {"attachments": [{"id": 0, "filename": nombre}]},
+                         endpoint=f"messages/{mensaje_id}", metodo="PATCH")
+    if vacio:
+        time.sleep(0.5)
+        ds.api("PATCH", f"/channels/{canal_id}/messages/{mensaje_id}",
+               {"content": ""})
+    return r
+
+
 BANNERS = [
     ("ıı・📜・reglas",       "Reglas",     "Ocho normas y sentido comun",              MORADO, "reglas.png"),
     ("ıı・🗺️・guia",         "El mapa",    "Ocho zonas, y que hay en cada una",        AZUL,   "guia.png"),

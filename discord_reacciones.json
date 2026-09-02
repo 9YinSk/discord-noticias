@@ -5,29 +5,16 @@
     {
       "que_es": "Paso 2 y ultimo — aceptar las reglas abre el servidor",
       "canal_id": "1540616189967994920",
-      "mensaje": "1541695329248878614",
+      "mensaje": "1543513429929627668",
       "quitar": false,
       "reacciones": {
-        "✅": "✅ Verificado"
-      }
-    },
-    {
-      "que_es": "Zonas de trabajo — solo añade. Cerrar una zona se hace quitandose el interes en Canales y roles",
-      "canal_id": "1541110942417297439",
-      "mensaje": "1541668428182585415",
-      "quitar": false,
-      "reacciones": {
-        "🎭": "🔓 Zona doblaje",
-        "🎵": "🔓 Zona canto",
-        "🎓": "🔓 Zona clases",
-        "🎚️": "🔓 Zona edición",
-        "🎮": "🔓 Zona juegos"
+        "yn_visto:1543512203527983147": "✅ Verificado"
       }
     },
     {
       "que_es": "Colores del nombre. Solo uno a la vez.",
       "canal_id": "1540616201716367402",
-      "mensaje": "1541691082503495761",
+      "mensaje": "1543512539021713570",
       "exclusivo": true,
       "quitar": true,
       "reacciones": {
@@ -48,7 +35,7 @@
     {
       "que_es": "De dónde eres. Solo uno a la vez.",
       "canal_id": "1540616201716367402",
-      "mensaje": "1541691135121166456",
+      "mensaje": "1543512594353102858",
       "exclusivo": true,
       "quitar": true,
       "reacciones": {
@@ -66,6 +53,15 @@
         "🇩🇴": "🇩🇴 Rep. Dominicana",
         "🇪🇸": "🇪🇸 España",
         "🌎": "🌎 Otro país"
+      }
+    },
+    {
+      "que_es": "Paso 1 del recorrido — abre 📜 reglas",
+      "canal_id": "1540616201716367402",
+      "mensaje": "1543512686535512125",
+      "quitar": false,
+      "reacciones": {
+        "yn_flecha:1543512211878846475": "🚪 Paso 1"
       }
     }
   ],
@@ -182,13 +178,7 @@
     "nunca_quitar": true,
     "_por_que": "El cuestionario vuelve a repartir las llaves el solo, para que quien entra vea sus canales al instante. Esto queda de red de seguridad: solo AÑADE lo que falte. Quitar seria deshacer lo que acaba de hacer Discord."
   },
-  "limpiar": [
-    {
-      "que_es": "🙋 si-te-atascas — no debe acumular conversacion",
-      "canal_id": "1541109361286451231",
-      "minutos": 60
-    }
-  ],
+  "limpiar": [],
   "todos_llevan": {
     "_que_es": "Que ninguna persona se quede sin rol destacado y acabe en el grupo de los bots. El cuestionario ya lo reparte; esto cubre a quien lo cierre sin contestar.",
     "rol": "🌱 Nuevo por aquí"

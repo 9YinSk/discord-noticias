@@ -298,7 +298,7 @@ def tarjeta(titular, fuente, color_int, etiqueta=None, arte_url=None):
     esté instalado. Sin imagen se vive; sin noticias, no.
     """
     try:
-        import discord_banners as db
+        import discord_tarjetas_neon as db
     except ImportError:
         return None
     rgb = ((color_int >> 16) & 255, (color_int >> 8) & 255, color_int & 255)
@@ -502,7 +502,7 @@ def main():
                     # embed tienen que ir en la MISMA peticion multipart, o el
                     # `attachment://` del embed apunta a un archivo que no existe
                     # y Discord deja el hueco en blanco.
-                    import discord_banners as db
+                    import discord_tarjetas_neon as db
                     from discord_botones import componentes
                     cuerpo = {"embeds": [e]}
                     comp = componentes(e, extra)
