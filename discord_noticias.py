@@ -257,6 +257,7 @@ def _steam(titulo):
     j = items[0]
     # la cabecera grande de la tienda, que es la buena; `tiny_image` es diminuta
     return {
+        "id": j["id"],                  # lo pide `discord_reparto` para las reseñas
         "nombre": j["name"],
         "imagen": f"https://cdn.cloudflare.steamstatic.com/steam/apps/"
                   f"{j['id']}/header.jpg",

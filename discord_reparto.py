@@ -203,9 +203,15 @@ def de_comentarios(comentarios, ia):
     grupos = {"G": [], "I": [], "N": []}
     for texto, letra in zip(textos, letras):
         grupos[letra].append(texto)
+    # **Un motivo hace falta un grupo, no tres comentarios sueltos.** Con el
+    # tope en 3 salio publicado un «12% les gusto -- falta de claridad y
+    # complejidad innecesaria»: el motivo de los que SI, redactado con quejas.
+    # De tres opiniones no se saca lo que piensa un bando, se saca ruido con
+    # forma de frase. Se pide un minimo de cinco y ademas que sean al menos la
+    # sexta parte de la muestra, para que el grupo pese algo de verdad.
     razones = {}
     for letra, clave in (("G", "gusto"), ("I", "igual"), ("N", "no")):
-        if len(grupos[letra]) >= 3:
+        if len(grupos[letra]) >= max(5, len(textos) // 6):
             x = ia.pedir(_RAZONES, "\n\n---\n\n".join(grupos[letra])[:4000],
                          tope=60, temperatura=0.3)
             if x and not x.strip().upper().startswith("NADA"):
