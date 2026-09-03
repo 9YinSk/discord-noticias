@@ -47,7 +47,14 @@ CONECTAR = 1 << 20
 # clave -> (emoji, etiqueta). El orden es el que tendrán en la lista.
 CONTADORES = [
     ("miembros", "👥", "Miembros"),
-    ("enlinea",  "🟢", "En línea"),
+    # «En línea» retirado el 2-sep-2026. El calculo era honrado --resta los
+    # bots-- pero inutil a esta escala: Discord dice 38 conectados y 37 son
+    # bots, asi que el numero siempre salia 0 o 1. Un contador que dice «En
+    # linea - 0» con gente dentro no informa: miente a la vista, y encima es de
+    # lo primero que se lee al entrar. Mejor tres datos ciertos que cuatro con
+    # uno roto.
+    #
+    # Si algun dia hay menos bots que personas, se vuelve a poner y ya esta.
     ("bots",     "🤖", "Bots"),
     ("mejoras",  "💎", "Mejoras"),
     ("desde",    "📅", "Desde"),
