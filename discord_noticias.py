@@ -419,6 +419,73 @@ def _es_el_mismo(titular, nombre_juego):
     return len(comunes) >= 2 or (len(pesadas(nombre_juego)) == 1 and comunes)
 
 
+def abrir_debate(canal_id, mensaje, titular, r=None):
+    """Le abre a la noticia su propio hilo, con la pregunta y una encuesta.
+
+    **Por qué un hilo y no responder debajo.** En un canal de noticias que
+    publica cada media hora, una conversación suelta queda enterrada bajo la
+    siguiente noticia en minutos, y la de al lado se mezcla con ella. En su
+    hilo, cada noticia se queda con lo suyo, el canal no se llena de charla y
+    quien no quiere debatir no ve nada.
+
+    Y la encuesta va **dentro del hilo, no en el mensaje**: un mensaje solo
+    admite una encuesta, y ponerla arriba tapa el titular con tres botones antes
+    de que nadie haya leído de qué va la noticia.
+
+    Se le pasa el reparto para que el arranque diga contra qué se compara. «Ahí
+    fuera fue 89 a 11, ¿aquí igual?» invita mucho más que un «¿opiniones?» a
+    secas: da algo con lo que estar o no estar de acuerdo.
+    """
+    if not mensaje or not mensaje.get("id"):
+        return None
+    nombre = limpio(titular, 92) or "¿Y tú qué opinas?"
+    hilo = api("POST", f"/channels/{canal_id}/messages/{mensaje['id']}/threads",
+               {"name": "💬 " + nombre, "auto_archive_duration": 1440})
+    if not hilo:
+        return None
+    if r:
+        g, i, n = r["pct"]
+        muestra = f"{r['n']:,}".replace(",", ".")
+        arranque = (f"Ahí fuera se partió **{g}/{n}** entre {muestra} opiniones "
+                    f"({r['fuente']}).\n"
+                    "**¿Y aquí?**")
+    else:
+        arranque = "**¿Y tú qué opinas?** Aquí abajo, sin filtro."
+    api("POST", f"/channels/{hilo['id']}/messages", {
+        "content": arranque,
+        "poll": {"question": {"text": "¿Y tú qué opinas?"},
+                 "answers": [
+                     {"poll_media": {"text": "Me gusta",
+                                     "emoji": {"name": "🟩"}}},
+                     {"poll_media": {"text": "Me da igual",
+                                     "emoji": {"name": "🟨"}}},
+                     {"poll_media": {"text": "No me gusta",
+                                     "emoji": {"name": "🟥"}}}],
+                 "duration": 168, "allow_multiselect": False}})
+    return hilo
+
+
+def tarjeta_con_barra(r, titular, foto_url, arte_url, color_int):
+    """La portada de la noticia con la barra del reparto pegada debajo.
+
+    Se importa aquí dentro por lo mismo que `tarjeta()`: sin Pillow se publican
+    igual las noticias, solo que sin imagen dibujada. Una dependencia de adorno
+    no puede tumbar el canal entero.
+    """
+    try:
+        import discord_tarjetas_neon as db
+    except ImportError:
+        return None
+    rgb = ((color_int >> 16) & 255, (color_int >> 8) & 255, color_int & 255)
+    nombre = "reparto_%09d.png" % (abs(hash(titular)) % (10 ** 9))
+    try:
+        return db.tarjeta_reparto(r, nombre, foto_url=foto_url,
+                                  arte_url=arte_url, color=rgb, titular=titular)
+    except Exception as x:                              # noqa: BLE001
+        print(f"      (no se pudo dibujar la barra: {x})")
+        return None
+
+
 def embed(item, url_feed, canal=""):
     """La noticia con cara: fuente, titular, extracto, imagen y fecha.
 
@@ -474,6 +541,11 @@ def embed(item, url_feed, canal=""):
     if not imagen:
         de_la_pagina = portada(item["enlace"])
         imagen = de_la_pagina if util(de_la_pagina) else None
+    # **Con reparto, la imagen se rehace.** La foto de la noticia sigue arriba
+    # --siempre gana a cualquier cosa que dibujemos-- pero debajo se le pega la
+    # banda con la barra. En una lista de noticias lo que frena el dedo es la
+    # imagen, y una barra que dice de un vistazo «esto está partido por la
+    # mitad» cuenta la noticia antes de que nadie la lea.
     if imagen:
         e["image"] = {"url": imagen}
     else:
@@ -496,6 +568,18 @@ def embed(item, url_feed, canal=""):
         e["fields"] = [{"name": "Por qué te puede interesar", "value": porque}]
         pie.append(ia.AVISO)
     con_la_gente(e, e["title"], tema, extra, ver, appid)
+
+    # **Aquí y no antes**: el reparto lo calcula `con_la_gente`, así que en el
+    # bloque de la imagen todavía no existe. Se intentó allí y salía siempre
+    # `None` -- la barra no se habría dibujado nunca, y sin dar un solo error.
+    r = e.pop("_reparto", None)
+    if r:
+        e["_debate"] = r
+        ruta = tarjeta_con_barra(r, e["title"], imagen,
+                                 (ver or {}).get("arte"), color)
+        if ruta:
+            e["image"] = {"url": "attachment://" + os.path.basename(ruta)}
+            e["_tarjeta"] = ruta
     if any(c["name"].startswith(("En qué se dividió", "Lo que dijo", "Cómo se dividió")) for c in e.get("fields", [])) \
             and ia.AVISO not in pie:
         pie.append(ia.AVISO)
@@ -552,6 +636,7 @@ def main():
                 e = embed(item, url, canal)
                 extra = e.pop("_extra", None)
                 ruta = e.pop("_tarjeta", None)
+                debate = e.pop("_debate", None)
                 if ruta:
                     # Con adjunto no vale el POST de siempre: la imagen y el
                     # embed tienen que ir en la MISMA peticion multipart, o el
@@ -563,9 +648,14 @@ def main():
                     comp = componentes(e, extra)
                     if comp:
                         cuerpo["components"] = comp
-                    db.subir_con_imagen(cid, ruta, cuerpo)
+                    msg = db.subir_con_imagen(cid, ruta, cuerpo)
                 else:
-                    publicar(cid, e, extra)
+                    msg = publicar(cid, e, extra)
+                # su propio hilo, con la pregunta y la encuesta dentro
+                try:
+                    abrir_debate(cid, msg, e["title"], debate)
+                except Exception as x:                  # noqa: BLE001
+                    print(f"      (sin hilo: {x})")
                 publicados += 1
                 time.sleep(1.2)
             # se guardan TODOS los enlaces del feed, no solo los publicados: si no,

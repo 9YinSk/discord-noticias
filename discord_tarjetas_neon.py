@@ -24,7 +24,8 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, AQUI)
 
 from discord_banners import (  # noqa: E402
-    FUENTE, FUENTE_TIT, SALIDA, sin_emoji, _parrafo, _bajar_imagen, _circular)
+    FUENTE, FUENTE_TIT, FUENTE_FINA, SALIDA, sin_emoji, _parrafo,
+    _bajar_imagen, _circular)
 from discord_laminas_neon import (  # noqa: E402
     brillar, simbolo, _textura, _envolver, NEGRO, CREMA, GRIS, ORO, MORADO)
 
@@ -225,3 +226,153 @@ def tarjeta_bienvenida(nombre, avatar_url, numero, color, archivo,
 # suben, y así cambiar de estilo sigue siendo cambiar una sola línea de import
 # en vez de dos.
 from discord_banners import subir_con_imagen  # noqa: E402,F401
+
+
+# ── LA BARRA DEL REPARTO ────────────────────────────────────────────────────
+#
+# Los tres colores. No salen de la paleta del servidor a propósito: aquí el
+# color no decora, **significa** --verde gustó, ámbar da igual, rojo no gustó--
+# y esos tres significados los tiene ya aprendidos todo el mundo. Cambiarlos por
+# vino y oro para que peguen con la casa sería bonito y se entendería peor.
+VERDE = (61, 224, 138)
+AMBAR = (242, 199, 68)
+ROJO = (255, 77, 109)
+
+
+def barra_reparto(img, r, y, w, alto=44, margen=54):
+    """Pinta los tres tramos, cada uno con su porcentaje dentro.
+
+    Un tramo por debajo del 7% no cabe con su número dentro, así que **el número
+    se saca fuera, encima**; escribirlo dentro y que se salga por los lados es
+    lo que hace que una barra se vea rota. Y por debajo del 1% ni se dibuja: un
+    tramo de dos píxeles no informa de nada y ensucia el borde.
+    """
+    d = ImageDraw.Draw(img)
+    ancho = w - margen * 2
+    f_pct = ImageFont.truetype(FUENTE_TIT, 30)
+    f_fuera = ImageFont.truetype(FUENTE_TIT, 24)
+    x = margen
+    tramos = [(r["pct"][0], VERDE), (r["pct"][1], AMBAR), (r["pct"][2], ROJO)]
+    for pct, color in tramos:
+        if pct < 1:
+            continue
+        ancho_tramo = ancho * pct / 100.0
+        caja = [x, y, x + ancho_tramo, y + alto]
+        # el neón: el mismo tramo desenfocado por debajo, y el sólido encima
+        halo = Image.new("RGB", img.size, NEGRO)
+        ImageDraw.Draw(halo).rectangle(caja, fill=color)
+        img.paste(ImageChops.add(img.crop((0, 0, *img.size)),
+                                 halo.filter(ImageFilter.GaussianBlur(13))),
+                  (0, 0))
+        d = ImageDraw.Draw(img)
+        d.rectangle(caja, fill=color)
+        texto = f"{pct}%"
+        if ancho_tramo >= 78:
+            cw = d.textlength(texto, font=f_pct)
+            d.text((x + ancho_tramo / 2 - cw / 2, y + alto / 2 - 20), texto,
+                   font=f_pct, fill=NEGRO)
+        else:
+            cw = d.textlength(texto, font=f_fuera)
+            d.text((x + ancho_tramo / 2 - cw / 2, y - 30), texto,
+                   font=f_fuera, fill=color)
+        x += ancho_tramo
+    return img
+
+
+def tarjeta_reparto(r, archivo, foto_url=None, arte_url=None, color=MORADO,
+                    titular="", w=1200, alto_foto=520, alto_pie=210):
+    """La imagen de una noticia CON la barra de en cuánto se dividió la gente.
+
+    **Por qué no basta con escribirlo en el texto del mensaje.** El reparto ya
+    va escrito ahí, y se lee; pero en una lista de noticias lo que frena el
+    dedo es la imagen, y una barra que de un vistazo dice «casi todo verde» o
+    «esto está partido por la mitad» cuenta la noticia antes de leerla.
+
+    Arriba va la foto de la noticia si la hay --que siempre es mejor que
+    cualquier cosa que dibujemos-- y si no, el fondo de neón de la casa. Abajo,
+    en su propia banda oscura, la barra con la muestra y de dónde sale. La
+    muestra va **junto a la barra y no en letra chica**: un 89% de 421.000
+    personas y un 89% de nueve no son el mismo dato, y sin el número al lado
+    parecen iguales.
+    """
+    h = alto_foto + alto_pie
+    img = Image.new("RGB", (w, h), NEGRO)
+
+    arriba = None
+    for u in (foto_url, arte_url):
+        if u:
+            arriba = _bajar_imagen(u)
+            if arriba:
+                break
+    if arriba:
+        base = arriba.convert("RGB")
+        escala = max(w / base.width, alto_foto / base.height)
+        base = base.resize((max(w, int(base.width * escala)),
+                            max(alto_foto, int(base.height * escala))),
+                           Image.LANCZOS)
+        izq = (base.width - w) // 2
+        img.paste(base.crop((izq, 0, izq + w, alto_foto)), (0, 0))
+    else:
+        # `simbolo` no pinta sobre la imagen: pinta sobre una MÁSCARA en modo
+        # "L" y el color lo pone `brillar` después. Llamarlo con la imagen
+        # directamente es el error fácil de este módulo.
+        fondo = _fondo_neon(w, alto_foto, color, (w * .78, alto_foto * .42))
+        capa = Image.new("L", (w, alto_foto), 0)
+        simbolo("periodico", ImageDraw.Draw(capa), w * .78, alto_foto * .44,
+                alto_foto * .22, max(5, int(alto_foto / 55)))
+        img.paste(ImageChops.add(fondo, brillar(capa, color)), (0, 0))
+
+    d = ImageDraw.Draw(img)
+    # el degradado que funde la foto con la banda de abajo: un corte seco entre
+    # una foto y un rectángulo negro se ve como un error de montaje
+    velo = Image.new("L", (w, 90), 0)
+    dv = ImageDraw.Draw(velo)
+    for k in range(90):
+        dv.line([(0, k), (w, k)], fill=int(255 * (k / 89) ** 1.6))
+    img.paste(Image.new("RGB", (w, 90), NEGRO), (0, alto_foto - 90), velo)
+
+    d = ImageDraw.Draw(img)
+    d.rectangle([0, alto_foto, w, h], fill=(10, 8, 15))
+    _dientes(d, w, color, y=alto_foto, alto=4)
+
+    f_cab = ImageFont.truetype(FUENTE_TIT, 30)
+    f_pie = ImageFont.truetype(FUENTE_FINA, 25)
+    y = alto_foto + 30
+    d.text((54, y), "CÓMO SE DIVIDIÓ LA GENTE", font=f_cab, fill=CREMA)
+    muestra = f"{r['n']:,}".replace(",", ".")
+    cab_der = f"{muestra} opiniones · {r['fuente']}"
+    d.text((w - 54 - d.textlength(cab_der, font=f_pie), y + 4), cab_der,
+           font=f_pie, fill=GRIS)
+
+    barra_reparto(img, r, y + 62, w)
+
+    # los tres rótulos, debajo de su tramo
+    d = ImageDraw.Draw(img)
+    f_rot = ImageFont.truetype(FUENTE, 24)
+    f_corto = ImageFont.truetype(FUENTE, 20)
+    x = 54
+    ancho = w - 108
+    # **Dos formas de decir lo mismo, larga y corta.** Con un solo rótulo, el
+    # tramo pequeño se quedaba mudo: «no les gustó» no cabe en el 11% de la
+    # barra, y el resultado era una barra con un lado etiquetado y el otro no,
+    # que se lee como si al rojo le faltara algo. Si no cabe la frase, cabe la
+    # palabra; y si no cabe ni eso, el porcentaje ya está escrito dentro.
+    for pct, color_t, largo, corto in (
+            (r["pct"][0], VERDE, "les gustó", "gustó"),
+            (r["pct"][1], AMBAR, "les da igual", "igual"),
+            (r["pct"][2], ROJO, "no les gustó", "no gustó")):
+        if pct < 1:
+            continue
+        tramo = ancho * pct / 100.0
+        for texto, fuente in ((largo, f_rot), (corto, f_corto)):
+            cw = d.textlength(texto, font=fuente)
+            if cw + 10 <= tramo:
+                d.text((x + tramo / 2 - cw / 2, y + 124), texto, font=fuente,
+                       fill=color_t)
+                break
+        x += tramo
+
+    os.makedirs(SALIDA, exist_ok=True)
+    ruta = os.path.join(SALIDA, archivo)
+    img.save(ruta, "PNG")
+    return ruta
