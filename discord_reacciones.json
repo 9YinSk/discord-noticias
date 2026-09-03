@@ -175,9 +175,9 @@
         "llave": "🔓 Zona noticias"
       }
     ],
-    "nunca_quitar": false,
+    "nunca_quitar": true,
     "_por_que": "El cuestionario vuelve a repartir las llaves el solo, para que quien entra vea sus canales al instante. Esto queda de red de seguridad: solo AÑADE lo que falte. Quitar seria deshacer lo que acaba de hacer Discord.",
-    "_nota_nunca_quitar": "Estuvo en true mientras el CUESTIONARIO repartia las llaves el solo: quitarlas habria deshecho lo que acababa de hacer Discord. Desde el 2-sep-2026 el cuestionario reparte solo el INTERES, asi que la llave es cosa de este script y tiene que poder cerrarla: si alguien aun no se ha verificado, o se quita un interes, la zona se cierra sola."
+    "_nota_nunca_quitar": "En true porque el CUESTIONARIO vuelve a repartir las llaves el solo, que es lo unico instantaneo que existe sin un bot conectado las 24 h. Quitarlas aqui seria deshacer lo que Discord acaba de hacer. La Y (interes -> llave) se queda escrita y funcionando como red de seguridad para quien tenga el interes sin la llave."
   },
   "limpiar": [],
   "todos_llevan": {
