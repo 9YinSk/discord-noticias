@@ -117,6 +117,31 @@ def _apple(clave):
     return fuera
 
 
+# De donde sacar el iconito de cada fuente cuando su clave no es un dominio.
+# Sin esto, las listas de Apple mandaban `icons.duckduckgo.com/ip3/apple pe/
+# songs.ico` --con un espacio y una barra dentro-- y Discord tiraba el mensaje
+# ENTERO con un 400: `URL_TYPE_INVALID_URL`. No es que saliera sin icono; es que
+# no salia la noticia.
+ICONOS = {
+    "apple pe/songs":  "music.apple.com",
+    "apple pe/albums": "music.apple.com",
+    "apple jp/albums": "music.apple.com",
+}
+
+
+def icono_de(dominio):
+    """El favicon de la fuente, o `None` si no hay uno que valga.
+
+    Se comprueba que la clave parezca un dominio de verdad --con punto y sin
+    espacios-- antes de meterla en una URL. Una clave inventada colada ahi
+    dentro no da un icono roto: da un mensaje rechazado.
+    """
+    d = ICONOS.get(dominio, dominio)
+    if "." not in d or " " in d or "/" in d:
+        return None
+    return f"https://icons.duckduckgo.com/ip3/{d}.ico"
+
+
 def de_donde(url):
     """El nombre corto de la fuente, para el registro por pantalla.
 
@@ -573,12 +598,15 @@ def embed(item, url_feed, canal=""):
     dominio = de_donde(url_feed)
     nombre, color = FUENTES.get(dominio, (dominio, 0x9B59B6))
     e = {
-        "author": {"name": nombre,
-                   "icon_url": f"https://icons.duckduckgo.com/ip3/{dominio}.ico"},
+        "author": {"name": nombre},
         "title": ia.traducir(limpio(item["titulo"], 250)),
         "url": item["enlace"],
         "color": color,
     }
+    ico = icono_de(dominio)
+    if ico:
+        e["author"]["icon_url"] = ico
+
     desc = limpio(item["desc"], 300)
     if desc and desc.lower() != e["title"].lower():
         e["description"] = desc
@@ -678,9 +706,43 @@ def main():
     if os.path.exists(VISTAS):
         vistas = json.load(open(VISTAS, encoding="utf-8"))
 
+    def guardar():
+        """Escribe la memoria de lo ya publicado. Se llama pase lo que pase.
+
+        **Antes solo se guardaba al terminar del todo**, y eso convertia
+        cualquier fallo a media pasada en noticias duplicadas: lo ya publicado
+        no quedaba apuntado y la siguiente pasada lo volvia a mandar. Paso de
+        verdad -- un icono mal formado tumbo la pasada en la nube justo despues
+        de publicar seis noticias, y las seis se habrian repetido.
+        """
+        if not args.enserio:
+            return
+        t = json.dumps(vistas, ensure_ascii=False, indent=1)
+        json.loads(t)                       # que no se escriba un JSON roto
+        with open(VISTAS, "w", encoding="utf-8") as f:
+            f.write(t + "\n")
+
     ch = {c["name"]: c["id"] for c in api("GET", f"/guilds/{GUILD}/channels")}
     publicados = 0
 
+    try:
+        publicados = _pasada(FEEDS, ch, vistas, args, guardar)
+    finally:
+        # Pase lo que pase --un feed caido, un 400 de Discord, un Ctrl+C-- lo
+        # que ya se publico queda apuntado. Es la diferencia entre perder una
+        # pasada y publicar dos veces lo mismo manana.
+        guardar()
+
+    if args.enserio:
+        print(f"\n{publicados} noticias publicadas. Memoria en "
+              f"{os.path.basename(VISTAS)}")
+    else:
+        print("\n>>> SIMULACRO. Agrega --enserio.")
+
+
+def _pasada(FEEDS, ch, vistas, args, guardar):
+    """El recorrido de todos los feeds. Devuelve cuantas noticias publico."""
+    publicados = 0
     for _bot, canal, lista in FEEDS:
         cid = ch.get(canal)
         if not cid:
@@ -753,21 +815,19 @@ def main():
                 except Exception as x:                  # noqa: BLE001
                     print(f"      (sin hilo: {x})")
                 publicados += 1
+                # **Se apunta al momento, no al final del feed.** Si algo
+                # revienta con la siguiente, esta ya esta a salvo de repetirse.
+                vistas.setdefault(url, [])
+                if item["enlace"] not in vistas[url]:
+                    vistas[url].insert(0, item["enlace"])
+                    del vistas[url][200:]
                 time.sleep(1.2)
             # se guardan TODOS los enlaces del feed, no solo los publicados: si no,
             # la próxima corrida trataría como nuevo lo que hoy se dejó fuera del
             # tope y acabaría publicando el historial entero a trozos
             vistas[url] = [x["enlace"] for x in items][:200]
 
-    if args.enserio:
-        t = json.dumps(vistas, ensure_ascii=False, indent=1)
-        json.loads(t)
-        with open(VISTAS, "w", encoding="utf-8") as f:
-            f.write(t + "\n")
-        print(f"\n{publicados} noticias publicadas. Memoria en "
-              f"{os.path.basename(VISTAS)}")
-    else:
-        print("\n>>> SIMULACRO. Agrega --enserio.")
+    return publicados
 
 
 if __name__ == "__main__":
