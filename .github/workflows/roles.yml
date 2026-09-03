@@ -48,11 +48,17 @@ jobs:
       # nombre cada 10 minutos por canal: atado a este cron, encaja justo. El
       # script solo renombra lo que cambio, asi que la mayoria de vueltas no
       # gastan ninguna peticion.
-      - name: Los contadores del servidor
-        continue-on-error: true
-        env:
-          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
-        run: python discord_contadores.py --enserio
+      # Los contadores se quitaron el 3-sep: la categoria «EL SERVIDOR» con
+      # los cuatro numeros arriba del todo no le gustaba, y con seis miembros
+      # un «Miembros - 6» en la cabecera resta mas de lo que suma. El paso se
+      # queda comentado y no borrado: si algun dia vuelve a interesar, se
+      # descomenta esto y se corre `discord_contadores.py --crear --enserio`.
+      #
+      # - name: Los contadores del servidor
+      #   continue-on-error: true
+      #   env:
+      #     DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+      #   run: python discord_contadores.py --enserio
 
       # La tarjeta de bienvenida. `--dias 1` a proposito: asi solo saluda a quien
       # entro de verdad hace poco. Con una ventana mas ancha, el dia que se
