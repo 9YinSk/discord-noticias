@@ -85,8 +85,22 @@ def claves(titular, minimo=4):
     cruza nada: mejor no decir nada que inventarse una relación.
     """
     palabras = _LIMPIA.sub(" ", titular or "").split()
-    return [p for p in palabras
-            if len(p) >= minimo and p.lower() not in VACIAS and not p.isdigit()]
+    fuera = []
+    for p in palabras:
+        # **Los números se quedan si van pegados a un nombre.** Se tiraban
+        # todos, y con ellos se iban «Cyberpunk 2077», «Half-Life 2»,
+        # «Persona 5» o «Silent Hill 2»: buscar «Cyberpunk estrena» en la
+        # tienda no devuelve nada, y la noticia se quedaba sin la opinión de
+        # 977.000 personas por una cifra. Solo se admite el número si ya hay
+        # una palabra de verdad delante -- así «Los 10 mejores juegos» no
+        # empieza por un número suelto.
+        if p.isdigit():
+            if fuera and len(p) <= 4:
+                fuera.append(p)
+            continue
+        if len(p) >= minimo and p.lower() not in VACIAS:
+            fuera.append(p)
+    return fuera
 
 
 def pozo(tema, horas=72, paginas=2, callado=False):
@@ -271,6 +285,7 @@ _ANILIST = """
 query($s:String){ Media(search:$s, type:ANIME){
   title{romaji english} averageScore popularity siteUrl
   bannerImage coverImage{extraLarge}
+  stats{ scoreDistribution{ score amount } }
   reviews(perPage:5, sort:RATING_DESC){ nodes{ summary score user{name} } }
 }}"""
 
@@ -356,21 +371,45 @@ def veredicto(titular, tema):
             arte = (m.get("bannerImage")
                     or (m.get("coverImage") or {}).get("extraLarge"))
             return {"nota": linea, "url": m["siteUrl"], "arte": arte,
-                    "voces": voces, "tienda": None}
+                    "voces": voces, "tienda": None,
+                    # El reparto de notas de AniList: miles de personas que ya
+                    # puntuaron. No es una estimación de nadie -- son los votos.
+                    "notas": [(d["score"], d["amount"])
+                              for d in ((m.get("stats") or {})
+                                        .get("scoreDistribution") or [])]}
 
         if tema in ("juegos", "ofertas"):
+            # **Se comprueba dentro del bucle, no después.** Antes se paraba
+            # en el primer intento que devolviera algo y se validaba al salir:
+            # como la tienda es difusa y **siempre contesta algo**, el primer
+            # intento --el más largo, «cyberpunk 2077 estrena»-- traía un juego
+            # cualquiera, la comprobación lo tumbaba y ya no se probaba
+            # «cyberpunk 2077», que sí era el bueno. Se perdían noticias por no
+            # insistir una vez más.
+            # Y un último intento con **el nombre solo**, que es como se
+            # llaman la mitad de los juegos. Aquí sí se permite una palabra
+            # sola --al revés que en AniList-- porque el guardia es más duro:
+            # el juego encontrado tiene que **empezar** por esa palabra, no
+            # solo contenerla. «Knight» no cuela «Hollow Knight», pero
+            # «Cyberpunk» sí encuentra «Cyberpunk 2077».
+            if ks:
+                intentos.append(ks[0])
             j = None
             for q in intentos:
                 b = _pedir_json("https://store.steampowered.com/api/storesearch/"
                                 f"?term={_p.quote(q)}&cc=pe&l=spanish")
-                items = b.get("items") or []
-                if items:
-                    j = items[0]
+                una_sola = q == (ks[0] if ks else None)
+                for cand in (b.get("items") or [])[:3]:
+                    nom = cand["name"].lower()
+                    vale = (nom.startswith(q.lower()) if una_sola
+                            else any(k.lower() in nom for k in ks))
+                    if vale:
+                        j = cand
+                        break
+                if j:
                     break
             if not j:
                 return None
-            if not any(k.lower() in j["name"].lower() for k in ks):
-                return None  # la búsqueda se fue por otro lado
             d = _pedir_json(f"https://store.steampowered.com/appreviews/{j['id']}"
                             f"?json=1&language=all&num_per_page=0")
             s = d.get("query_summary") or {}
@@ -404,7 +443,14 @@ def veredicto(titular, tema):
             tienda = f"https://store.steampowered.com/app/{j['id']}/"
             return {"nota": f"**{j['name']}** — reseñas **{cual.lower()}** en "
                             f"Steam: {pct}% positivas de {total:,}".replace(",", "."),
-                    "url": tienda, "arte": arte, "voces": voces, "tienda": tienda}
+                    "url": tienda, "arte": arte, "voces": voces,
+                    "tienda": tienda,
+                    # El id del juego, para que `discord_reparto` pida los
+                    # totales de reseñas sin volver a buscarlo. Buscarlo otra
+                    # vez desde el titular entero no funciona: la tienda no
+                    # encuentra nada con «... recibe un parche que ajusta la
+                    # dificultad» detrás del nombre.
+                    "appid": j["id"]}
     except Exception:                                   # noqa: BLE001
         return None
     return None

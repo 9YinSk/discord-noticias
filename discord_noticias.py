@@ -209,6 +209,7 @@ FUENTES = {
 
 import discord_ia as ia  # noqa: E402  — todo lo que escribe la IA, en un sitio
 import discord_publico as publico  # noqa: E402  — lo que dice la gente
+import discord_reparto as reparto  # noqa: E402  — en cuánto se dividió
 
 # De qué se habla en cada canal, para saber en qué subreddits mirar. Los que no
 # están aquí —la música— no llevan sección de debate: nadie discute en Reddit el
@@ -315,7 +316,7 @@ def tema_de(canal):
     return next((t for k, t in TEMA_DEL_CANAL.items() if k in (canal or "")), None)
 
 
-def con_la_gente(e, titulo, tema, extra, ver=None):
+def con_la_gente(e, titulo, tema, extra, ver=None, appid=None):
     """Le añade a la noticia **en qué se dividió la gente**, si se dividió.
 
     Es lo que separa un tablón de titulares de algo que apetece leer: la noticia
@@ -352,6 +353,28 @@ def con_la_gente(e, titulo, tema, extra, ver=None):
     if ver and ver.get("tienda"):
         extra.append(boton(ver["tienda"]))
 
+    # ── EN CUÁNTO SE DIVIDIÓ, CON NÚMEROS ───────────────────────────────────
+    #
+    # Va antes que el resumen en prosa y lo sustituye cuando sale, porque dice
+    # lo mismo mejor: «89% les gustó, 11% no, y por esto cada uno» se lee de un
+    # vistazo y además se puede comprobar. La prosa queda de reserva para
+    # cuando no hay con qué contar.
+    #
+    # Los porcentajes NO se los inventa nadie: salen de los totales de Steam o
+    # de clasificar comentarios de verdad uno por uno. Ver `discord_reparto.py`.
+    try:
+        r = reparto.reparto(veredicto=ver, comentarios=voces, appid=appid)
+    except Exception:                                   # noqa: BLE001
+        r = None                        # una fuente caída no tumba la noticia
+    if r:
+        texto = reparto.en_texto(r)
+        if texto:
+            e.setdefault("fields", []).append({
+                "name": "Cómo se dividió la gente", "value": texto[:1020],
+                "inline": False})
+            e["_reparto"] = r           # para dibujar la barra en la portada
+            return
+
     # **Con menos de tres no se resume.** Salió publicado «En qué se dividió la
     # gente · 1 opiniones», que además de no concordar es falso: una persona no
     # se divide. Por debajo de tres, la nota pelada dice más y no finge nada.
@@ -374,6 +397,28 @@ def con_la_gente(e, titulo, tema, extra, ver=None):
             "value": ver["nota"][:1020], "inline": False})
 
 
+_SUELTAS = set("""a al de del el en la las lo los un una y o para por con
+que se su sus es son the of and for to in on new nuevo nueva anuncio anuncia
+tráiler trailer fecha ya disponible confirma revela""".split())
+
+
+def _es_el_mismo(titular, nombre_juego):
+    """¿La ficha que encontró Steam es de lo que habla el titular?
+
+    La búsqueda de la tienda **siempre devuelve algo**: le pidas lo que le
+    pidas, saca el juego que más se le parezca. Así que sin este guardia una
+    noticia sobre un Direct de Nintendo acabaría con el veredicto de un juego
+    cualquiera pegado debajo, y con un porcentaje bien grande al lado para que
+    se vea. Se exige que **dos palabras con peso** del nombre del juego estén en
+    el titular; con una sola bastaba «Knight» para colar cualquier cosa.
+    """
+    def pesadas(t):
+        return {w for w in re.sub(r"[^\w\s]", " ", t.lower()).split()
+                if len(w) > 2 and w not in _SUELTAS}
+    comunes = pesadas(nombre_juego) & pesadas(titular)
+    return len(comunes) >= 2 or (len(pesadas(nombre_juego)) == 1 and comunes)
+
+
 def embed(item, url_feed, canal=""):
     """La noticia con cara: fuente, titular, extracto, imagen y fecha.
 
@@ -393,6 +438,7 @@ def embed(item, url_feed, canal=""):
     if desc and desc.lower() != e["title"].lower():
         e["description"] = desc
     extra = []
+    appid = None                    # el juego en Steam, si la noticia va de uno
     imagen = item["imagen"] if util(item["imagen"]) else None
 
     # **La ficha se busca aquí, antes de dibujar nada.** De ella salen dos cosas
@@ -409,12 +455,21 @@ def embed(item, url_feed, canal=""):
         e["title"] = sin_repetir_tienda(e["title"])
         j = _steam(item["titulo"])
         if j:
+            appid = j["id"]
             imagen = j["imagen"]
             extra.append(boton(j["url"]))            # «Ver en Steam», por dominio
             if j["precio"] == 0:
                 e["title"] = f"{j['nombre']} — GRATIS"
             elif j["precio"]:
                 e["title"] = f"{j['nombre']} — S/ {j['precio'] / 100:.2f}"
+
+    # **Las noticias de juegos también buscan su ficha en Steam**, aunque no
+    # sean ofertas: de ahí salen los cientos de miles de reseñas con los que se
+    # dice en cuánto se dividió la gente. Con guardia, eso sí — un titular como
+    # «Nintendo anuncia el Direct de septiembre» no es ningún juego, y pegarle
+    # el veredicto de otro sería peor que no poner nada.
+    if appid is None and ver and ver.get("appid"):
+        appid = ver["appid"]
 
     if not imagen:
         de_la_pagina = portada(item["enlace"])
@@ -440,8 +495,8 @@ def embed(item, url_feed, canal=""):
     if porque:
         e["fields"] = [{"name": "Por qué te puede interesar", "value": porque}]
         pie.append(ia.AVISO)
-    con_la_gente(e, e["title"], tema, extra, ver)
-    if any(c["name"].startswith(("En qué se dividió", "Lo que dijo")) for c in e.get("fields", [])) \
+    con_la_gente(e, e["title"], tema, extra, ver, appid)
+    if any(c["name"].startswith(("En qué se dividió", "Lo que dijo", "Cómo se dividió")) for c in e.get("fields", [])) \
             and ia.AVISO not in pie:
         pie.append(ia.AVISO)
     if pie:
