@@ -609,6 +609,18 @@ def main():
         if not cid:
             print(f"  no existe {canal}")
             continue
+        # **Los titulares que ya han salido en ESTE canal en esta pasada.**
+        #
+        # Dos feeds del mismo sitio traen la misma noticia: la sala de prensa de
+        # Anime News Network esta contenida entera en su feed de «todo», y en
+        # ofertas un juego regalado aparece tambien en el de descuentos. Como
+        # cada feed lleva su propia memoria de enlaces, ninguno sabia lo que
+        # acababa de publicar el otro, y el canal salia con todo por duplicado.
+        #
+        # Se compara el titular **ya traducido**, que es lo unico que coincide:
+        # los enlaces son distintos y en ANN el mismo titular llega en ingles por
+        # un feed y en espanol por el otro, pero al traducirlos caen en el mismo.
+        dichos = set()
         for que, url in lista:
             if url.rstrip("/").endswith("musicbutler.io/users/rss-feed"):
                 # esa es la PAGINA DE AYUDA de MusicButler, no un feed. El RSS de
@@ -635,6 +647,11 @@ def main():
 
             for item in reversed(nuevos):               # de vieja a nueva
                 e = embed(item, url, canal)
+                firma = " ".join((e.get("title") or "").lower().split())
+                if firma and firma in dichos:
+                    print(f"      (repetida de otro feed: {firma[:52]})")
+                    continue
+                dichos.add(firma)
                 extra = e.pop("_extra", None)
                 ruta = e.pop("_tarjeta", None)
                 debate = e.pop("_debate", None)

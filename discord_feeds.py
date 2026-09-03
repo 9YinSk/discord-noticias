@@ -49,8 +49,13 @@ FEEDS = [
         ("Anime News Network · sala de prensa — solo noticias, **sin reseñas de "
          "episodios**. Es el que hay que poner",
          "https://www.animenewsnetwork.com/newsroom/rss.xml"),
-        ("Anime News Network · todo — añádelo solo si quieres MUCHO volumen",
-         "https://www.animenewsnetwork.com/all/rss.xml"),
+        # El feed de «todo» de ANN estaba puesto aquí al lado del de sala de
+        # prensa, y **contiene a la sala de prensa entera**: cada noticia salía
+        # dos veces en el canal, una por cada feed, y como cada uno lleva su
+        # propia memoria de enlaces ninguno sabía lo que había publicado el
+        # otro. Encima llegaban en idiomas distintos —uno traducido, el otro
+        # no— así que ni pareciendo iguales se notaba de dónde venía el
+        # duplicado. Fuera; con la sala de prensa sobra.
     ]),
     ("Readybot", "ıı・🎮・noticias-gaming", [
         ("Vandal — videojuegos en español",
