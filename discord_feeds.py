@@ -79,7 +79,26 @@ FEEDS = [
     # que compartir ese enlace puede costar la cuenta: quien lo tenga ve tu feed.
     # Por eso sale de la variable de entorno `MUSICBUTLER_RSS`, que en la nube es
     # un secret de GitHub. Sin ella, el canal de música se salta y ya está.
+    # MÚSICA · dos patas a propósito, porque el canal es «música nueva» y eso
+    # son dos cosas distintas: **descubrir** lo que suena y **enterarte** de lo
+    # que pasa con ella.
+    #
+    # Lo de descubrir sale de las listas abiertas de Apple, sin cuenta ni clave.
+    # Perú porque es donde vive la gente de aquí, y Japón porque de ahí vienen
+    # los openings y el J-pop que se versiona.
+    #
+    # Y sigue puesto MusicButler, que es lo mejor si algún día hay cuenta:
+    # sigue a TUS artistas en vez de a los de todo el mundo. Mientras la
+    # variable no exista, la URL cae en su página de ayuda y el programa la
+    # salta sola diciéndolo.
     ("Readybot", "ıı・🎵・musica-nueva", [
+        ("Apple · lo más sonado en Perú, canciones",  "apple:pe/songs"),
+        ("Apple · lo más sonado en Perú, discos",     "apple:pe/albums"),
+        ("Apple · lo más sonado en Japón, discos",    "apple:jp/albums"),
+        ("Rolling Stone en Español — noticias de música",
+         "https://es.rollingstone.com/feed/"),
+        ("Billboard — la industria, en inglés (se traduce solo)",
+         "https://www.billboard.com/feed/"),
         ("MusicButler — tu RSS personal, desde la variable MUSICBUTLER_RSS",
          os.environ.get("MUSICBUTLER_RSS", "").strip()
          or "https://www.musicbutler.io/users/rss-feed/"),

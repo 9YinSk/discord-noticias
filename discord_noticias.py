@@ -61,6 +61,75 @@ CABECERAS = {
 }
 
 
+# ── LAS LISTAS DE APPLE, QUE NO SON UN RSS ──────────────────────────────────
+#
+# Para «musica-nueva» no valia ninguna fuente de las de siempre: las que hay o
+# son NOTICIAS sobre musica --que se leen, pero no te dicen que escuchar-- o
+# piden una cuenta. MusicButler, que era el plan original, necesita que el
+# usuario se registre y siga artistas: su RSS lleva su identificador dentro.
+#
+# Apple publica sus listas **abiertas, sin clave y por pais**, en JSON. De ahi
+# salen las dos cosas que le sirven a un servidor de doblaje y karaoke: que se
+# canta hoy en su pais, y que se canta en Japon --que es de donde vienen los
+# openings--.
+#
+# Se enchufan con una URL inventada (`apple:pe/songs`) porque el resto del
+# programa esta escrito alrededor de «baja un XML y sacale los items». En vez de
+# tocar ese camino, esto devuelve lo mismo que devolveria un feed.
+APPLE = "https://rss.applemarketingtools.com/api/v2/{}/music/most-played/{}/{}.json"
+
+PAISES = {"pe": "Perú", "jp": "Japón", "mx": "México", "es": "España"}
+
+
+def _apple(clave):
+    """`pe/songs` » los items de esa lista, con la forma de siempre.
+
+    La caratula viene a 100 px, que en Discord se ve como un sello. La URL
+    lleva el tamano escrito dentro (`100x100bb.jpg`), asi que pidiendo 600 sale
+    a 600: es el mismo truco de siempre con las imagenes de Apple.
+    """
+    pais, tipo = clave.split("/")
+    with urllib.request.urlopen(urllib.request.Request(
+            APPLE.format(pais, 10, tipo), headers=CABECERAS), timeout=20) as r:
+        d = json.load(r)
+    fuera = []
+    for puesto, x in enumerate(d["feed"]["results"], 1):
+        arte = (x.get("artworkUrl100") or "").replace("100x100bb", "600x600bb")
+        que = "una canción" if tipo == "songs" else "un disco"
+        # El genero solo si dice algo: Apple etiqueta casi todo como «Música»,
+        # que puesto detras de «es una cancion de» queda a medio camino entre lo
+        # obvio y lo tonto.
+        genero = ""
+        for g in (x.get("genres") or []):
+            if g.get("name") and g["name"].lower() not in ("música", "music"):
+                genero = f" de {g['name']}"
+                break
+        fuera.append({
+            "titulo": f"{x['artistName']} — {x['name']}",
+            "enlace": x.get("url") or d["feed"].get("link", ""),
+            "desc": f"Nº {puesto} entre lo más sonado en {PAISES.get(pais, pais)}. "
+                    f"Es {que}{genero}.",
+            "imagen": arte,
+            "autor": x["artistName"],
+            "categoria": f"Lo que suena en {PAISES.get(pais, pais)}",
+            "fecha": d["feed"].get("updated", ""),
+        })
+    return fuera
+
+
+def de_donde(url):
+    """El nombre corto de la fuente, para el registro por pantalla.
+
+    `url.split("/")[2]` da el dominio de una direccion normal y revienta con
+    `apple:pe/songs`, que no tiene dominio porque no es una direccion de
+    verdad: es la etiqueta de una lista.
+    """
+    if url.startswith("apple:"):
+        return "apple " + url[6:]
+    trozos = url.split("/")
+    return trozos[2] if len(trozos) > 2 else url[:24]
+
+
 def bajar(url, timeout=25):
     """Baja el feed, **descomprimiéndolo si hace falta**.
 
@@ -204,6 +273,14 @@ FUENTES = {
     "www.sensacine.com": ("SensaCine", 0xF5C518),
     "isthereanydeal.com": ("IsThereAnyDeal", 0x2ECC71),
     "www.musicbutler.io": ("MusicButler", 0x00B8D4),
+    "es.rollingstone.com": ("Rolling Stone en Español", 0xE7332B),
+    "www.billboard.com": ("Billboard", 0x000000),
+    # Las listas de Apple no tienen dominio: su clave es la que inventa
+    # `de_donde`. El color es el rosa de Apple Music, que es lo que la gente
+    # reconoce de un vistazo aunque no lea el nombre.
+    "apple pe/songs":  ("Lo que suena en Perú", 0xFA243C),
+    "apple pe/albums": ("Discos que suenan en Perú", 0xFA243C),
+    "apple jp/albums": ("Discos que suenan en Japón", 0xFA243C),
 }
 
 
@@ -493,7 +570,7 @@ def embed(item, url_feed, canal=""):
     `canal` solo sirve para saber en qué subreddits buscar el debate: el tema
     lo marca el canal de destino, no el dominio del feed.
     """
-    dominio = url_feed.split("/")[2]
+    dominio = de_donde(url_feed)
     nombre, color = FUENTES.get(dominio, (dominio, 0x9B59B6))
     e = {
         "author": {"name": nombre,
@@ -629,15 +706,16 @@ def main():
                 print(f"  {canal}: falta tu RSS personal de MusicButler, lo salto")
                 continue
             try:
-                items = entradas(bajar(url))
+                items = (_apple(url[6:]) if url.startswith("apple:")
+                         else entradas(bajar(url)))
             except (urllib.error.URLError, urllib.error.HTTPError, ET.ParseError,
                     TimeoutError) as e:
-                print(f"  {canal}: falla {url.split('/')[2]} — {type(e).__name__}")
+                print(f"  {canal}: falla {de_donde(url)} — {type(e).__name__}")
                 continue
 
             ya = set(vistas.get(url, []))
             nuevos = [x for x in items if x["enlace"] not in ya][:args.max]
-            print(f"  {canal[:26]:26} {url.split('/')[2][:24]:24} "
+            print(f"  {canal[:26]:26} {de_donde(url)[:24]:24} "
                   f"{len(items):3} items, {len(nuevos)} nuevos")
             if not args.enserio:
                 for x in nuevos[:2]:
