@@ -101,8 +101,16 @@ def _apple(clave):
         # obvio y lo tonto.
         genero = ""
         for g in (x.get("genres") or []):
-            if g.get("name") and g["name"].lower() not in ("música", "music"):
-                genero = f" de {g['name']}"
+            n = (g.get("name") or "").strip()
+            # La tienda japonesa devuelve el genero EN JAPONES
+            # («ヒップホップ／ラップ»), y puesto en mitad de una frase en
+            # espanol no informa a nadie de aqui: se calla. Se mira si el
+            # nombre esta escrito en alfabeto latino, que es lo unico que
+            # distingue «J-Pop» --que si vale-- de lo que no se lee.
+            if not n or n.lower() in ("música", "music"):
+                continue
+            if all(ord(ch) < 0x2E80 for ch in n):
+                genero = f" de {n}"
                 break
         fuera.append({
             "titulo": f"{x['artistName']} — {x['name']}",
@@ -599,7 +607,13 @@ def embed(item, url_feed, canal=""):
     nombre, color = FUENTES.get(dominio, (dominio, 0x9B59B6))
     e = {
         "author": {"name": nombre},
-        "title": ia.traducir(limpio(item["titulo"], 250)),
+        # **Las listas de Apple no se traducen.** Un titular se traduce; un
+        # «Masato Hayashi — Iconic» es un nombre propio y un titulo de disco, y
+        # el traductor lo convirtio en «Icónico». A KAROL G le cambio la raya
+        # por dos puntos y le puso comillas encima. Ahi no hay nada que
+        # traducir: hay que dejarlo tal como se llama.
+        "title": (limpio(item["titulo"], 250) if url_feed.startswith("apple:")
+                  else ia.traducir(limpio(item["titulo"], 250))),
         "url": item["enlace"],
         "color": color,
     }
