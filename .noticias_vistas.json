@@ -204,10 +204,6 @@
   "https://www.animenewsnetwork.com/review/mobile-suit-gundam-hathaway/the-sorcery-of-nymph-circe-anime-film/.233634"
  ],
  "https://vandal.elespanol.com/xml.cgi": [
-  "https://vandal.elespanol.com/noticia/2026246042/el-primer-trailer-de-historia-de-monster-hunter-wilds-ascendance-presenta-nuevas-ubicaciones-y-monstruos/",
-  "https://vandal.elespanol.com/noticia/2026246041/konami-anuncia-rhapsody-in-scarlet-accion-y-magia-en-el-nueva-york-de-los-anos-20/",
-  "https://vandal.elespanol.com/noticia/2026246040/el-ultimo-exito-de-nintendo-continua-dominando-las-ventas-japonesas-a-pesar-de-elden-ring-y-metal-gear/",
-  "https://vandal.elespanol.com/noticia/2026246039/ghost-of-yotei-edicion-completa-detalla-su-modo-most-wanted-y-confirma-el-regreso-de-un-personaje-muy-conocido/",
   "https://vandal.elespanol.com/noticia/2026246038/cuesta-390-euros-asi-es-la-edicion-coleccionista-de-final-fantasy-vii-revelation-con-triple-figura-incluida/",
   "https://vandal.elespanol.com/noticia/2026246037/digimon-story-time-stranger-anuncia-una-gran-expansion-con-mas-de-50-nuevos-digimon-para-2027/",
   "https://vandal.elespanol.com/noticia/2026246036/final-fantasy-vii-revelation-desvela-sus-dos-expansiones-de-historia-que-llegaran-tras-el-lanzamiento/",
@@ -233,9 +229,14 @@
   "https://vandal.elespanol.com/noticia/2026246017/gta-6-aprende-de-rdr-2-solo-podras-llevar-2-armas-largas-y-portar-una-en-la-mano-alterara-a-los-npc/",
   "https://vandal.elespanol.com/noticia/2026246016/fable-explica-por-que-ha-cambiado-el-aspecto-de-su-protagonista-en-los-ultimos-gameplays-mostrados/",
   "https://vandal.elespanol.com/noticia/2026246015/los-creadores-de-the-blood-of-dawnwalker-celebran-el-exito-de-criticas-y-reciben-el-apoyo-de-cd-projekt/",
-  "https://vandal.elespanol.com/noticia/2026246014/mario-kart-8-deluxe-mejora-mucho-en-switch-2-tras-su-ultimo-parche-comparan-graficos-y-rendimiento/"
+  "https://vandal.elespanol.com/noticia/2026246014/mario-kart-8-deluxe-mejora-mucho-en-switch-2-tras-su-ultimo-parche-comparan-graficos-y-rendimiento/",
+  "https://vandal.elespanol.com/noticia/2026246013/el-enorme-mapa-de-gta-6-estara-abierto-desde-el-principio-pero-ojo-tendra-niebla-de-guerra/",
+  "https://vandal.elespanol.com/noticia/2026246012/desvelan-el-tamano-de-onimusha-way-of-the-sword-en-ps5-estos-son-los-gb-que-ocupara-en-tu-ssd/",
+  "https://vandal.elespanol.com/noticia/2026246011/es-una-buena-adaptacion-comparan-los-graficos-de-call-of-duty-modern-warfare-4-en-switch-2-y-ps5-con-su-beta/",
+  "https://vandal.elespanol.com/noticia/2026246010/acer-presenta-predator-atlas-7-su-nueva-consola-portatil-con-pantalla-de-120-hz-y-bateria-de-hasta-80-wh/"
  ],
  "https://www.nintenderos.com/feed/": [
+  "https://www.nintenderos.com/nintendo-switch-2/nihon-falcom-asegura-que-seguira-apoyando-a-nintendo-para-hacer-crecer-la-saga-trails/",
   "https://www.nintenderos.com/2026/09/castlevania-belmonts-curse-estrena-nuevo-trailer-bloody-tears/",
   "https://www.nintenderos.com/2026/09/el-libro-the-art-of-splatoon-3-anuncia-localizacion-occidental/",
   "https://www.nintenderos.com/nintendo-switch-2/130-gb-es-el-tamano-de-final-fantasy-vii-revelation-en-nintendo-switch-2-a-donde-llegara-como-game-key-card/",
@@ -243,8 +244,7 @@
   "https://www.nintenderos.com/2026/09/detenido-un-profesor-voluntario-de-77-anos-tras-agredir-a-un-alumno-menor-de-10-anos-por-unas-cartas-de-jcc-pokemon/",
   "https://www.nintenderos.com/nintendo-switch-2/digimon-story-time-stranger-detalla-su-expansion-dlc-a-heros-legacy/",
   "https://www.nintenderos.com/2026/09/fate-extra-record-confirma-fecha-y-lanza-nuevo-trailer-lo-recibiremos-el-28-de-enero-de-2027-en-nintendo-switch-2/",
-  "https://www.nintenderos.com/nintendo-switch-2/dragon-quest-monsters-el-reino-marchito-lanza-nuevo-trailer-oficial/",
-  "https://www.nintenderos.com/nintendo-switch-2/final-fantasy-vii-revelation-detalla-sus-dlc-con-nuevas-historias-ediciones-fisicas-y-mas/"
+  "https://www.nintenderos.com/nintendo-switch-2/dragon-quest-monsters-el-reino-marchito-lanza-nuevo-trailer-oficial/"
  ],
  "https://www.espinof.com/feedburner.xml": [
   "https://www.espinof.com/directores-y-guionistas/mitica-frase-leonardo-dicaprio-titanic-que-fue-improvisada-james-cameron-estabamos-pasando-frio-hambrientos-sintiendonos-fatal",
@@ -306,6 +306,35 @@
   "https://isthereanydeal.com/giveaways/7433/"
  ],
  "https://isthereanydeal.com/feeds/PE/USD/deals.rss": [
+  "https://isthereanydeal.com/game/wulin-showdown/info/",
+  "https://isthereanydeal.com/game/cosmos-vr/info/",
+  "https://isthereanydeal.com/game/ravenswatch-year-one-edition/info/",
+  "https://isthereanydeal.com/game/mxgp-24-fox-holeshot-edition/info/",
+  "https://isthereanydeal.com/game/chef-life-a-restaurant-simulator-tokyo-delight/info/",
+  "https://isthereanydeal.com/game/welcome-to-paradize-zombot-edition/info/",
+  "https://isthereanydeal.com/game/train-life-a-railway-simulator-supporter-edition/info/",
+  "https://isthereanydeal.com/game/tropico-6-llama-of-wall-street/info/",
+  "https://isthereanydeal.com/game/disciples-iii-renaissance/info/",
+  "https://isthereanydeal.com/game/montabi-x-ribbit-rogue/info/",
+  "https://isthereanydeal.com/game/gu-gu-x-mi-shi-zhi-jing/info/",
+  "https://isthereanydeal.com/game/ribbit-rougue-x-archon-soul/info/",
+  "https://isthereanydeal.com/game/ribbit-rogue/info/",
+  "https://isthereanydeal.com/game/food-truck-simulator/info/",
+  "https://isthereanydeal.com/game/model-builder-complete-edition/info/",
+  "https://isthereanydeal.com/game/broken-front/info/",
+  "https://isthereanydeal.com/game/toroa-skycall-soundtrack/info/",
+  "https://isthereanydeal.com/game/floppa-the-dark-forest/info/",
+  "https://isthereanydeal.com/game/backrooms-bodycam-2/info/",
+  "https://isthereanydeal.com/game/model-builder-into-the-stars/info/",
+  "https://isthereanydeal.com/game/checkmate-rush/info/",
+  "https://isthereanydeal.com/game/find-kittens-series-bundle/info/",
+  "https://isthereanydeal.com/game/toroa-skycall/info/",
+  "https://isthereanydeal.com/game/hidden-cats-3-steampunk-coloring-book/info/",
+  "https://isthereanydeal.com/game/hidden-cats-3-steampunk-extra-level/info/",
+  "https://isthereanydeal.com/game/hidden-cats-3-steampunk/info/",
+  "https://isthereanydeal.com/game/find-all-series-bundle/info/",
+  "https://isthereanydeal.com/game/find-all-4-magic/info/",
+  "https://isthereanydeal.com/game/gridiron-manager/info/",
   "https://isthereanydeal.com/game/creta-taskbar-fishing/info/",
   "https://isthereanydeal.com/game/reality-breach/info/",
   "https://isthereanydeal.com/game/montabi-deluxe-edition/info/",
@@ -426,36 +455,7 @@
   "https://isthereanydeal.com/game/kardboard-kings-soundtrack/info/",
   "https://isthereanydeal.com/game/unity-of-command-ii-soundtrack-vol-2/info/",
   "https://isthereanydeal.com/game/aeon-must-die-soundtrack/info/",
-  "https://isthereanydeal.com/game/gone-viral-soundtrack/info/",
-  "https://isthereanydeal.com/game/my-time-at-sandrock-original-soundtrack/info/",
-  "https://isthereanydeal.com/game/behind-the-frame-the-finest-scenery-soundtrack/info/",
-  "https://isthereanydeal.com/game/fuzz-dungeon-soundtrack/info/",
-  "https://isthereanydeal.com/game/ancestors-the-humankind-odyssey/info/",
-  "https://isthereanydeal.com/game/ambulance-life-bay-side-expansion/info/",
-  "https://isthereanydeal.com/game/indika-deluxe-edition/info/",
-  "https://isthereanydeal.com/game/session-skate-sim-schoolyard/info/",
-  "https://isthereanydeal.com/game/war-hospital-x-ray/info/",
-  "https://isthereanydeal.com/game/war-hospital-original-soundtrack/info/",
-  "https://isthereanydeal.com/game/the-life-and-suffering-of-sir-brante/info/",
-  "https://isthereanydeal.com/game/zenonia-1/info/",
-  "https://isthereanydeal.com/game/hot-wheels-unleashed/info/",
-  "https://isthereanydeal.com/game/slug-disco-bullet/info/",
-  "https://isthereanydeal.com/game/akm-interactive-collection/info/",
-  "https://isthereanydeal.com/game/war-is-heck-collection/info/",
-  "https://isthereanydeal.com/game/sulfur-x-tempest-tower/info/",
-  "https://isthereanydeal.com/game/busy-bodies/info/",
-  "https://isthereanydeal.com/game/half-past-yellow-complete/info/",
-  "https://isthereanydeal.com/game/island-hopper/info/",
-  "https://isthereanydeal.com/game/teeto-meets-bubsy/info/",
-  "https://isthereanydeal.com/game/horror-heist/info/",
-  "https://isthereanydeal.com/game/midwest-and-friends/info/",
-  "https://isthereanydeal.com/game/llamasoft-and-atari/info/",
-  "https://isthereanydeal.com/game/digital-eclipse-and-atari-bundle/info/",
-  "https://isthereanydeal.com/game/the-chiller-kriller-edition/info/",
-  "https://isthereanydeal.com/game/scrapnaut-meet-asian-parents/info/",
-  "https://isthereanydeal.com/game/mobu-how-asian-parents-went-to-school/info/",
-  "https://isthereanydeal.com/game/high-above-x-urban-jungle/info/",
-  "https://isthereanydeal.com/game/play-with-playtonic/info/"
+  "https://isthereanydeal.com/game/gone-viral-soundtrack/info/"
  ],
  "https://www.musicbutler.io/users/feeds/95f44df4-78eb-4ed1-b2e2-85b9003b9540/": [],
  "apple:pe/songs": [
@@ -479,8 +479,8 @@
   "https://music.apple.com/pe/album/deb%C3%AD-tirar-m%C3%A1s-fotos/1787022393",
   "https://music.apple.com/pe/album/petal/1895420989",
   "https://music.apple.com/pe/album/primera-musa/1760193416",
-  "https://music.apple.com/pe/album/nadie-sabe-lo-que-va-a-pasar-ma%C3%B1ana/1710982865",
-  "https://music.apple.com/pe/album/yhlqmdlg/1500776322"
+  "https://music.apple.com/pe/album/arirang/1868862375",
+  "https://music.apple.com/pe/album/nadie-sabe-lo-que-va-a-pasar-ma%C3%B1ana/1710982865"
  ],
  "apple:jp/albums": [
   "https://music.apple.com/jp/album/amenity/6802879262",
@@ -488,13 +488,16 @@
   "https://music.apple.com/jp/album/iconic/6807251367",
   "https://music.apple.com/jp/album/fame-flame/6803795371",
   "https://music.apple.com/jp/album/chiikawa-the-movie-the-secret-of-the/6792290933",
+  "https://music.apple.com/jp/album/%E3%81%90%E3%81%A3%E3%81%99%E3%82%8A%E7%9C%A0%E3%82%8C%E3%82%8B%CE%B1%E6%B3%A2-%E3%83%87%E3%82%A3%E3%82%BA%E3%83%8B%E3%83%BC-%E3%83%97%E3%83%AC%E3%83%9F%E3%82%A2%E3%83%A0-%E3%82%AA%E3%83%AB%E3%82%B4%E3%83%BC%E3%83%AB-%E3%83%99%E3%82%B9%E3%83%88/1054914398",
   "https://music.apple.com/jp/album/momentum/6799692939",
   "https://music.apple.com/jp/album/%E3%82%A2%E3%82%A4%E3%83%89%E3%83%AB%E3%83%A9%E3%82%A4%E3%83%95%E3%83%A1%E3%82%AC%E3%83%91%E3%83%83%E3%82%AF/6802937865",
-  "https://music.apple.com/jp/album/%E3%81%90%E3%81%A3%E3%81%99%E3%82%8A%E7%9C%A0%E3%82%8C%E3%82%8B%CE%B1%E6%B3%A2-%E3%83%87%E3%82%A3%E3%82%BA%E3%83%8B%E3%83%BC-%E3%83%97%E3%83%AC%E3%83%9F%E3%82%A2%E3%83%A0-%E3%82%AA%E3%83%AB%E3%82%B4%E3%83%BC%E3%83%AB-%E3%83%99%E3%82%B9%E3%83%88/1054914398",
   "https://music.apple.com/jp/album/arirang/1869053670",
   "https://music.apple.com/jp/album/hana/1874511603"
  ],
  "https://es.rollingstone.com/feed/": [
+  "https://es.rollingstone.com/critica-impacto-mortal-deep-water/",
+  "https://es.rollingstone.com/la-combustion-honesta-de-olivia-wald-en-otra-que-arde/",
+  "https://es.rollingstone.com/lucy-miro-al-mundo-y-noto-que-esta-girando-el-nuevo-disco-de-akriila/",
   "https://es.rollingstone.com/informe-policial-descarta-que-la-entrada-masiva-de-inmigrantes-a-ceuta-fuera-espontanea/",
   "https://es.rollingstone.com/inmunidad-soberana-el-recurso-con-el-que-maduro-busca-desestimar-los-cargos-en-su-contra/",
   "https://es.rollingstone.com/la-musica-es-mi-vida-mia/",
@@ -503,21 +506,18 @@
   "https://es.rollingstone.com/artistas-que-debes-conocer-majo-rivas/",
   "https://es.rollingstone.com/rocca-y-kyo-itachi-se-unen-en-venus/",
   "https://es.rollingstone.com/el-reencuentro-de-el-ultimo-de-la-fila-quedara-inmortalizado-en-directo-2026/",
-  "https://es.rollingstone.com/chatgpt-reddit-y-roblox-se-someteran-a-reglas-mas-estrictas-de-la-union-europea/",
-  "https://es.rollingstone.com/arg-louta-y-joaquin-levinton-se-suman-a-la-nueva-comedia-protagonizada-por-nicolas-furtado/",
-  "https://es.rollingstone.com/arg-de-iron-maiden-a-bts-mas-de-40-shows-internacionales-que-todavia-quedan-en-argentina-en-2026/",
-  "https://es.rollingstone.com/milo-j-esta-buscando-que-viene-despues/"
+  "https://es.rollingstone.com/chatgpt-reddit-y-roblox-se-someteran-a-reglas-mas-estrictas-de-la-union-europea/"
  ],
  "https://www.billboard.com/feed/": [
+  "https://www.billboard.com/pro/aeg-seatgeek-live-nation-doj-deal-ticketmaster/",
+  "https://www.billboard.com/culture/product-recommendations/frozen-little-people-collector-set-disney-2026-shop-online-1236331384/",
+  "https://www.billboard.com/lists/premios-juventud-2026-winners-list/",
+  "https://www.billboard.com/pro/suno-mary-j-blige-ad-dropped-ai-music-generation/",
   "https://www.billboard.com/music/chart-beat/kiss-destroys-anaheim-76-top-10-debut-billboard-album-sales-1236333279/",
   "https://www.billboard.com/music/pop/slayyyter-reacts-lady-gaga-song-tiktok-1236333276/",
   "https://www.billboard.com/music/music-news/ciara-miller-sabrina-carpenter-song-messy-choice-dwts-1236333177/",
   "https://www.billboard.com/music/rb-hip-hop/drake-fear-of-missing-out-youtube-stream-1236333219/",
   "https://www.billboard.com/lists/only-good-people-partners-with-sony-music-publishing/",
-  "https://www.billboard.com/music/country/kelsea-ballerini-defends-stella-lefty-grand-ole-opry-backlash-1236333221/",
-  "https://www.billboard.com/culture/tv-film/carla-jeffery-dead-tributes-zombies-cast-meg-donnelly-1236333133/",
-  "https://www.billboard.com/music/music-news/krewella-new-album-peak-interview-1236330637/",
-  "https://www.billboard.com/music/awards/margo-price-performers-present-americana-honors-awards-1236332708/",
-  "https://www.billboard.com/lists/new-country-music-books-to-read-this-fall-list/"
+  "https://www.billboard.com/music/country/kelsea-ballerini-defends-stella-lefty-grand-ole-opry-backlash-1236333221/"
  ]
 }
