@@ -1310,6 +1310,13 @@ ESTILO = {
     "staff":              ("engranaje",      MAGENTA, (70, 30, 90)),
     "postulaciones":      ("sobre",     MAGENTA, (70, 30, 90)),
     "config-bots":        ("chip",       MAGENTA, (70, 30, 90)),
+
+    # REGISTRO · los dos libros de cuentas del servidor. Van con los privados
+    # porque solo los ve el staff, pero con simbolo propio: uno guarda lo que
+    # hace la gente y el otro lo que hace el staff, y confundirlos es justo lo
+    # que no debe pasar cuando hay que mirar quien hizo que.
+    "log-mod":            ("visto",     MAGENTA, (70, 30, 90)),
+    "log-servidor":       ("pergamino", MAGENTA, (70, 30, 90)),
 }
 
 
