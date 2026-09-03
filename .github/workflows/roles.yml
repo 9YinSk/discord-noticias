@@ -63,3 +63,28 @@ jobs:
         env:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         run: python discord_bienvenida.py --enserio --dias 1
+
+      # ── Y AHORA SE QUEDA VIGILANDO ─────────────────────────────────────
+      #
+      # Una pasada cada cinco minutos significa que quien acepta las reglas
+      # puede esperar entre cinco y quince minutos a que se le abra el
+      # servidor -- GitHub cumple los cron a su ritmo. El dia que entra gente
+      # eso es una eternidad, y la primera impresion se juega ahi.
+      #
+      # Como el repositorio es PUBLICO, los minutos de Actions son ilimitados:
+      # la unica razon para no vigilar en continuo era una factura que no
+      # existe. Asi que cada ejecucion se queda mirando las reacciones cada 15
+      # segundos durante NUEVE minutos. Con el cron cada cinco, siempre hay una
+      # corriendo y casi siempre dos solapadas -- cobertura continua sin que el
+      # PC de casa tenga que estar encendido.
+      #
+      # Solaparse no hace dano: repartir un rol que ya se tiene no hace nada.
+      # Y va el ULTIMO a proposito, para no retrasar los contadores ni las
+      # bienvenidas, que son de una pasada.
+      #
+      # `timeout` devuelve 124 al cortar, que no es un fallo: por eso el `|| true`.
+      - name: Vigilar las reacciones en continuo
+        continue-on-error: true
+        env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+        run: timeout 540 python -u discord_reacciones.py --vigilar 15 || true
