@@ -1,5 +1,9 @@
 {
  "https://www.animenewsnetwork.com/newsroom/rss.xml": [
+  "https://www.animenewsnetwork.com/press-release/2026-09-04/grand-summoners-x-fate-kaleid-liner-prisma-illya-licht-nameless-girl-now-available-in-76-/.241368",
+  "https://www.animenewsnetwork.com/press-release/2026-09-04/the-revival-project-for-the-macross-rhythm-game-uta-macross-featuring-classic-songs-from-the-/.241374",
+  "https://www.animenewsnetwork.com/news/2026-09-04/north-american-anime-manga-releases-august-30-september-5/.241170",
+  "https://www.animenewsnetwork.com/news/2026-09-04/the-shy-snow-woman-and-the-cursed-ring-tv-anime-reveals-early-streaming-on-september-11-on-/.241386",
   "https://www.animenewsnetwork.com/news/2026-09-04/the-grimm-reapress-and-the-drearytale-monster-game-heads-west/.241381",
   "https://www.animenewsnetwork.com/news/2026-09-04/tokyo-anime-awards-festival-ends/.241377",
   "https://www.animenewsnetwork.com/news/2026-09-04/new-votoms-anime-films-reveal-cast/.241379",
@@ -35,11 +39,7 @@
   "https://www.animenewsnetwork.com/news/2026-09-03/tanuki-to-kitsune-anime-video-unveils-cast/.241343",
   "https://www.animenewsnetwork.com/news/2026-09-03/live-action-look-back-film-clip-highlights-kyomoto-fujino-creating-manga/.241344",
   "https://www.animenewsnetwork.com/news/2026-09-03/konami-project-zircon-deckbuilding-roguelike-game-streams-new-teaser/.241341",
-  "https://www.animenewsnetwork.com/news/2026-09-03/castlevania-belmont-curse-game-streams-bloody-tears-trailer/.241327",
-  "https://www.animenewsnetwork.com/news/2026-09-03/konami-unveils-concept-trailer-for-konami-wai-wai-world-craft-game-creation-system/.241326",
-  "https://www.animenewsnetwork.com/news/2026-09-03/gkids-responds-to-incorrectly-timed-subtitles-during-the-last-blossom-film-screenings-reviews-/.241323",
-  "https://www.animenewsnetwork.com/news/2026-09-03/sword-art-online-echoes-of-aincrad-game-trailer-reveals-genesis-maidens-dlc/.241320",
-  "https://www.animenewsnetwork.com/news/2026-09-03/digimon-story-time-stranger-game-reveals-a-hero-eternal-legacy-dlc-expansion/.241319"
+  "https://www.animenewsnetwork.com/news/2026-09-03/castlevania-belmont-curse-game-streams-bloody-tears-trailer/.241327"
  ],
  "https://www.animenewsnetwork.com/all/rss.xml": [
   "https://www.animenewsnetwork.com/interest/2026-09-02/inuyasha-sketch-auctioned-to-help-african-kids-orphaned-by-aids/.241227",
@@ -204,6 +204,7 @@
   "https://www.animenewsnetwork.com/review/mobile-suit-gundam-hathaway/the-sorcery-of-nymph-circe-anime-film/.233634"
  ],
  "https://vandal.elespanol.com/xml.cgi": [
+  "https://vandal.elespanol.com/noticia/2026247034/donde-se-ve-mejor-comparan-los-graficos-de-onimusha-way-of-the-sowrd-en-switch-2-ps5-y-steam-deck/",
   "https://vandal.elespanol.com/noticia/2026247033/con-y-sin-dlss-5-una-comparativa-de-nba-2k27-demuestra-las-capacidades-de-la-tecnologia-de-nvida/",
   "https://vandal.elespanol.com/noticia/2026247032/asi-se-cambia-la-bateria-de-la-nueva-switch-2-europea-el-primer-video-muestra-lo-facil-que-es/",
   "https://vandal.elespanol.com/noticia/2026247031/la-version-para-pc-de-gta-6-llegaria-antes-de-lo-que-la-gente-espera-segun-un-reputado-periodista/",
@@ -232,21 +233,21 @@
   "https://vandal.elespanol.com/noticia/2026247008/rev-noir-el-nuevo-rpg-de-accion-de-konami-muestra-su-historia-y-combate-en-dos-nuevos-traileres/",
   "https://vandal.elespanol.com/noticia/2026247007/trump-lanza-sus-propios-videojuegos-anima-a-construir-el-muro-y-deportar-con-clones-de-tetris-y-snake/",
   "https://vandal.elespanol.com/noticia/2026247006/naughty-dog-da-pistas-de-mas-the-last-of-us-y-confirma-que-hay-dos-proyectos-en-marcha/",
-  "https://vandal.elespanol.com/noticia/2026247005/dragon-ball-xenoverse-3-escucha-las-criticas-y-elimina-una-de-sus-limitaciones-mas-polemicas/",
-  "https://vandal.elespanol.com/noticia/2026247004/the-blood-of-dawnwalker-recibe-su-primer-parche-pero-aun-no-soluciona-los-tirones-y-cierres/"
+  "https://vandal.elespanol.com/noticia/2026247005/dragon-ball-xenoverse-3-escucha-las-criticas-y-elimina-una-de-sus-limitaciones-mas-polemicas/"
  ],
  "https://www.nintenderos.com/feed/": [
+  "https://www.nintenderos.com/2026/09/kingdom-hearts-allano-el-camino-para-un-juego-de-lucha-de-disney-al-estilo-smash-bros-que-nunca-llego-a-ver-la-luz/",
+  "https://www.nintenderos.com/2026/09/miraidon-se-trago-una-olla-a-presion-critican-al-anime-horizontes-pokemon-tras-el-episodio-de-hoy/",
   "https://www.nintenderos.com/nintendo-switch-2/sin-anuncios-para-nintendo-switch-1-en-el-nuevo-nintendo-direct-este-mensaje-de-nintendo-apunta-a-que-ocurrira-por-primera-vez/",
   "https://www.nintenderos.com/2026/09/hideki-kamiya-ve-comprensible-la-decision-de-playstation-de-abandonar-los-discos-pero-pide-garantizar-la-preservacion-de-los-juegos/",
   "https://www.nintenderos.com/nintendo-switch-2/someten-a-test-tecnico-a-elden-ring-en-nintendo-switch-2/",
   "https://www.nintenderos.com/nintendo-switch-2/nate-the-hate-avanza-algunos-detalles-de-como-seria-zelda-ocarina-of-time-remake/",
   "https://www.nintenderos.com/nintendo-switch-2/sigue-aqui-los-nintendo-direct-del-40o-aniversario-de-zelda-el-nintendo-direct-general-y-el-nintendo-treehouse-live-en-directo-y-en-espanol-horarios-duraciones-y-mas-detalles/",
   "https://www.nintenderos.com/nintendo-switch-2/anunciados-dos-nintendo-direct-para-la-proxima-semana-uno-de-zelda-y-otro-general/",
-  "https://www.nintenderos.com/nintendo-switch-2/zelda-ocarina-of-time-remake-sera-un-remake-11-un-nuevo-reporte-apunta-a-que-no/",
-  "https://www.nintenderos.com/nintendo-switch-2/nintendo-detalla-al-guerrero-nuzzuo-de-fire-emblem-fortunes-weave/",
-  "https://www.nintenderos.com/nintendo-switch-2/la-eshop-americana-recibe-nuevo-juego-gratis-para-nintendo-switch-asi-es-el-adictivo-fortress-merge/"
+  "https://www.nintenderos.com/nintendo-switch-2/zelda-ocarina-of-time-remake-sera-un-remake-11-un-nuevo-reporte-apunta-a-que-no/"
  ],
  "https://www.espinof.com/feedburner.xml": [
+  "https://www.espinof.com/actores-y-actrices/dave-bautista-presume-transformacion-fisica-para-interpretar-a-kratos-god-of-war-como-andar-bicicleta",
   "https://www.espinof.com/series-de-ficcion/temporada-4-ted-lasso-esta-corrigiendo-uno-mayores-errores-que-cometio-ted-creo-que-refleja-muy-bien-evolucion-personaje",
   "https://www.espinof.com/directores-y-guionistas/hermanos-russo-quieren-que-vengadores-doomsday-sea-como-western-sergio-leone-siempre-han-sido-muy-especiales-para-nosotros",
   "https://www.espinof.com/directores-y-guionistas/pelicula-ciencia-ficcion-steven-spielberg-que-casi-nadie-conoce-se-estreno-hace-62-anos-solamente-500-personas-llegaron-a-verla",
@@ -265,8 +266,7 @@
   "https://www.espinof.com/en-digital/meses-despues-ser-nombrada-mejor-pelicula-festivales-se-estrena-streaming-uno-grandes-debuts-espanoles-ano",
   "https://www.espinof.com/actores-y-actrices/evan-rachel-wood-opina-que-fue-sustituida-practicamente-magia-2-su-voluntad-siento-decepcionar-a-fans",
   "https://www.espinof.com/estrenos/atentados-fatidicos-helados-derretidos-mejor-peor-estrenos-cine",
-  "https://www.espinof.com/directores-y-guionistas/mitica-frase-leonardo-dicaprio-titanic-que-fue-improvisada-james-cameron-estabamos-pasando-frio-hambrientos-sintiendonos-fatal",
-  "https://www.espinof.com/entrevistas/creador-silo-me-ha-soltado-spoiler-gigantesco-temporada-4-no-recuerdo-control-memoria-parte-fundamental-este-proyecto"
+  "https://www.espinof.com/directores-y-guionistas/mitica-frase-leonardo-dicaprio-titanic-que-fue-improvisada-james-cameron-estabamos-pasando-frio-hambrientos-sintiendonos-fatal"
  ],
  "https://www.sensacine.com/rss/noticias.xml": [
   "https://www.sensacine.com/noticias/series/noticia-1000221344/",
@@ -307,6 +307,29 @@
   "https://isthereanydeal.com/giveaways/7433/"
  ],
  "https://isthereanydeal.com/feeds/PE/USD/deals.rss": [
+  "https://isthereanydeal.com/game/fate-reawakened-prometheus/info/",
+  "https://isthereanydeal.com/game/fate-reawakened/info/",
+  "https://isthereanydeal.com/game/countrytale-2010/info/",
+  "https://isthereanydeal.com/game/wildgate-renegade-pack/info/",
+  "https://isthereanydeal.com/game/wildgate-renegade-edition/info/",
+  "https://isthereanydeal.com/game/wildgate/info/",
+  "https://isthereanydeal.com/game/mechabellum/info/",
+  "https://isthereanydeal.com/game/an-shi-hui-guang/info/",
+  "https://isthereanydeal.com/game/pulse-void-and-the-case-of-the-last-shawarma/info/",
+  "https://isthereanydeal.com/game/the-case-of-the-last-shawarma/info/",
+  "https://isthereanydeal.com/game/ako/info/",
+  "https://isthereanydeal.com/game/pulse-void/info/",
+  "https://isthereanydeal.com/game/terrarium-ii/info/",
+  "https://isthereanydeal.com/game/pulse-cross-crosshair-generator/info/",
+  "https://isthereanydeal.com/game/voxel-isle-simulator/info/",
+  "https://isthereanydeal.com/game/atelier-sophie-2-the-alchemist-of-the-mysterious-dream-digital-deluxe/info/",
+  "https://isthereanydeal.com/game/atelier-yumia-the-alchemist-of-memories-and-the-envisioned-land-ultimat/info/",
+  "https://isthereanydeal.com/game/atelier-ryza-2-lost-legends-and-the-secret-fairy-dx/info/",
+  "https://isthereanydeal.com/game/nioh-3-digital-deluxe-edition/info/",
+  "https://isthereanydeal.com/game/proyecto-huemul/info/",
+  "https://isthereanydeal.com/game/balloon-party/info/",
+  "https://isthereanydeal.com/game/cattopia-soundtrack/info/",
+  "https://isthereanydeal.com/game/blorbit/info/",
   "https://isthereanydeal.com/game/all-dlcs-deluxe/info/",
   "https://isthereanydeal.com/game/tunguska-the-visitation-complete-collection/info/",
   "https://isthereanydeal.com/game/story-lovers/info/",
@@ -433,30 +456,7 @@
   "https://isthereanydeal.com/game/nightmare-survival--1/info/",
   "https://isthereanydeal.com/game/hot-potatoes/info/",
   "https://isthereanydeal.com/game/hell-slayers/info/",
-  "https://isthereanydeal.com/game/soulstone-survivors-x-funguys-swarm/info/",
-  "https://isthereanydeal.com/game/voidface-x-soulstone-survivors/info/",
-  "https://isthereanydeal.com/game/parcel-corps-x-tiny-terrys-turbo-trip/info/",
-  "https://isthereanydeal.com/game/soulstone-survivors-x-terratech-legion/info/",
-  "https://isthereanydeal.com/game/soulstone-survivors-x-be-my-horde/info/",
-  "https://isthereanydeal.com/game/soulstone-and-machick-2/info/",
-  "https://isthereanydeal.com/game/make-way-x-parcel-corps/info/",
-  "https://isthereanydeal.com/game/indie-action-collection/info/",
-  "https://isthereanydeal.com/game/rockstone-survivors/info/",
-  "https://isthereanydeal.com/game/conquest-dark-and-soulstone-survivors/info/",
-  "https://isthereanydeal.com/game/vainsane-psychological-horror-complete/info/",
-  "https://isthereanydeal.com/game/soulstone-survivors-and-moon-watch/info/",
-  "https://isthereanydeal.com/game/frogs-soulstone/info/",
-  "https://isthereanydeal.com/game/weapons-and-soulstones/info/",
-  "https://isthereanydeal.com/game/soulstone-vikings/info/",
-  "https://isthereanydeal.com/game/deaths-soulstone/info/",
-  "https://isthereanydeal.com/game/capybaras-and-soulstones/info/",
-  "https://isthereanydeal.com/game/bullet-hell-survivors/info/",
-  "https://isthereanydeal.com/game/adofai-and-rhythm-journey-and-rhythm-stones/info/",
-  "https://isthereanydeal.com/game/retro-arcade-shop-simulator-x-minsgon-simulator/info/",
-  "https://isthereanydeal.com/game/chop-chains-x-temperhall-1402/info/",
-  "https://isthereanydeal.com/game/productivity-bundle/info/",
-  "https://isthereanydeal.com/game/mall-tidy-up-together-island-market-simulator/info/",
-  "https://isthereanydeal.com/game/void-salvage-x-execute/info/"
+  "https://isthereanydeal.com/game/soulstone-survivors-x-funguys-swarm/info/"
  ],
  "https://www.musicbutler.io/users/feeds/95f44df4-78eb-4ed1-b2e2-85b9003b9540/": [],
  "apple:pe/songs": [
@@ -496,6 +496,10 @@
   "https://music.apple.com/jp/album/momentum/6799692939"
  ],
  "https://es.rollingstone.com/feed/": [
+  "https://es.rollingstone.com/musicos-demandan-a-suno-por-usar-su-identidad-y-estilo-sin-autorizacion/",
+  "https://es.rollingstone.com/low-clika-este-album-nos-ayudo-a-encontrar-nuestro-sonido/",
+  "https://es.rollingstone.com/juanes-celebra-25-anos-de-carrera-con-el-inicio-de-su-gira-mas-ambiciosa/",
+  "https://es.rollingstone.com/el-universo-expansivo-de-veintiuno/",
   "https://es.rollingstone.com/arg-nuevos-sonidos-y-musicas-eclecticas-en-el-centro-cultural-borges/",
   "https://es.rollingstone.com/arg-guillermo-piccolini-es-un-mundo-peor-que-el-de-cinco-anos-atras/",
   "https://es.rollingstone.com/arg-el-universo-creativo-de-mariana-enriquez-entre-el-rock-y-el-terror/",
@@ -503,22 +507,18 @@
   "https://es.rollingstone.com/los-universos-alternativos-de-carlos-ares-y-barry-b-colisionan-en-postdata/",
   "https://es.rollingstone.com/un-hombre-de-bien-nos-da-la-bienvenida-a-la-nueva-era-de-nsqk/",
   "https://es.rollingstone.com/critica-impacto-mortal-deep-water/",
-  "https://es.rollingstone.com/la-combustion-honesta-de-olivia-wald-en-otra-que-arde/",
-  "https://es.rollingstone.com/lucy-miro-al-mundo-y-noto-que-esta-girando-el-nuevo-disco-de-akriila/",
-  "https://es.rollingstone.com/informe-policial-descarta-que-la-entrada-masiva-de-inmigrantes-a-ceuta-fuera-espontanea/",
-  "https://es.rollingstone.com/inmunidad-soberana-el-recurso-con-el-que-maduro-busca-desestimar-los-cargos-en-su-contra/",
-  "https://es.rollingstone.com/la-musica-es-mi-vida-mia/"
+  "https://es.rollingstone.com/la-combustion-honesta-de-olivia-wald-en-otra-que-arde/"
  ],
  "https://www.billboard.com/feed/": [
+  "https://www.billboard.com/music/chart-beat/conway-twitty-desperado-love-chart-rewind-1986-1236334802/",
+  "https://www.billboard.com/music/chart-beat/beyonce-morning-dew-donk-bday-number-1-adult-rb-radio-chart-1236334804/",
+  "https://www.billboard.com/music/country/jason-aldean-makin-tracks-anytime-soon-1236334780/",
+  "https://www.billboard.com/music/pop/nct-127-blingy-inteview-1236333463/",
+  "https://www.billboard.com/music/chart-beat/dolly-parton-belles-son-of-jolene-country-airplay-chart-debut-1236334651/",
+  "https://www.billboard.com/music/rb-hip-hop/50-cent-angers-jay-z-reebok-commercial-2003-1236334485/",
   "https://www.billboard.com/pro/blue-rodeo-song-trump-lake-ontario-renaming-order/",
   "https://www.billboard.com/lists/samantha-juneman-named-mattel-head-of-music/",
   "https://www.billboard.com/music/country/randy-travis-new-album-same-old-way-release-date-1236334475/",
-  "https://www.billboard.com/music/awards/soul-train-awards-return-bet-air-date-1236325496/",
-  "https://www.billboard.com/pro/how-alliance-entertainment-drive-physical-music-boom/",
-  "https://www.billboard.com/lists/beyonce-top-songs-billboard-hot-100-2/",
-  "https://www.billboard.com/music/chart-beat/ariana-grande-hate-that-i-made-you-love-me-number-1-pop-airplay-1236334350/",
-  "https://www.billboard.com/music/rb-hip-hop/kanye-west-big-sean-end-beef-reunite-perform-show-1236334324/",
-  "https://www.billboard.com/pro/music-industry-events-calendar-festivals-awards-conferences/",
-  "https://www.billboard.com/music/pop/prince-estate-responds-posthumous-tweak-timeless-calabama-ai-1236334429/"
+  "https://www.billboard.com/music/awards/soul-train-awards-return-bet-air-date-1236325496/"
  ]
 }
