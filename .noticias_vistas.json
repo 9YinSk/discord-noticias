@@ -1,5 +1,6 @@
 {
  "https://www.animenewsnetwork.com/newsroom/rss.xml": [
+  "https://www.animenewsnetwork.com/news/2026-09-11/north-american-anime-manga-releases-september-6-12/.241539",
   "https://www.animenewsnetwork.com/news/2026-09-11/harem-camp-anime-english-dub-releases-on-september-18/.241668",
   "https://www.animenewsnetwork.com/news/2026-09-11/madoka-magica-walpurgisnacht-rising-anime-film-reveals-maaya-sakamoto-role/.241675",
   "https://www.animenewsnetwork.com/news/2026-09-11/sound-euphonium-the-final-movie-part-2-streams-video-featuring-new-footage/.241674",
@@ -38,8 +39,7 @@
   "https://www.animenewsnetwork.com/press-release/2026-09-10/muramasa-revenant-blades-cuts-a-path-towards-a-4-feb-2027-launch-on-playstation-5-pc-nintendo-/.241624",
   "https://www.animenewsnetwork.com/news/2026-09-10/pokemon-pokopia-game-introduces-accessories-included-in-expansion-pass-dlc-part-2/.241622",
   "https://www.animenewsnetwork.com/news/2026-09-10/nintendo-reveals-new-trailer-october-22-launch-for-nintendo-switch-sports-resort-game/.241623",
-  "https://www.animenewsnetwork.com/news/2026-09-10/mega-man-dual-override-game-announces-spring-2027-launch/.241619",
-  "https://www.animenewsnetwork.com/news/2026-09-10/the-iceblade-sorcerer-shall-rule-the-world-tv-anime-2nd-season-reveals-main-trailer-more-cast-/.241621"
+  "https://www.animenewsnetwork.com/news/2026-09-10/mega-man-dual-override-game-announces-spring-2027-launch/.241619"
  ],
  "https://www.animenewsnetwork.com/all/rss.xml": [
   "https://www.animenewsnetwork.com/interest/2026-09-02/inuyasha-sketch-auctioned-to-help-african-kids-orphaned-by-aids/.241227",
@@ -204,10 +204,17 @@
   "https://www.animenewsnetwork.com/review/mobile-suit-gundam-hathaway/the-sorcery-of-nymph-circe-anime-film/.233634"
  ],
  "https://vandal.elespanol.com/xml.cgi": [
+  "https://vandal.elespanol.com/noticia/2026254031/dragon-ball-xenoverse-3-deslumbra-con-un-nuevo-super-saiyan-3-y-muestra-la-poderosa-transformacion-como-nunca/",
+  "https://vandal.elespanol.com/noticia/2026254030/control-resonant-revela-sus-requisitos-finales-en-pc-pide-120-gb-de-ssd-pero-una-grafica-bastante-modesta/",
+  "https://vandal.elespanol.com/noticia/2026254029/las-tiendas-avisan-asi-puedes-saber-si-la-edicion-fisica-de-zelda-ocarina-of-time-tiene-acabado-metalico-o-no/",
+  "https://vandal.elespanol.com/noticia/2026254028/rockstar-asegura-que-extremo-la-seguridad-con-gta-6-evitando-drones-espia-en-las-oficinas-e-intentos-de-chantaje/",
+  "https://vandal.elespanol.com/noticia/2026254027/sony-abandono-physint-por-sus-retrasos-sobrecostes-y-dudas-sobre-su-rentabilidad-segun-jason-schreier/",
+  "https://vandal.elespanol.com/noticia/2026254021/final-fantasy-vii-revelation-tendra-tanto-o-mas-contenido-que-rebirth-todo-es-buen-contenido/",
+  "https://vandal.elespanol.com/noticia/2026254026/consigue-el-exitoso-wardogs-y-otros-juegazos-para-pc-al-mejor-precio-con-las-ofertas-de-instant-gaming/",
+  "https://vandal.elespanol.com/noticia/2026254025/victoria-de-nintendo-contra-la-pirateria-bloquean-la-venta-de-dispositivos-para-ejecutar-copias-ilegitimas/",
   "https://vandal.elespanol.com/noticia/2026254024/el-remaster-de-the-witcher-3-mejora-a-sardinilla-y-elimina-sus-bugs-aunque-tendras-la-opcion-de-volver-a-ellos/",
   "https://vandal.elespanol.com/noticia/2026254023/fallout-76-desafia-al-paso-del-tiempo-es-uno-de-los-rpg-que-mas-dinero-generan-en-consolas-en-2026/",
   "https://vandal.elespanol.com/noticia/2026254022/level5-prepara-un-importante-titulo-para-celebrar-sus-30-anos-que-se-presentara-en-2027/",
-  "https://vandal.elespanol.com/noticia/2026254021/final-fantasy-vii-revelation-tendra-tanto-o-mas-contenido-que-rebirth-todo-es-buen-contenido/",
   "https://vandal.elespanol.com/noticia/2026254020/rockstar-revela-por-que-gta-6-limita-los-memes-y-temas-de-actualidad-tenemos-que-tener-mucho-cuidado/",
   "https://vandal.elespanol.com/noticia/2026254019/gears-of-war-eday-podria-estrenar-el-equivalente-al-trofeo-platino-de-playstation-en-xbox/",
   "https://vandal.elespanol.com/noticia/2026254018/blizzard-ya-no-podra-imponer-el-uso-de-ia-a-sus-desarrolladores-tendra-que-negociarlo-con-sus-trabajadores/",
@@ -226,16 +233,10 @@
   "https://vandal.elespanol.com/noticia/2026254005/solucion-wordle-en-espanol-y-tildes-hoy-11-de-septiembre-y-pistas-a-la-palabra-oculta/",
   "https://vandal.elespanol.com/noticia/2026254004/el-metroidvania-espanol-aeterna-lucis-ya-tiene-fecha-y-precio-llegara-en-diciembre-tras-un-largo-retraso/",
   "https://vandal.elespanol.com/noticia/2026254003/inazuma-eleven-victory-road-ya-tiene-secuela-level5-anuncia-inazuma-eleven-bold-revolution/",
-  "https://vandal.elespanol.com/noticia/2026254002/project-espresso-abre-su-playtest-y-todo-apunta-a-que-es-el-nuevo-nombre-de-fairgames-de-playstation/",
-  "https://vandal.elespanol.com/noticia/2026254001/amazon-prime-regala-9-juegos-mas-en-septiembre-incluidos-doom-eternal-y-high-on-life/",
-  "https://vandal.elespanol.com/noticia/2026253039/filtracion-de-steam-revela-un-nuevo-personaje-de-dragon-ball-xenoverse-3-sin-anunciar/",
-  "https://vandal.elespanol.com/noticia/2026253038/cuanto-dura-realmente-marvels-wolverine-esta-es-la-duracion-del-juego-de-lobezno-para-ps5/",
-  "https://vandal.elespanol.com/noticia/2026253037/ubisoft-anuncia-nuevo-juego-de-su-saga-mas-exitosa-just-dance-decades-of-hits-busca-unir-generaciones-musicales/",
-  "https://vandal.elespanol.com/noticia/2026253036/mercury-steam-lo-confirma-el-nuevo-metroid-ravenous-para-nintendo-switch-2-tambien-ha-sido-creado-en-espana/",
-  "https://vandal.elespanol.com/noticia/2026253035/el-primer-profesor-layton-regresa-con-un-remake-la-villa-misteriosa-vuelve-en-2027-para-consolas-y-pc/",
-  "https://vandal.elespanol.com/noticia/2026253034/los-nuevos-juegos-gratis-de-epic-games-store-ya-estan-disponibles-y-se-anuncia-el-de-la-proxima-semana/"
+  "https://vandal.elespanol.com/noticia/2026254002/project-espresso-abre-su-playtest-y-todo-apunta-a-que-es-el-nuevo-nombre-de-fairgames-de-playstation/"
  ],
  "https://www.nintenderos.com/feed/": [
+  "https://www.nintenderos.com/nintendo-switch-2/fire-emblem-fortunes-weave-confirma-sus-primeros-articulos-de-merchandising/",
   "https://www.nintenderos.com/nintendo-switch-2/la-edicion-fisica-de-orbitals-se-esta-agotando-pero-kepler-interactive-promete-reabastecimiento/",
   "https://www.nintenderos.com/nintendo-switch-2/danganronpa-2x2-confirma-estos-detalles-tecnicos-en-nintendo-switch-2-y-nintendo-switch-resolucion-fps-y-mas/",
   "https://www.nintenderos.com/2026/09/nintendo-actualiza-la-cronologia-oficial-de-zelda-y-parece-confirmar-una-teoria-de-los-fans-que-lleva-mucho-tiempo-circulando/",
@@ -243,8 +244,7 @@
   "https://www.nintenderos.com/nintendo-switch-2/la-parte-de-atras-de-la-caja-de-zelda-ocarina-of-time-remake-enamora-a-los-fans/",
   "https://www.nintenderos.com/nintendo-switch-2/metroid-ravenous-dispara-las-ventas-de-metroid-dread/",
   "https://www.nintenderos.com/nintendo-switch-2/la-actualizacion-23-0-0-tambien-corrige-este-molesto-error-en-nintendo-switch-2/",
-  "https://www.nintenderos.com/nintendo-switch-2/asi-se-comparan-con-gta-6-los-picos-de-visitas-de-los-nintendo-direct-de-esta-semana/",
-  "https://www.nintenderos.com/nintendo-switch-2/fire-emblem-fortunes-weave-lanza-trailer-extendido/"
+  "https://www.nintenderos.com/nintendo-switch-2/asi-se-comparan-con-gta-6-los-picos-de-visitas-de-los-nintendo-direct-de-esta-semana/"
  ],
  "https://www.espinof.com/feedburner.xml": [
   "https://www.espinof.com/directores-y-guionistas/director-mejores-peliculas-animacion-historia-defiende-artesanal-stop-motion-hace-gala-su-humanidad-ia-carece-ella",
@@ -269,26 +269,26 @@
   "https://www.espinof.com/actores-y-actrices/hermano-paul-walker-habla-estara-final-fast-furious-brian-volvera-ia-sabran-como-resolverlo"
  ],
  "https://www.sensacine.com/rss/noticias.xml": [
+  "https://www.sensacine.com/noticias/cine/noticia-1000222360/",
+  "https://www.sensacine.com/noticias/cine/noticia-1000222218/",
+  "https://www.sensacine.com/noticias/cine/noticia-1000222355/",
+  "https://www.sensacine.com/noticias/cine/noticia-1000222338/",
+  "https://www.sensacine.com/noticias/cine/noticia-1000222344/",
+  "https://www.sensacine.com/noticias/cine/noticia-1000222343/",
+  "https://www.sensacine.com/noticias/cine/noticia-1000222317/",
+  "https://www.sensacine.com/noticias/series/noticia-1000222304/",
+  "https://www.sensacine.com/noticias/series/noticia-1000222320/",
+  "https://www.sensacine.com/noticias/cine/noticia-1000222290/",
+  "https://www.sensacine.com/noticias/cine/noticia-1000222289/",
+  "https://www.sensacine.com/noticias/cine/noticia-1000222189/",
+  "https://www.sensacine.com/noticias/series/noticia-1000222210/",
   "https://www.sensacine.com/noticias/cine/noticia-1000222153/",
   "https://www.sensacine.com/noticias/series/noticia-1000222196/",
   "https://www.sensacine.com/noticias/cine/noticia-1000222104/",
   "https://www.sensacine.com/noticias/cine/noticia-1000222090/",
   "https://www.sensacine.com/noticias/series/noticia-1000222107/",
   "https://www.sensacine.com/noticias/cine/noticia-1000222083/",
-  "https://www.sensacine.com/noticias/cine/noticia-1000222082/",
-  "https://www.sensacine.com/noticias/cine/noticia-1000221995/",
-  "https://www.sensacine.com/noticias/cine/noticia-1000221953/",
-  "https://www.sensacine.com/noticias/cine/noticia-1000221786/",
-  "https://www.sensacine.com/noticias/series/noticia-1000200079/",
-  "https://www.sensacine.com/noticias/cine/noticia-1000221980/",
-  "https://www.sensacine.com/noticias/cine/noticia-1000221966/",
-  "https://www.sensacine.com/noticias/cine/noticia-1000221962/",
-  "https://www.sensacine.com/noticias/series/noticia-1000221973/",
-  "https://www.sensacine.com/noticias/series/noticia-1000221942/",
-  "https://www.sensacine.com/noticias/series/noticia-1000221939/",
-  "https://www.sensacine.com/noticias/series/noticia-1000221930/",
-  "https://www.sensacine.com/noticias/series/noticia-1000221908/",
-  "https://www.sensacine.com/noticias/cine/noticia-1000221894/"
+  "https://www.sensacine.com/noticias/cine/noticia-1000222082/"
  ],
  "https://isthereanydeal.com/feeds/PE/giveaways.rss": [
   "https://isthereanydeal.com/giveaways/16552/",
@@ -306,6 +306,28 @@
   "https://isthereanydeal.com/giveaways/7433/"
  ],
  "https://isthereanydeal.com/feeds/PE/USD/deals.rss": [
+  "https://isthereanydeal.com/game/fatal-frame-project-zero-maiden-of-black-water/info/",
+  "https://isthereanydeal.com/game/car-mechanic-city-driving/info/",
+  "https://isthereanydeal.com/game/birch-simulator/info/",
+  "https://isthereanydeal.com/game/keywe-the-100th-annual-grand-old-telepost-tournament/info/",
+  "https://isthereanydeal.com/game/first-dwarf-and-flame-keeper/info/",
+  "https://isthereanydeal.com/game/first-dwarf-and-frozenheim/info/",
+  "https://isthereanydeal.com/game/first-dwarf-and-giants-uprising/info/",
+  "https://isthereanydeal.com/game/tilewise-bundle/info/",
+  "https://isthereanydeal.com/game/wordlace/info/",
+  "https://isthereanydeal.com/game/octillion-entertainment-collection/info/",
+  "https://isthereanydeal.com/game/the-game-for-skippers-kinetic-story/info/",
+  "https://isthereanydeal.com/game/the-game-for-skippers-bonus-story/info/",
+  "https://isthereanydeal.com/game/easy-quiz/info/",
+  "https://isthereanydeal.com/game/horizon-ring/info/",
+  "https://isthereanydeal.com/game/contractville-rent-expansion/info/",
+  "https://isthereanydeal.com/game/the-reluctant-hero-bundle/info/",
+  "https://isthereanydeal.com/game/volley-guns-soundtrack/info/",
+  "https://isthereanydeal.com/game/volley-guns-supporters-pack/info/",
+  "https://isthereanydeal.com/game/apex-automata/info/",
+  "https://isthereanydeal.com/game/worker-simulator/info/",
+  "https://isthereanydeal.com/game/proper-tosser/info/",
+  "https://isthereanydeal.com/game/scoundrel-the-descent/info/",
   "https://isthereanydeal.com/game/the-last-citadel/info/",
   "https://isthereanydeal.com/game/chessplosion--1/info/",
   "https://isthereanydeal.com/game/bible-trivia-alchemy/info/",
@@ -433,29 +455,7 @@
   "https://isthereanydeal.com/game/bugs-vs-zombies/info/",
   "https://isthereanydeal.com/game/conquer-the-void/info/",
   "https://isthereanydeal.com/game/monster-winter/info/",
-  "https://isthereanydeal.com/game/night-swarm-and-conquest-dark/info/",
-  "https://isthereanydeal.com/game/conquest-dark-and-soulstone-survivors/info/",
-  "https://isthereanydeal.com/game/conquest-dark-and-asgards-fall/info/",
-  "https://isthereanydeal.com/game/hand-drawn-games/info/",
-  "https://isthereanydeal.com/game/hidden-fish-and-phototaxis/info/",
-  "https://isthereanydeal.com/game/100-hidden-objects-and-point-and-click/info/",
-  "https://isthereanydeal.com/game/click-and-conquer-and-a-game-about-making-a-planet/info/",
-  "https://isthereanydeal.com/game/click-and-conquer-x-all-hail-the-orb/info/",
-  "https://isthereanydeal.com/game/tiny-aquarium-and-gecko-gods/info/",
-  "https://isthereanydeal.com/game/void-resurgence-x-cell-command-roguelike-pack/info/",
-  "https://isthereanydeal.com/game/cosmoteer-x-desynced/info/",
-  "https://isthereanydeal.com/game/cell-command-wantless-turn-based-tactics/info/",
-  "https://isthereanydeal.com/game/cell-command-deepest-chamber-resurrection/info/",
-  "https://isthereanydeal.com/game/cell-command-islets-defense/info/",
-  "https://isthereanydeal.com/game/cell-command-moods/info/",
-  "https://isthereanydeal.com/game/play-with-playtonic/info/",
-  "https://isthereanydeal.com/game/genome-guardian-noobs-are-coming/info/",
-  "https://isthereanydeal.com/game/genome-guardian-crafty-survivors-survival-roguelikes/info/",
-  "https://isthereanydeal.com/game/genome-guardian-heaven-seeker-weapon-building-roguelike-shooters/info/",
-  "https://isthereanydeal.com/game/genome-guardian-wand-project-weapon-combining-roguelikes/info/",
-  "https://isthereanydeal.com/game/sci-fi-survival-roguelikes-genome-guardian-space-will/info/",
-  "https://isthereanydeal.com/game/songs-and-seeds/info/",
-  "https://isthereanydeal.com/game/beastro-x-teeto/info/"
+  "https://isthereanydeal.com/game/night-swarm-and-conquest-dark/info/"
  ],
  "https://www.musicbutler.io/users/feeds/95f44df4-78eb-4ed1-b2e2-85b9003b9540/": [],
  "apple:pe/songs": [
@@ -463,10 +463,10 @@
   "https://music.apple.com/pe/album/yonaguni/1570323047?i=1570323056",
   "https://music.apple.com/pe/album/koko/1877481995?i=1877482633",
   "https://music.apple.com/pe/album/efecto/1622045624?i=1622045954",
-  "https://music.apple.com/pe/album/sonido-de-lluvia-para-dormir-y-relajarse-pt-01/1695209090?i=1695209093",
   "https://music.apple.com/pe/album/ojitos-lindos/1622045624?i=1622045962",
   "https://music.apple.com/pe/album/vete/1500776322?i=1500776923",
   "https://music.apple.com/pe/album/dichavate/1865959222?i=1865959223",
+  "https://music.apple.com/pe/album/sonido-de-lluvia-para-dormir-y-relajarse-pt-01/1695209090?i=1695209093",
   "https://music.apple.com/pe/album/calla%C3%ADta/1465503234?i=1465503235",
   "https://music.apple.com/pe/album/la-canci%C3%B3n/1470146332?i=1470146813"
  ],
@@ -479,7 +479,7 @@
   "https://music.apple.com/pe/album/deb%C3%AD-tirar-m%C3%A1s-fotos/1787022393",
   "https://music.apple.com/pe/album/prima/6792883860",
   "https://music.apple.com/pe/album/arirang/1868862375",
-  "https://music.apple.com/pe/album/petal/1895420989",
+  "https://music.apple.com/pe/album/better-late-than-never/1848960616",
   "https://music.apple.com/pe/album/primera-musa/1760193416"
  ],
  "apple:jp/albums": [
@@ -492,9 +492,10 @@
   "https://music.apple.com/jp/album/aimyon-best-album-chase-the-lips/6798303682",
   "https://music.apple.com/jp/album/mark-on-me-ep/6806202377",
   "https://music.apple.com/jp/album/%E6%9E%9C%E5%AE%9F/6801103152",
-  "https://music.apple.com/jp/album/supernova/6808205768"
+  "https://music.apple.com/jp/album/%E3%81%90%E3%81%A3%E3%81%99%E3%82%8A%E7%9C%A0%E3%82%8C%E3%82%8B%CE%B1%E6%B3%A2-%E3%83%87%E3%82%A3%E3%82%BA%E3%83%8B%E3%83%BC-%E3%83%97%E3%83%AC%E3%83%9F%E3%82%A2%E3%83%A0-%E3%82%AA%E3%83%AB%E3%82%B4%E3%83%BC%E3%83%AB-%E3%83%99%E3%82%B9%E3%83%88/1054914398"
  ],
  "https://es.rollingstone.com/feed/": [
+  "https://es.rollingstone.com/dalex-conecta-el-desamor-y-la-nostalgia-en-calendario/",
   "https://es.rollingstone.com/han-pasado-25-anos-desde-los-ataques-de-las-torres-gemelas-ganaron-los-terroristas/",
   "https://es.rollingstone.com/armas-y-violencia-de-genero-el-riesgo-que-queda-fuera-del-debate/",
   "https://es.rollingstone.com/my-chemical-romance-celebrara-los-20-anos-de-the-black-parade-con-su-reedicion/",
@@ -505,19 +506,18 @@
   "https://es.rollingstone.com/la-ia-es-una-amenaza-existencial-dicen-ingenieros-de-openai-y-anthropic/",
   "https://es.rollingstone.com/kevin-parker-dejara-de-firmar-autografos-como-medida-contra-los-coleccionistas-agresivos/",
   "https://es.rollingstone.com/rigoberta-bandini-comparte-la-version-oficial-de-chicle-mal-enganchado/",
-  "https://es.rollingstone.com/alex-rose-se-reencuentra-con-la-esencia-del-latin-rb-en-la-rosa/",
-  "https://es.rollingstone.com/arg-ya-podes-comprar-la-nueva-rolling-stone-con-mariana-enriquez-en-tapa-en-colecciones-la-nacion/"
+  "https://es.rollingstone.com/alex-rose-se-reencuentra-con-la-esencia-del-latin-rb-en-la-rosa/"
  ],
  "https://www.billboard.com/feed/": [
-  "https://www.billboard.com/lists/2026-emmys-variety-series-multiple-winners-likely/",
-  "https://www.billboard.com/culture/product-recommendations/t-mobile-postpaid-apple-iphone-18-pro-signup-online-1236338588/",
-  "https://www.billboard.com/music/rb-hip-hop/juvenile-b-g-cash-money-no-limit-tour-interview-1236335411/",
-  "https://www.billboard.com/pro/david-ali-accepts-billboard-rb-hip-hop-executive-year-award/",
-  "https://www.billboard.com/music/rb-hip-hop/50-cent-shyne-beef-over-1236338668/",
-  "https://www.billboard.com/music/rb-hip-hop/fabolous-reflects-ghetto-fabulous-arriving-9-11-1236338551/",
-  "https://www.billboard.com/lists/executive-turntable-corey-calder-columbia-records/",
-  "https://www.billboard.com/music/music-news/zach-bryan-kings-of-leon-bowery-nashville-show-1236338476/",
-  "https://www.billboard.com/pro/ne-yo-lawsuit-canceled-sri-lanka-concert/",
-  "https://www.billboard.com/pro/ella-langley-choosin-texas-how-much-money-made/"
+  "https://www.billboard.com/pro/jamaican-dancehall-singer-shabba-ranks-lawsuit-catalog/",
+  "https://www.billboard.com/music/country/911-country-songs-darryl-worley-reflect-significance-1236338824/",
+  "https://www.billboard.com/culture/product-recommendations/oklahoma-vs-michigan-sept-2026-college-football-watch-livestream-online-free-1236337268/",
+  "https://www.billboard.com/culture/product-recommendations/ella-langley-tour-sept-oct-2026-buy-shop-tickets-online-1236338450/",
+  "https://www.billboard.com/music/music-news/ocean-way-festival-canceled-santa-monica-hurricane-marie-1236338821/",
+  "https://www.billboard.com/music/awards/best-of-vmas-specials-relive-iconic-moments-before-show-1236332715/",
+  "https://www.billboard.com/music/pop/best-new-music-this-week-poll-vote-jhene-aiko-slayyyter-1236338762/",
+  "https://www.billboard.com/photos/lucky-daye-yung-miami-rb-hip-hop-live-2026-best-photos-1236338363/",
+  "https://www.billboard.com/lists/john-mayer-continuum-songs-ranked/",
+  "https://www.billboard.com/lists/2026-emmys-variety-series-multiple-winners-likely/"
  ]
 }
