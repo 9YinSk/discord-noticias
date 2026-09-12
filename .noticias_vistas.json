@@ -1,5 +1,6 @@
 {
  "https://www.animenewsnetwork.com/newsroom/rss.xml": [
+  "https://www.animenewsnetwork.com/news/2026-09-12/tokyopop-releases-cant-buy-my-love-romantically-challenged-3-more-manga-in-2027/.241694",
   "https://www.animenewsnetwork.com/news/2026-09-12/japan-video-game-rankings-august-31-september-6/.241658",
   "https://www.animenewsnetwork.com/news/2026-09-12/japanese-animation-tv-ranking-august-31-september-6/.241659",
   "https://www.animenewsnetwork.com/news/2026-09-12/bleach-thousand-year-blood-war-the-calamity-anime-episodes-49-50-delayed-to-october-19-26/.241707",
@@ -38,8 +39,7 @@
   "https://www.animenewsnetwork.com/news/2026-09-11/a-wild-last-boss-appeared-season-2-anime-reveals-september-26-early-streaming-debut-more-cast-in-/.241664",
   "https://www.animenewsnetwork.com/news/2026-09-11/psyren-tv-anime-reveals-more-cast-opening-theme-artist-october-5-debut-in-video/.241661",
   "https://www.animenewsnetwork.com/press-release/2026-09-11/oc-japan-fair-returns-this-october-with-expanded-anime-and-pop-culture-programming/.241655",
-  "https://www.animenewsnetwork.com/news/2026-09-11/live-action-ao-to-midori-bl-series-unveils-theme-song-artists-visual/.241648",
-  "https://www.animenewsnetwork.com/news/2026-09-11/my-sword-saint-master-is-too-cute-to-live-with-anime-reveals-staff-new-visual/.241653"
+  "https://www.animenewsnetwork.com/news/2026-09-11/live-action-ao-to-midori-bl-series-unveils-theme-song-artists-visual/.241648"
  ],
  "https://www.animenewsnetwork.com/all/rss.xml": [
   "https://www.animenewsnetwork.com/interest/2026-09-02/inuyasha-sketch-auctioned-to-help-african-kids-orphaned-by-aids/.241227",
@@ -204,18 +204,6 @@
   "https://www.animenewsnetwork.com/review/mobile-suit-gundam-hathaway/the-sorcery-of-nymph-circe-anime-film/.233634"
  ],
  "https://vandal.elespanol.com/xml.cgi": [
-  "https://vandal.elespanol.com/noticia/2026255011/sigue-en-directo-la-blizzcon-2026-todos-los-anuncios-traileres-y-novedades-de-blizzard/",
-  "https://vandal.elespanol.com/noticia/2026255010/no-todo-es-perfecto-en-gta-6-estos-5-errores-del-trailer-demuestran-que-rockstar-enseno-gameplay-real/",
-  "https://vandal.elespanol.com/noticia/2026255009/cuanto-durara-metro-2039-4a-games-anticipa-el-juego-mas-largo-de-la-saga/",
-  "https://vandal.elespanol.com/noticia/2026247026/blizzcon-2026-fecha-horarios-donde-ver-el-evento-de-blizzard-y-que-anuncios-podemos-esperar/",
-  "https://vandal.elespanol.com/noticia/2026255008/geralt-tiene-una-nueva-arma-en-the-witcher-3-songs-of-the-past-cd-projekt-explica-como-funciona/",
-  "https://vandal.elespanol.com/noticia/2026255007/un-ex-de-dragon-age-advierte-a-larian-volver-a-divinity-tras-baldurs-gate-3-es-un-riesgo-enorme/",
-  "https://vandal.elespanol.com/noticia/2026255006/hito-para-steam-deck-la-portatil-de-valve-ya-cuenta-con-mas-de-30000-juegos-jugables/",
-  "https://vandal.elespanol.com/noticia/2026255005/titanfall-iba-a-tener-nuevo-juego-de-estrategia-por-turnos-pero-acabo-convertido-en-star-wars-zero-company/",
-  "https://vandal.elespanol.com/noticia/2026255004/convierten-fallout-4-y-new-vegas-al-estilo-rpg-isometrico-y-parecen-juegos-de-los-anos-90/",
-  "https://vandal.elespanol.com/noticia/2026255003/encuentran-un-juego-multijugador-de-scream-totalmente-funcional-en-la-filtracion-de-steam/",
-  "https://vandal.elespanol.com/noticia/2026255002/kamiya-lo-tiene-claro-los-creadores-de-resident-evil-han-olvidado-el-miedo-que-dan-sus-juegos/",
-  "https://vandal.elespanol.com/noticia/2026255001/el-realismo-extremo-de-gta-6-los-gimnasios-te-pediran-cuota-y-tendras-que-consumir-bebidas-para-entrenar/",
   "https://vandal.elespanol.com/noticia/2026254031/dragon-ball-xenoverse-3-deslumbra-con-un-nuevo-super-saiyan-3-y-muestra-la-poderosa-transformacion-como-nunca/",
   "https://vandal.elespanol.com/noticia/2026254030/control-resonant-revela-sus-requisitos-finales-en-pc-pide-120-gb-de-ssd-pero-una-grafica-bastante-modesta/",
   "https://vandal.elespanol.com/noticia/2026254029/las-tiendas-avisan-asi-puedes-saber-si-la-edicion-fisica-de-zelda-ocarina-of-time-tiene-acabado-metalico-o-no/",
@@ -233,18 +221,30 @@
   "https://vandal.elespanol.com/noticia/2026254017/gley-lancer-overdrive-es-el-espectacular-remake-de-un-clasico-matamarcianos-de-mega-drive-que-llegara-en-2027/",
   "https://vandal.elespanol.com/noticia/2026254016/se-nota-el-salto-grafico-comparan-marvels-wolverine-en-ps5-vs-ps5-pro/",
   "https://vandal.elespanol.com/noticia/2026254015/veteranos-de-pokemon-grandia-y-tales-anuncian-un-peculiar-jrpg-que-empieza-siendo-adorable-y-acaba-en-la-locura/",
-  "https://vandal.elespanol.com/noticia/2026254014/ubisoft-comienza-a-retirar-el-requisito-del-launcher-ubisoft-connect-en-steam/"
+  "https://vandal.elespanol.com/noticia/2026254014/ubisoft-comienza-a-retirar-el-requisito-del-launcher-ubisoft-connect-en-steam/",
+  "https://vandal.elespanol.com/noticia/2026254013/call-of-duty-tendra-una-skin-exclusiva-en-xbox-que-los-jugadores-de-otras-plataformas-ni-siquiera-podran-ver/",
+  "https://vandal.elespanol.com/noticia/2026254012/wardogs-es-la-sorpresa-de-la-temporada-anuncia-su-hito-de-ventas-en-las-primeras-24-horas/",
+  "https://vandal.elespanol.com/noticia/2026254011/gta-6-sera-clave-para-que-el-mercado-de-consolas-crezca-en-2026-sin-el-los-ingresos-caerian-este-ano/",
+  "https://vandal.elespanol.com/noticia/2026254010/el-director-de-final-fantasy-vii-revelation-explica-por-que-no-se-incluye-todo-el-juego-en-la-edicion-fisica/",
+  "https://vandal.elespanol.com/noticia/2026254009/arabia-saudi-estudia-fusionar-electronic-arts-con-savvy-games-y-crear-un-nuevo-gigante-del-videojuego/",
+  "https://vandal.elespanol.com/noticia/2026254008/sony-pone-precio-a-until-dawn-2-y-es-mas-barato-de-lo-esperado-la-aventura-de-terror-no-costara-80-euros/",
+  "https://vandal.elespanol.com/noticia/2026254007/decapolice-suma-su-tercer-gran-retraso-el-esperado-rpg-detectivesco-de-level5-no-llegara-hasta-2027/",
+  "https://vandal.elespanol.com/noticia/2026254006/free-fire-max-codigos-de-hoy-viernes-11-de-septiembre-de-2026-recompensas-gratis/",
+  "https://vandal.elespanol.com/noticia/2026254005/solucion-wordle-en-espanol-y-tildes-hoy-11-de-septiembre-y-pistas-a-la-palabra-oculta/",
+  "https://vandal.elespanol.com/noticia/2026254004/el-metroidvania-espanol-aeterna-lucis-ya-tiene-fecha-y-precio-llegara-en-diciembre-tras-un-largo-retraso/",
+  "https://vandal.elespanol.com/noticia/2026254003/inazuma-eleven-victory-road-ya-tiene-secuela-level5-anuncia-inazuma-eleven-bold-revolution/",
+  "https://vandal.elespanol.com/noticia/2026254002/project-espresso-abre-su-playtest-y-todo-apunta-a-que-es-el-nuevo-nombre-de-fairgames-de-playstation/"
  ],
  "https://www.nintenderos.com/feed/": [
+  "https://www.nintenderos.com/nintendo-switch-2/cae-a-5990e-el-precio-de-la-reserva-de-zelda-ocarina-of-time-remake-en-amazon-espana/",
+  "https://www.nintenderos.com/2026/09/nintendo-dejara-de-vender-todos-estos-productos-extra-de-switch-en-europa-por-la-nueva-normativa-de-baterias/",
+  "https://www.nintenderos.com/nintendo-switch-2/minecraft-recibe-estos-contenidos-de-transformers/",
   "https://www.nintenderos.com/nintendo-switch-2/diablo-iv-llegara-a-nintendo-switch-2-este-septiembre-blizzard-anuncia-diablo-v-para-2029-y-tambien-una-serie-animada-en-netflix/",
   "https://www.nintenderos.com/nintendo-switch-2/uncanyon-maneater-2-y-mas-juegos-concretan-sus-estrenos-en-nintendo-switch-nintendo-switch-2/",
   "https://www.nintenderos.com/nintendo-switch-2/orbitals-lidera-el-top-ventas-del-momento-en-la-eshop-de-nintendo-switch-2-y-tomodachi-life-lo-hace-en-nintendo-switch-12-9-26/",
   "https://www.nintenderos.com/nintendo-switch-2/melty-blood-twi-lumina-y-mas-juegos-detallan-sus-debuts-en-nintendo-switch-nintendo-switch-2/",
   "https://www.nintenderos.com/2026/09/analisis-another-eden-begins-para-nintendo-switch/",
-  "https://www.nintenderos.com/2026/09/racion-triple-con-el-super-monkey-ball-triple-pack-que-llega-en-noviembre/",
-  "https://www.nintenderos.com/2026/09/akihiro-hino-presidente-de-level-5-da-explicaciones-sobre-el-uso-de-ia-en-su-ultimo-directo/",
-  "https://www.nintenderos.com/nintendo-switch-2/koei-tecmo-rebaja-todos-estos-juegos-de-nintendo-switch-2-y-nintendo-switch-en-la-eshop/",
-  "https://www.nintenderos.com/2026/09/scopely-confirma-que-los-globos-del-team-rocket-aparecen-una-vez-al-dia-en-pokemon-go-de-forma-intencionada/"
+  "https://www.nintenderos.com/2026/09/racion-triple-con-el-super-monkey-ball-triple-pack-que-llega-en-noviembre/"
  ],
  "https://www.espinof.com/feedburner.xml": [
   "https://www.espinof.com/actores-y-actrices/florence-pugh-actriz-no-voy-a-esconder-celulitis-mi-muslo-grasa-mi-brazo-mi-pecho-prefiero-mostrarlo-todo-tapujos",
@@ -306,6 +306,10 @@
   "https://isthereanydeal.com/giveaways/7433/"
  ],
  "https://isthereanydeal.com/feeds/PE/USD/deals.rss": [
+  "https://isthereanydeal.com/game/trailmakers/info/",
+  "https://isthereanydeal.com/game/shadowhand-rpg-card-game/info/",
+  "https://isthereanydeal.com/game/squirrel-with-a-gun/info/",
+  "https://isthereanydeal.com/game/hiraeth/info/",
   "https://isthereanydeal.com/game/caramellia/info/",
   "https://isthereanydeal.com/game/mina-the-hollower-and-momodora-moonlit-farewell/info/",
   "https://isthereanydeal.com/game/tales-and-tactics-soundtrack/info/",
@@ -451,11 +455,7 @@
   "https://isthereanydeal.com/game/anamiks-indie-games-8/info/",
   "https://isthereanydeal.com/game/unrailed-collection/info/",
   "https://isthereanydeal.com/game/metroidvania-in-the-dark/info/",
-  "https://isthereanydeal.com/game/cosmic-horror-collection/info/",
-  "https://isthereanydeal.com/game/mega-indie-platformer-bundle/info/",
-  "https://isthereanydeal.com/game/mega-indie-horror-games-bundle/info/",
-  "https://isthereanydeal.com/game/lets-play-japanese-games/info/",
-  "https://isthereanydeal.com/game/kasedo-bundle/info/"
+  "https://isthereanydeal.com/game/cosmic-horror-collection/info/"
  ],
  "https://www.musicbutler.io/users/feeds/95f44df4-78eb-4ed1-b2e2-85b9003b9540/": [],
  "apple:pe/songs": [
@@ -463,9 +463,9 @@
   "https://music.apple.com/pe/album/yonaguni/1570323047?i=1570323056",
   "https://music.apple.com/pe/album/koko/1877481995?i=1877482633",
   "https://music.apple.com/pe/album/efecto/1622045624?i=1622045954",
-  "https://music.apple.com/pe/album/sonido-de-lluvia-para-dormir-y-relajarse-pt-01/1695209090?i=1695209093",
   "https://music.apple.com/pe/album/ojitos-lindos/1622045624?i=1622045962",
   "https://music.apple.com/pe/album/vete/1500776322?i=1500776923",
+  "https://music.apple.com/pe/album/sonido-de-lluvia-para-dormir-y-relajarse-pt-01/1695209090?i=1695209093",
   "https://music.apple.com/pe/album/dichavate/1865959222?i=1865959223",
   "https://music.apple.com/pe/album/calla%C3%ADta/1465503234?i=1465503235",
   "https://music.apple.com/pe/album/me-porto-bonito/1622045624?i=1622045634"
@@ -509,6 +509,7 @@
   "https://es.rollingstone.com/alex-rose-se-reencuentra-con-la-esencia-del-latin-rb-en-la-rosa/"
  ],
  "https://www.billboard.com/feed/": [
+  "https://www.billboard.com/music/music-news/pink-backlash-macklemore-pro-palestine-comments-1236338984/",
   "https://www.billboard.com/music/rb-hip-hop/drake-fear-of-missing-out-teaser-a-not-so-short-film-1236338978/",
   "https://www.billboard.com/music/latin/carin-leon-sphere-pepe-aguilar-jose-guadalupe-esparza-recap-1236338962/",
   "https://www.billboard.com/music/music-news/stray-kids-rock-in-rio-brazil-debut-review-recap-1236338948/",
@@ -517,7 +518,6 @@
   "https://www.billboard.com/culture/product-recommendations/ryan-garcia-conor-benn-2026-watch-livestream-boxing-online-1236337863/",
   "https://www.billboard.com/music/latin/los-tigres-del-norte-day-minneapolis-uplifting-moments-1236338423/",
   "https://www.billboard.com/video/the-roots-hip-hop-hall-of-fame-endgame-roots-picnic/",
-  "https://www.billboard.com/music/pop/kylie-minogues-afl-grand-final-show-mcg-1236338919/",
-  "https://www.billboard.com/music/country/dolly-parton-nashville-airport-1236338913/"
+  "https://www.billboard.com/music/pop/kylie-minogues-afl-grand-final-show-mcg-1236338919/"
  ]
 }
