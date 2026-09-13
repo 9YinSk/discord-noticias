@@ -1,5 +1,11 @@
 {
  "https://www.animenewsnetwork.com/newsroom/rss.xml": [
+  "https://www.animenewsnetwork.com/interest/2026-09-12/level-5-ceo-akihiro-hino-addresses-use-of-ai-in-latest-presentation/.241710",
+  "https://www.animenewsnetwork.com/news/2026-09-12/the-oblivious-saint-cant-contain-her-power-manga-ends-in-next-volume/.241716",
+  "https://www.animenewsnetwork.com/news/2026-09-12/the-record-of-a-fallen-vampire-manga-gets-new-series-after-19-years-teases-announcement/.241709",
+  "https://www.animenewsnetwork.com/news/2026-09-12/in-the-clear-moonlit-dusk-manga-to-end-in-12th-volume-next-spring/.241708",
+  "https://www.animenewsnetwork.com/news/2026-09-12/star-detective-precure-film-assembles-you-and-idol-precure-wonderful-precure-in-2-trailers/.241718",
+  "https://www.animenewsnetwork.com/news/2026-09-12/orb-100-meters-manga-creator-uoto-to-launch-2-new-manga-series/.241706",
   "https://www.animenewsnetwork.com/news/2026-09-12/tokyopop-releases-cant-buy-my-love-romantically-challenged-3-more-manga-in-2027/.241694",
   "https://www.animenewsnetwork.com/news/2026-09-12/japan-video-game-rankings-august-31-september-6/.241658",
   "https://www.animenewsnetwork.com/news/2026-09-12/japanese-animation-tv-ranking-august-31-september-6/.241659",
@@ -33,13 +39,7 @@
   "https://www.animenewsnetwork.com/news/2026-09-11/webtoon-based-live-action-series-mousetrap-rises-to-no-1-on-global-non-english-series-on-netflix/.241652",
   "https://www.animenewsnetwork.com/news/2026-09-11/under-night-in-birth-ii-sys-celes-fighting-game-releases-dlc-character-zohar-the-doppelganger-on-/.241666",
   "https://www.animenewsnetwork.com/news/2026-09-11/voice-actor-kentaro-ito-goes-on-hiatus-following-brain-hemorrhage-surgery/.241667",
-  "https://www.animenewsnetwork.com/news/2026-09-11/shakugan-no-shana-blaze-edge-browser-game-launches-on-september-14/.241660",
-  "https://www.animenewsnetwork.com/news/2026-09-11/black-torch-tv-anime-reveals-final-promo-video/.241665",
-  "https://www.animenewsnetwork.com/news/2026-09-11/chitose-is-in-the-ramune-bottle-anime-2nd-part-reveals-october-13-debut-in-promo-video/.241662",
-  "https://www.animenewsnetwork.com/news/2026-09-11/a-wild-last-boss-appeared-season-2-anime-reveals-september-26-early-streaming-debut-more-cast-in-/.241664",
-  "https://www.animenewsnetwork.com/news/2026-09-11/psyren-tv-anime-reveals-more-cast-opening-theme-artist-october-5-debut-in-video/.241661",
-  "https://www.animenewsnetwork.com/press-release/2026-09-11/oc-japan-fair-returns-this-october-with-expanded-anime-and-pop-culture-programming/.241655",
-  "https://www.animenewsnetwork.com/news/2026-09-11/live-action-ao-to-midori-bl-series-unveils-theme-song-artists-visual/.241648"
+  "https://www.animenewsnetwork.com/news/2026-09-11/shakugan-no-shana-blaze-edge-browser-game-launches-on-september-14/.241660"
  ],
  "https://www.animenewsnetwork.com/all/rss.xml": [
   "https://www.animenewsnetwork.com/interest/2026-09-02/inuyasha-sketch-auctioned-to-help-african-kids-orphaned-by-aids/.241227",
@@ -236,6 +236,7 @@
   "https://vandal.elespanol.com/noticia/2026254018/blizzard-ya-no-podra-imponer-el-uso-de-ia-a-sus-desarrolladores-tendra-que-negociarlo-con-sus-trabajadores/"
  ],
  "https://www.nintenderos.com/feed/": [
+  "https://www.nintenderos.com/2026/09/asi-de-curiosa-era-la-decoracion-de-donkey-kong-64-en-el-e3-1999/",
   "https://www.nintenderos.com/nintendo-switch-2/cae-a-5990e-el-precio-de-la-reserva-de-zelda-ocarina-of-time-remake-en-amazon-espana/",
   "https://www.nintenderos.com/2026/09/nintendo-dejara-de-vender-todos-estos-productos-extra-de-switch-en-europa-por-la-nueva-normativa-de-baterias/",
   "https://www.nintenderos.com/nintendo-switch-2/minecraft-recibe-estos-contenidos-de-transformers/",
@@ -243,8 +244,7 @@
   "https://www.nintenderos.com/nintendo-switch-2/uncanyon-maneater-2-y-mas-juegos-concretan-sus-estrenos-en-nintendo-switch-nintendo-switch-2/",
   "https://www.nintenderos.com/nintendo-switch-2/orbitals-lidera-el-top-ventas-del-momento-en-la-eshop-de-nintendo-switch-2-y-tomodachi-life-lo-hace-en-nintendo-switch-12-9-26/",
   "https://www.nintenderos.com/nintendo-switch-2/melty-blood-twi-lumina-y-mas-juegos-detallan-sus-debuts-en-nintendo-switch-nintendo-switch-2/",
-  "https://www.nintenderos.com/2026/09/analisis-another-eden-begins-para-nintendo-switch/",
-  "https://www.nintenderos.com/2026/09/racion-triple-con-el-super-monkey-ball-triple-pack-que-llega-en-noviembre/"
+  "https://www.nintenderos.com/2026/09/analisis-another-eden-begins-para-nintendo-switch/"
  ],
  "https://www.espinof.com/feedburner.xml": [
   "https://www.espinof.com/actores-y-actrices/florence-pugh-actriz-no-voy-a-esconder-celulitis-mi-muslo-grasa-mi-brazo-mi-pecho-prefiero-mostrarlo-todo-tapujos",
@@ -306,6 +306,20 @@
   "https://isthereanydeal.com/giveaways/7433/"
  ],
  "https://isthereanydeal.com/feeds/PE/USD/deals.rss": [
+  "https://isthereanydeal.com/game/fox7-the-real-workout-simulator-soundtrack/info/",
+  "https://isthereanydeal.com/game/cultivation-x-modern/info/",
+  "https://isthereanydeal.com/game/travel-back-to-the-song-dynasty/info/",
+  "https://isthereanydeal.com/game/zhong-guo-feng-mo-ni-jing-ying/info/",
+  "https://isthereanydeal.com/game/mo-fa-chong-chong/info/",
+  "https://isthereanydeal.com/game/defend-the-bugs/info/",
+  "https://isthereanydeal.com/game/dawn-bugs/info/",
+  "https://isthereanydeal.com/game/chong-chong-de-jing-shi/info/",
+  "https://isthereanydeal.com/game/zombies-crash-the-tech-startup/info/",
+  "https://isthereanydeal.com/game/dawn-before-the-ashes/info/",
+  "https://isthereanydeal.com/game/seek-the-gem-in-the-prophecy/info/",
+  "https://isthereanydeal.com/game/daily-botanica-the-living-collection/info/",
+  "https://isthereanydeal.com/game/risk-of-rain-2-alloyed-collective/info/",
+  "https://isthereanydeal.com/game/risk-of-rain-2-seekers-of-the-storm/info/",
   "https://isthereanydeal.com/game/tribes-of-midgard-deluxe-content/info/",
   "https://isthereanydeal.com/game/risk-of-rain-2-and-survivors-of-the-void-and-seekers-of-the-storm-and-alloye/info/",
   "https://isthereanydeal.com/game/borderlands-collection-pandoras-box/info/",
@@ -441,21 +455,7 @@
   "https://isthereanydeal.com/game/cooking-simulator-x-overcooked/info/",
   "https://isthereanydeal.com/game/cooking-simulator-x-house-flipper/info/",
   "https://isthereanydeal.com/game/they-are-coming-noobs-x-monsters-are-coming/info/",
-  "https://isthereanydeal.com/game/bytebond-x-cooking-simulator/info/",
-  "https://isthereanydeal.com/game/brotato-x-noobs-are-coming/info/",
-  "https://isthereanydeal.com/game/cooking-simulator-and-everdream-valley/info/",
-  "https://isthereanydeal.com/game/cooking-simulator-and-bee-simulator/info/",
-  "https://isthereanydeal.com/game/chinese-frontiers-x-cooking-simulator/info/",
-  "https://isthereanydeal.com/game/simplegames/info/",
-  "https://isthereanydeal.com/game/fantasy-jigsaw-puzzles-core-collection/info/",
-  "https://isthereanydeal.com/game/raw-fury-publisher/info/",
-  "https://isthereanydeal.com/game/hooded-horse-strategy-rpg/info/",
-  "https://isthereanydeal.com/game/wild-woods-sheepherds--1/info/",
-  "https://isthereanydeal.com/game/unbeatable-and-bits-and-bops/info/",
-  "https://isthereanydeal.com/game/monster-keeper/info/",
-  "https://isthereanydeal.com/game/joy-of-adventure/info/",
-  "https://isthereanydeal.com/game/astro-colony-and-desynced/info/",
-  "https://isthereanydeal.com/game/anamiks-special-bundle-1/info/"
+  "https://isthereanydeal.com/game/bytebond-x-cooking-simulator/info/"
  ],
  "https://www.musicbutler.io/users/feeds/95f44df4-78eb-4ed1-b2e2-85b9003b9540/": [],
  "apple:pe/songs": [
@@ -467,8 +467,8 @@
   "https://music.apple.com/pe/album/vete/1500776322?i=1500776923",
   "https://music.apple.com/pe/album/dichavate/1865959222?i=1865959223",
   "https://music.apple.com/pe/album/calla%C3%ADta/1465503234?i=1465503235",
-  "https://music.apple.com/pe/album/sonido-de-lluvia-para-dormir-y-relajarse-pt-01/1695209090?i=1695209093",
-  "https://music.apple.com/pe/album/me-porto-bonito/1622045624?i=1622045634"
+  "https://music.apple.com/pe/album/me-porto-bonito/1622045624?i=1622045634",
+  "https://music.apple.com/pe/album/latina-foreva/1819544141?i=1819544623"
  ],
  "apple:pe/albums": [
   "https://music.apple.com/pe/album/no-me-arrepiento-de-sentir-tanto/6796864741",
@@ -480,7 +480,7 @@
   "https://music.apple.com/pe/album/prima/6792883860",
   "https://music.apple.com/pe/album/primera-musa/1760193416",
   "https://music.apple.com/pe/album/better-late-than-never/1848960616",
-  "https://music.apple.com/pe/album/omakase/6771082594"
+  "https://music.apple.com/pe/album/arirang/1868862375"
  ],
  "apple:jp/albums": [
   "https://music.apple.com/jp/album/amenity/6802879262",
@@ -509,15 +509,15 @@
   "https://es.rollingstone.com/alex-rose-se-reencuentra-con-la-esencia-del-latin-rb-en-la-rosa/"
  ],
  "https://www.billboard.com/feed/": [
+  "https://www.billboard.com/lists/bigbang-xx-cosmos-new-york-metlife-stadium-best-moments/",
+  "https://www.billboard.com/lists/celine-dion-paris-residency-opening-night-best-moments/",
+  "https://www.billboard.com/lists/celine-dion-paris-setlist-2026-songs/",
   "https://www.billboard.com/music/music-news/pink-backlash-macklemore-pro-palestine-comments-1236338984/",
   "https://www.billboard.com/music/rb-hip-hop/drake-fear-of-missing-out-teaser-a-not-so-short-film-1236338978/",
   "https://www.billboard.com/music/latin/carin-leon-sphere-pepe-aguilar-jose-guadalupe-esparza-recap-1236338962/",
   "https://www.billboard.com/music/music-news/stray-kids-rock-in-rio-brazil-debut-review-recap-1236338948/",
   "https://www.billboard.com/culture/product-recommendations/how-to-watch-2026-iowa-state-vs-iowa-game-online-free-1236337886/",
   "https://www.billboard.com/culture/product-recommendations/saturday-night-live-uk-season-2-watch-stream-online-1236338739/",
-  "https://www.billboard.com/culture/product-recommendations/ryan-garcia-conor-benn-2026-watch-livestream-boxing-online-1236337863/",
-  "https://www.billboard.com/music/latin/los-tigres-del-norte-day-minneapolis-uplifting-moments-1236338423/",
-  "https://www.billboard.com/video/the-roots-hip-hop-hall-of-fame-endgame-roots-picnic/",
-  "https://www.billboard.com/music/pop/kylie-minogues-afl-grand-final-show-mcg-1236338919/"
+  "https://www.billboard.com/culture/product-recommendations/ryan-garcia-conor-benn-2026-watch-livestream-boxing-online-1236337863/"
  ]
 }
