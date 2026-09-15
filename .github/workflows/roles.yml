@@ -79,10 +79,27 @@ jobs:
       #
       # Como el repositorio es PUBLICO, los minutos de Actions son ilimitados:
       # la unica razon para no vigilar en continuo era una factura que no
-      # existe. Asi que cada ejecucion se queda mirando las reacciones cada 15
-      # segundos durante NUEVE minutos. Con el cron cada cinco, siempre hay una
-      # corriendo y casi siempre dos solapadas -- cobertura continua sin que el
-      # PC de casa tenga que estar encendido.
+      # existe.
+      #
+      # **Esto vigilaba NUEVE minutos, y estaba mal calculado.** La cuenta daba
+      # por bueno que el `*/5` se cumple mas o menos; el 14-sep-2026 se midieron
+      # las 60 ultimas ejecuciones programadas, sobre 200 horas seguidas:
+      #
+      #     ejecuciones que tocaban ... 2.404
+      #     ejecuciones que hubo ......    60   (el 2,5 %)
+      #     hueco medio ...............   204 min  (3,4 h)
+      #     peor hueco ................   413 min  (6,9 h)
+      #     COBERTURA REAL ............   4,5 %
+      #
+      # O sea que no habia «siempre una corriendo»: habia nueve minutos de
+      # vigilancia y luego tres horas de nadie. Quien aceptaba las reglas
+      # esperaba de media 3 horas a que se le abriera el servidor.
+      #
+      # GitHub no va a cumplir el cron por mucho que se le pida, asi que la
+      # solucion no es pedir mas vueltas sino que **cada vuelta dure**. El tope
+      # de un trabajo son 6 horas; 5 h 40 deja margen para los pasos de arriba
+      # y cubre de sobra el peor hueco medido. Con esto la cobertura pasa de
+      # 4,5 % a practicamente 100 %.
       #
       # Solaparse no hace dano: repartir un rol que ya se tiene no hace nada.
       # Y va el ULTIMO a proposito, para no retrasar los contadores ni las
@@ -91,6 +108,7 @@ jobs:
       # `timeout` devuelve 124 al cortar, que no es un fallo: por eso el `|| true`.
       - name: Vigilar las reacciones en continuo
         continue-on-error: true
+        timeout-minutes: 350
         env:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
-        run: timeout 540 python -u discord_reacciones.py --vigilar 15 || true
+        run: timeout 20400 python -u discord_reacciones.py --vigilar 15 || true

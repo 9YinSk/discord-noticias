@@ -48,21 +48,41 @@ query($temporada:MediaSeason, $anio:Int, $n:Int){
   }
 }"""
 
-ESTACION = {12: "WINTER", 1: "WINTER", 2: "WINTER",
-            3: "SPRING", 4: "SPRING", 5: "SPRING",
-            6: "SUMMER", 7: "SUMMER", 8: "SUMMER",
-            9: "FALL", 10: "FALL", 11: "FALL"}
+# **Los trimestres de AniList, no las estaciones del calendario.** La primera
+# version usaba las estaciones meteorologicas —septiembre es otono— y AniList
+# reparte el ano en cuatro trimestres que empiezan en enero, abril, julio y
+# octubre. Un mes de desfase en cada corte.
+#
+# Y el fallo no se veia venir, porque solo aparece el PRIMER mes de cada
+# trimestre: marzo, junio, septiembre y diciembre. Los otros dos meses acierta.
+# El 7 y el 14 de septiembre de 2026 pidio FALL 2026, que todavia no se emite,
+# y AniList devolvio cinco series sin una sola nota. Medido ese dia:
+#
+#     FALL 2026   -> 5 series, 0 con nota
+#     SUMMER 2026 -> 5 series, 5 con nota
+#
+# El guion lo leyo como «no hay nada que contar» y no publico. Dos lunes sin
+# top de temporada, y el workflow en rojo sin que nadie lo mirara.
+ESTACION = {1: "WINTER", 2: "WINTER", 3: "WINTER",
+            4: "SPRING", 5: "SPRING", 6: "SPRING",
+            7: "SUMMER", 8: "SUMMER", 9: "SUMMER",
+            10: "FALL", 11: "FALL", 12: "FALL"}
 EN_CASTELLANO = {"WINTER": "invierno", "SPRING": "primavera",
                  "SUMMER": "verano", "FALL": "otoño"}
 MEDALLA = ["🥇", "🥈", "🥉"]
 
 
 def temporada_actual():
-    """La estación de hoy. En diciembre ya cuenta como el invierno del año que viene."""
+    """El trimestre de AniList en el que estamos hoy.
+
+    **Diciembre NO adelanta el ano.** La version vieja lo hacia porque con las
+    estaciones del calendario diciembre ya era invierno, y el invierno es del
+    ano siguiente. Con los trimestres de AniList diciembre es el ultimo mes de
+    FALL, del ano en curso: adelantar el ano ahi pedia una temporada que aun no
+    se ha emitido y devolvia la misma lista sin notas de septiembre.
+    """
     hoy = datetime.date.today()
-    est = ESTACION[hoy.month]
-    anio = hoy.year + 1 if hoy.month == 12 else hoy.year
-    return est, anio
+    return ESTACION[hoy.month], hoy.year
 
 
 def barra(pct, ancho=12):
@@ -90,7 +110,15 @@ def main():
     # los que aún no tienen nota no dicen nada: se caen
     medios = [m for m in medios if m.get("averageScore")]
     if not medios:
-        sys.exit("AniList no da notas todavía para esta temporada.")
+        # **Salir en verde, no en rojo.** Esto no es un fallo: las dos primeras
+        # semanas de un trimestre AniList todavia no tiene notas de nada, y no
+        # haber nada que contar es una respuesta legitima. Con `sys.exit(texto)`
+        # el proceso terminaba en 1, el workflow salia fallido, y un rojo que se
+        # repite cada semana deja de mirarse -- que es justo como se perdieron
+        # dos lunes seguidos sin que saltara ninguna alarma.
+        print(f"AniList no da notas todavía de {EN_CASTELLANO[est]} {anio}. "
+              "No publico nada y no es un fallo.")
+        return
 
     campos = []
     extra = []
