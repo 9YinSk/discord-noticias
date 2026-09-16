@@ -530,6 +530,27 @@ def overwrites_de(ch, everyone_id, rol_id, silenciado=None, muro=None):
     return list(fundidos.values())
 
 
+def leer_plan(archivo, args):
+    """Carga el plan y **se niega a aplicarlo si esta marcado como desfasado**.
+
+    El 16-sep-2026 el plan ya no describia el servidor: tras la poda del 29-ago
+    las categorias vivas se llaman EMPIEZA AQUI, EL ESTUDIO, LA ACADEMIA,
+    COMUNIDAD... y el plan seguia con IMPORTANTE, GENERAL, CANTO, CLASES. Con
+    ese desfase, `limpiar --enserio` borraria canales vivos y `crear` recrearia
+    los que ya no existen. Los simulacros siguen funcionando: solo leen.
+    """
+    plan = json.load(archivo)
+    aviso = plan.get("_desfasado")
+    if aviso and getattr(args, "enserio", False):
+        print()
+        print(">>> PARADO: discord_plan.json esta marcado como desfasado.")
+        print("    " + aviso)
+        print("    Rehaz el plan desde el servidor vivo y quita la clave "
+              "\"_desfasado\" antes de aplicar nada.")
+        sys.exit(1)
+    return plan
+
+
 def preparar_muro(plan):
     """El rele de entrada: cada canal del recorrido se abre con la llave del anterior.
 
@@ -557,7 +578,7 @@ def preparar_muro(plan):
 
 def cmd_crear(args):
     with open(args.plan, encoding="utf-8") as f:
-        plan = json.load(f)
+        plan = leer_plan(f, args)
     preparar_muro(plan)
 
     guild = api("GET", f"/guilds/{args.guild_id}")
@@ -813,7 +834,7 @@ def cmd_crear(args):
 def cmd_onboarding(args):
     """Aplica el cuestionario de entrada (Community Onboarding) desde el plan."""
     with open(args.plan, encoding="utf-8") as f:
-        plan = json.load(f)
+        plan = leer_plan(f, args)
     ob = plan.get("onboarding")
     if not ob:
         sys.exit("El plan no tiene bloque 'onboarding'.")
@@ -929,7 +950,7 @@ def cmd_onboarding(args):
 def cmd_limpiar(args):
     """Borra los canales que NO estan en el plan. Simulacro por defecto."""
     with open(args.plan, encoding="utf-8") as f:
-        plan = json.load(f)
+        plan = leer_plan(f, args)
 
     del_plan = {c["nombre"] for cat in plan["categorias"] for c in cat["canales"]}
     del_plan |= {cat["nombre"] for cat in plan["categorias"]}
@@ -973,7 +994,7 @@ def cmd_limpiar(args):
 def limpiar_roles(args):
     """Borra roles fuera del plan. Nunca toca @everyone ni roles de bots/boost."""
     with open(args.plan, encoding="utf-8") as f:
-        plan = json.load(f)
+        plan = leer_plan(f, args)
     del_plan = {r["nombre"] for r in plan.get("roles", [])}
 
     roles = api("GET", f"/guilds/{args.guild_id}/roles")
@@ -1098,7 +1119,7 @@ def cmd_jerarquia(args):
     jerarquia queda indefinida: los bots no pueden repartir roles y no avisan.
     """
     with open(args.plan, encoding="utf-8") as f:
-        plan = json.load(f)
+        plan = leer_plan(f, args)
 
     roles = api("GET", f"/guilds/{args.guild_id}/roles")
     por_nombre = {r["name"]: r for r in roles}
@@ -1245,7 +1266,7 @@ def cmd_permisos(args):
     'solo_lectura', 'oradores' o 'sin_bots' en el plan, hace falta esto.
     """
     with open(args.plan, encoding="utf-8") as f:
-        plan = json.load(f)
+        plan = leer_plan(f, args)
     preparar_muro(plan)
 
     everyone = args.guild_id
