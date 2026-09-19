@@ -1,5 +1,7 @@
 {
  "https://www.animenewsnetwork.com/newsroom/rss.xml": [
+  "https://www.animenewsnetwork.com/news/2026-09-18/dengeki-daisy-tv-anime-reveals-january-2027-debut-half-year-run-in-main-promo-video/.241961",
+  "https://www.animenewsnetwork.com/news/2026-09-18/live-action-lollipop-chainsaw-film-announced/.241960",
   "https://www.animenewsnetwork.com/press-release/2026-09-18/band-maid-new-single-spin-named-new-ending-theme-for-beyblade-x/.241959",
   "https://www.animenewsnetwork.com/press-release/2026-09-18/nexon-showcases-mabinogi-mobile-and-fareidolia-at-tokyo-game-show-2026/.241958",
   "https://www.animenewsnetwork.com/press-release/2026-09-18/mabinogi-mobile-launches-in-japan-on-october-7/.241957",
@@ -37,9 +39,7 @@
   "https://www.animenewsnetwork.com/news/2026-09-17/goro-kanbe-golian-no-junjo-na-junai-manga-ends/.241878",
   "https://www.animenewsnetwork.com/news/2026-09-17/live-action-can-you-kiss-me-first-series-teaser-reveals-october-19-tv-debut/.241886",
   "https://www.animenewsnetwork.com/news/2026-09-17/the-failure-at-god-school-manga-gets-tv-anime/.241912",
-  "https://www.animenewsnetwork.com/news/2026-09-17/discotek-to-release-digimon-tamers-digimon-frontier-lupin-the-iiird-zenigata-and-the-two-lupins-/.241874",
-  "https://www.animenewsnetwork.com/news/2026-09-17/takeshobo-to-release-3-bl-manga-titles-digitally-in-english/.241893",
-  "https://www.animenewsnetwork.com/news/2026-09-17/a-mark-against-thee-webtoon-gets-stage-musical-adaptation/.241887"
+  "https://www.animenewsnetwork.com/news/2026-09-17/discotek-to-release-digimon-tamers-digimon-frontier-lupin-the-iiird-zenigata-and-the-two-lupins-/.241874"
  ],
  "https://www.animenewsnetwork.com/all/rss.xml": [
   "https://www.animenewsnetwork.com/interest/2026-09-02/inuyasha-sketch-auctioned-to-help-african-kids-orphaned-by-aids/.241227",
@@ -204,12 +204,6 @@
   "https://www.animenewsnetwork.com/review/mobile-suit-gundam-hathaway/the-sorcery-of-nymph-circe-anime-film/.233634"
  ],
  "https://vandal.elespanol.com/xml.cgi": [
-  "https://vandal.elespanol.com/noticia/2026261027/hay-diferencias-comparan-el-detalle-grafico-de-ea-sports-fc-27-en-ps5-switch-2-y-ps4/",
-  "https://vandal.elespanol.com/noticia/2026261026/fire-emblem-fortunes-weave-solo-tiene-una-partida-guardada-y-sus-creadores-explican-por-que/",
-  "https://vandal.elespanol.com/noticia/2026261025/acaba-de-salir-y-trails-in-the-sky-2nd-chapter-es-uno-de-los-juegos-mejor-valorados-del-ano-segun-metacritic/",
-  "https://vandal.elespanol.com/noticia/2026261024/amazon-esta-regalando-2-nuevos-juegos-gratis-de-pc-a-todos-los-suscriptores-de-amazon-prime-incluyendo-doom-eternal/",
-  "https://vandal.elespanol.com/noticia/2026261023/el-nuevo-fable-se-pudo-permitir-un-desarrollo-de-10-anos-porque-forma-parte-del-adn-de-xbox-segun-playground/",
-  "https://vandal.elespanol.com/noticia/2026261022/la-secuela-de-the-blood-of-dawnwalker-podria-descartar-su-mecanica-mas-polemica-no-la-forzaremos/",
   "https://vandal.elespanol.com/noticia/2026261021/game-te-premia-por-ir-a-la-san-diego-comiccon-de-malaga-la-suscripcion-a-game-premium-te-saldra-gratis/",
   "https://vandal.elespanol.com/noticia/2026261020/el-director-de-final-fantasy-vii-revelation-explica-como-seran-los-dlc-de-vincent-y-sephiroth/",
   "https://vandal.elespanol.com/noticia/2026261019/taketwo-vuelve-a-dar-pistas-sobre-gta-6-en-pc-es-una-plataforma-cada-vez-mas-importante/",
@@ -233,9 +227,16 @@
   "https://vandal.elespanol.com/noticia/2026261001/podra-tu-pc-con-gears-of-war-eday-estos-son-sus-requisitos-finales-para-juga-en-minimo-recomendado-y-ultra/",
   "https://vandal.elespanol.com/noticia/2026260030/kingdom-hearts-llega-a-fortnite-con-multitud-de-contenido-y-el-pack-de-contenido-mas-caro-del-juego/",
   "https://vandal.elespanol.com/noticia/2026260029/bloodstained-the-scarlet-engagement-muestra-nuevo-gameplay-y-promete-el-mapa-mas-grande-de-la-saga/",
-  "https://vandal.elespanol.com/noticia/2026260028/wardogs-es-el-nuevo-fenomeno-shooter-y-esta-vendiendo-mas-rapido-que-arc-raiders-o-helldivers-2/"
+  "https://vandal.elespanol.com/noticia/2026260028/wardogs-es-el-nuevo-fenomeno-shooter-y-esta-vendiendo-mas-rapido-que-arc-raiders-o-helldivers-2/",
+  "https://vandal.elespanol.com/noticia/2026260027/a-que-hora-se-desbloquea-ea-sports-fc-27-hora-exacta-de-su-lanzamiento-en-acceso-anticipado/",
+  "https://vandal.elespanol.com/noticia/2026260026/ya-disponibles-los-dos-juego-gratis-de-epic-games-store-y-anunciados-los-proximos-regalos/",
+  "https://vandal.elespanol.com/noticia/2026260025/pragmata-recibe-nuevas-apariencias-gratuitas-una-colaboracion-con-mega-man-que-hace-realidad-la-teoria-fan/",
+  "https://vandal.elespanol.com/noticia/2026260024/blizzard-presume-de-records-blizzcon-2026-supero-todas-las-cifras-de-pasadas-ediciones/",
+  "https://vandal.elespanol.com/noticia/2026260023/zero-parades-for-dead-spies-ya-tiene-fecha-en-ps5-y-llegara-con-una-directors-cut-repleta-de-novedades/",
+  "https://vandal.elespanol.com/noticia/2026260022/tiny-tinas-wonderlands-2-y-un-nuevo-brothers-in-arms-tuvieron-proyectos-que-han-sido-cancelados-o-reiniciados/"
  ],
  "https://www.nintenderos.com/feed/": [
+  "https://www.nintenderos.com/nintendo-switch-2/final-fantasy-vii-revelation-ofrece-nuevos-detalles-de-sus-dlc-y-deja-en-el-aire-la-llegada-de-la-remake-series-complete-edition-a-occidente/",
   "https://www.nintenderos.com/2026/09/las-tecnicas-mas-devastadoras-de-la-historia-de-dragon-ball-de-la-destruccion-planetaria-al-borrado-del-alma/",
   "https://www.nintenderos.com/nintendo-switch-2/sega-muestra-el-prototipo-de-sonic-frontiers-en-video-y-algunos-fans-lo-prefieren-al-juego-final/",
   "https://www.nintenderos.com/2026/09/nintendo-queda-segunda-en-el-brand-equity-score-2026-de-nikkei-research/",
@@ -243,8 +244,7 @@
   "https://www.nintenderos.com/nintendo-switch-2/todos-estos-packs-de-nintendo-switch-2-y-la-edicion-de-zelda-no-incluyen-bateria-reemplazable/",
   "https://www.nintenderos.com/nintendo-switch-2/comparativa-en-video-entre-ps4-vs-nintendo-switch-2-vs-ps5-de-ea-sports-fc-27/",
   "https://www.nintenderos.com/2026/09/rocket-league-detalla-su-temporada-24-con-contenidos-de-persona-5-y-mas/",
-  "https://www.nintenderos.com/2026/09/nintendo-music-permitio-ver-al-detalle-lo-arrugada-que-esta-wrinkly-kong/",
-  "https://www.nintenderos.com/2026/09/level-5-emite-un-nuevo-comunicado-sobre-las-acusaciones-de-uso-de-ia/"
+  "https://www.nintenderos.com/2026/09/nintendo-music-permitio-ver-al-detalle-lo-arrugada-que-esta-wrinkly-kong/"
  ],
  "https://www.espinof.com/feedburner.xml": [
   "https://www.espinof.com/proyectos/zack-snyder-da-primeros-detalles-su-remake-1997-rescate-nueva-york-tiene-todo-eso-me-encanta",
@@ -312,10 +312,30 @@
   "https://isthereanydeal.com/giveaways/7433/"
  ],
  "https://isthereanydeal.com/feeds/PE/USD/deals.rss": [
+  "https://isthereanydeal.com/game/bian-chui-zhi-lu/info/",
+  "https://isthereanydeal.com/game/snowdesktop/info/",
+  "https://isthereanydeal.com/game/nexus-ascendant/info/",
+  "https://isthereanydeal.com/game/dead-world/info/",
+  "https://isthereanydeal.com/game/milanesa-studio-pack/info/",
+  "https://isthereanydeal.com/game/dead-world-complete-edition/info/",
+  "https://isthereanydeal.com/game/dead-world-la-argentina-muerta-soundtrack/info/",
+  "https://isthereanydeal.com/game/bound-by-destiny/info/",
+  "https://isthereanydeal.com/game/mushiba-fang-zhi-zhu-shi-hui-she/info/",
+  "https://isthereanydeal.com/game/that-cloud-looks-like/info/",
+  "https://isthereanydeal.com/game/neon-city-legends/info/",
+  "https://isthereanydeal.com/game/black-hole-grow-forever/info/",
+  "https://isthereanydeal.com/game/data-center-simulator-game/info/",
+  "https://isthereanydeal.com/game/stronghold-warlords/info/",
+  "https://isthereanydeal.com/game/ready-or-not-boiling-point/info/",
+  "https://isthereanydeal.com/game/ready-or-not-digital-deluxe-edition/info/",
+  "https://isthereanydeal.com/game/ready-or-not/info/",
+  "https://isthereanydeal.com/game/ready-or-not-dark-waters/info/",
+  "https://isthereanydeal.com/game/ready-or-not-home-invasion/info/",
+  "https://isthereanydeal.com/game/warm/info/",
+  "https://isthereanydeal.com/game/ready-or-not-home-invasion-bundle/info/",
   "https://isthereanydeal.com/game/toonsouls-maker/info/",
   "https://isthereanydeal.com/game/crystal-covenant/info/",
   "https://isthereanydeal.com/game/stronghold-2-steam-edition/info/",
-  "https://isthereanydeal.com/game/stronghold-warlords/info/",
   "https://isthereanydeal.com/game/stronghold-hd/info/",
   "https://isthereanydeal.com/game/stronghold-legends/info/",
   "https://isthereanydeal.com/game/stronghold-warlords-special-edition/info/",
@@ -328,6 +348,7 @@
   "https://isthereanydeal.com/game/typing-show/info/",
   "https://isthereanydeal.com/game/at-face-value/info/",
   "https://isthereanydeal.com/game/stronghold-hd-collection/info/",
+  "https://isthereanydeal.com/game/radiant-guardians-of-light/info/",
   "https://isthereanydeal.com/game/iron-nest-heavy-turret-simulator/info/",
   "https://isthereanydeal.com/game/yet-another-survival-game/info/",
   "https://isthereanydeal.com/game/voxel-race/info/",
@@ -440,28 +461,7 @@
   "https://isthereanydeal.com/game/headarrow-anomaly-games/info/",
   "https://isthereanydeal.com/game/their-land-complete-edition/info/",
   "https://isthereanydeal.com/game/their-land-colorful-rifle-skin/info/",
-  "https://isthereanydeal.com/game/their-land/info/",
-  "https://isthereanydeal.com/game/headarrow-games/info/",
-  "https://isthereanydeal.com/game/headarrow-horror-games/info/",
-  "https://isthereanydeal.com/game/cave-quest-2-collectors-edition/info/",
-  "https://isthereanydeal.com/game/taskpaw-and-puni-the-florist/info/",
-  "https://isthereanydeal.com/game/taskpaw-and-neko-station/info/",
-  "https://isthereanydeal.com/game/i-wish-you-weren-t-here/info/",
-  "https://isthereanydeal.com/game/night-alley/info/",
-  "https://isthereanydeal.com/game/dewdrop/info/",
-  "https://isthereanydeal.com/game/taskpaw/info/",
-  "https://isthereanydeal.com/game/refate-echoes-of-desire/info/",
-  "https://isthereanydeal.com/game/red-dead-online/info/",
-  "https://isthereanydeal.com/game/cat-a-loop/info/",
-  "https://isthereanydeal.com/game/bot-bot/info/",
-  "https://isthereanydeal.com/game/dead-margin/info/",
-  "https://isthereanydeal.com/game/biovoid/info/",
-  "https://isthereanydeal.com/game/king-charles-rise-of-the-alpha-costume-pack/info/",
-  "https://isthereanydeal.com/game/spear/info/",
-  "https://isthereanydeal.com/game/caribbean-legend-and-brotherhood/info/",
-  "https://isthereanydeal.com/game/brotherhood/info/",
-  "https://isthereanydeal.com/game/tracks-the-train-set-game/info/",
-  "https://isthereanydeal.com/game/shoppe-keep-2/info/"
+  "https://isthereanydeal.com/game/their-land/info/"
  ],
  "https://www.musicbutler.io/users/feeds/95f44df4-78eb-4ed1-b2e2-85b9003b9540/": [],
  "apple:pe/songs": [
@@ -472,9 +472,9 @@
   "https://music.apple.com/pe/album/ojitos-lindos/1622045624?i=1622045962",
   "https://music.apple.com/pe/album/vete/1500776322?i=1500776923",
   "https://music.apple.com/pe/album/dichavate/1865959222?i=1865959223",
-  "https://music.apple.com/pe/album/sonido-de-lluvia-para-dormir-y-relajarse-pt-01/1695209090?i=1695209093",
   "https://music.apple.com/pe/album/calla%C3%ADta/1465503234?i=1465503235",
-  "https://music.apple.com/pe/album/latina-foreva/1819544141?i=1819544623"
+  "https://music.apple.com/pe/album/la-canci%C3%B3n/1470146332?i=1470146813",
+  "https://music.apple.com/pe/album/me-porto-bonito/1622045624?i=1622045634"
  ],
  "apple:pe/albums": [
   "https://music.apple.com/pe/album/el-green-print-la-saga-disc-2-el-club-de-las-19-flores/6812011280",
@@ -498,7 +498,7 @@
   "https://music.apple.com/jp/album/%E3%81%90%E3%81%A3%E3%81%99%E3%82%8A%E7%9C%A0%E3%82%8C%E3%82%8B%CE%B1%E6%B3%A2-%E3%83%87%E3%82%A3%E3%82%BA%E3%83%8B%E3%83%BC-%E3%83%97%E3%83%AC%E3%83%9F%E3%82%A2%E3%83%A0-%E3%82%AA%E3%83%AB%E3%82%B4%E3%83%BC%E3%83%AB-%E3%83%99%E3%82%B9%E3%83%88/1054914398",
   "https://music.apple.com/jp/album/%E3%81%82%E3%81%9F%E3%81%BE%E3%81%94/6805745934",
   "https://music.apple.com/jp/album/arirang/1869053670",
-  "https://music.apple.com/jp/album/hana/1874511603"
+  "https://music.apple.com/jp/album/aimyon-best-album-chase-the-lips/6798303682"
  ],
  "https://es.rollingstone.com/feed/": [
   "https://es.rollingstone.com/critica-volar/",
@@ -515,15 +515,15 @@
   "https://es.rollingstone.com/arg-en-sin-la-piel-las-pelotas-muestra-su-cara-luminosa-guitarrera-y-sofisticada/"
  ],
  "https://www.billboard.com/feed/": [
+  "https://www.billboard.com/music/latin/shakira-madrid-concert-recap-residency-spain-1236343874/",
+  "https://www.billboard.com/lists/2026-mtv-vma-nominations-list-madonna-video-music-awards/",
+  "https://www.billboard.com/music/pop/ateez-hongjoong-enough-interview-1236343248/",
   "https://www.billboard.com/pro/kiss-gene-simmons-award-ieba-2026-conference/",
   "https://www.billboard.com/pro/music-industry-events-calendar-festivals-awards-conferences/",
   "https://www.billboard.com/music/latin/rodrigo-y-gabriela-new-album-ourhome-lyrics-vocal-interview-1236343793/",
   "https://www.billboard.com/music/music-news/psychic-fever-interview-new-album-different-1236343813/",
   "https://www.billboard.com/music/music-news/vaundy-concert-live-recap-makuharimesse-chiba-japan-1236343809/",
   "https://www.billboard.com/music/chart-beat/yama-wayama-onna-no-sono-no-hoshi-5-tops-japan-book-hot-100-1236343805/",
-  "https://www.billboard.com/music/chart-beat/ebidan-yes-tokyo-third-week-number-1-japan-hot-100-1236343796/",
-  "https://www.billboard.com/culture/product-recommendations/aespa-2026-synk-complaexity-tour-merch-prices-shop-online-1236342972/",
-  "https://www.billboard.com/pro/shein-responds-selena-estate-lawsuit-knockoff-merch/",
-  "https://www.billboard.com/lists/tinashe-manager-new-company-music-executive-job-news/"
+  "https://www.billboard.com/music/chart-beat/ebidan-yes-tokyo-third-week-number-1-japan-hot-100-1236343796/"
  ]
 }
