@@ -149,6 +149,76 @@ def tarjeta_noticia(titular, fuente, color, archivo, w=1200, h=630,
     return ruta
 
 
+# ── LA MARQUESINA (22-sep-2026) ─────────────────────────────────────────────
+#
+# «Las bienvenidas pueden ser mil veces mejores… recuerda que debe salir su
+# imagen». El decorado —telón, foco, aro de bombillas, cartel, entrada— se
+# dibuja UNA vez en HTML (`laminas_v2/bienvenida_fondo.html`) y vive como PNG en
+# `decorados/`; aquí sólo se pega lo que cambia con cada persona: su foto en el
+# aro, su nombre en el cartel y su número en la entrada. Así la nube no necesita
+# navegador, sólo Pillow.
+DECORADO_BIENVENIDA = os.path.join(AQUI, "decorados", "bienvenida_marquesina.png")
+# Los huecos, en píxeles del decorado (que está a doble tamaño: 2400×960). Si
+# se mueve algo en el HTML, se mueve aquí.
+HUECO_FOTO = (542, 486, 212)            # centro x, centro y, radio
+HUECO_NOMBRE = (1580, 420, 1120)        # centro x, centro y de la línea, ancho máximo
+HUECO_ENTRADA = (1340, 746, -3)         # centro x, centro y, giro en grados
+
+
+def _bienvenida_marquesina(nombre, avatar_url, numero, archivo):
+    img = Image.open(DECORADO_BIENVENIDA).convert("RGB")
+    W, H = img.size
+
+    # 1. La foto, en el aro. Sin foto, la inicial en grande: nunca un hueco.
+    cx, cy, r = HUECO_FOTO
+    cara = _bajar_imagen(avatar_url) if avatar_url else None
+    if cara:
+        cara = cara.convert("RGB").resize((2 * r, 2 * r), Image.LANCZOS)
+        mascara = Image.new("L", (2 * r, 2 * r), 0)
+        ImageDraw.Draw(mascara).ellipse([0, 0, 2 * r - 1, 2 * r - 1], fill=255)
+        img.paste(cara, (cx - r, cy - r), mascara)
+    else:
+        d0 = ImageDraw.Draw(img)
+        d0.ellipse([cx - r, cy - r, cx + r, cy + r], fill=(60, 16, 28))
+        fi = ImageFont.truetype(FUENTE_TIT, 200)
+        letra = (nombre or "?")[0].upper()
+        bb = d0.textbbox((0, 0), letra, font=fi)
+        d0.text((cx - (bb[2] - bb[0]) / 2 - bb[0], cy - (bb[3] - bb[1]) / 2 - bb[1]),
+                letra, font=fi, fill=(255, 231, 168))
+
+    # 2. El nombre, en el cartel, encendido como sus bombillas.
+    nx, ny, ancho = HUECO_NOMBRE
+    texto = nombre.upper()
+    f = ImageFont.truetype(FUENTE_TIT, 150)
+    d = ImageDraw.Draw(img)
+    while d.textlength(texto, font=f) > ancho and f.size > 60:
+        f = ImageFont.truetype(FUENTE_TIT, f.size - 6)
+    bb = d.textbbox((0, 0), texto, font=f)
+    x, y = nx - (bb[2] - bb[0]) / 2 - bb[0], ny - (bb[3] - bb[1]) / 2 - bb[1]
+    cap = Image.new("L", (W, H), 0)
+    ImageDraw.Draw(cap).text((x, y), texto, font=f, fill=255)
+    img = ImageChops.add(img, brillar(cap, (255, 190, 90), radios=(8, 26), fuerzas=(.7, .35)))
+    ImageDraw.Draw(img).text((x, y), texto, font=f, fill=(255, 236, 190))
+
+    # 3. El número, en la entrada: «eres la persona 41» es un sitio en la fila.
+    ex, ey, giro = HUECO_ENTRADA
+    capa = Image.new("RGBA", (600, 172), (0, 0, 0, 0))
+    dc = ImageDraw.Draw(capa)
+    fn = ImageFont.truetype(FUENTE_TIT, 64)
+    fs = ImageFont.truetype(FUENTE, 30)
+    dc.text((48, 62), f"PERSONA Nº {numero}", font=fn, fill=(42, 18, 8))
+    dc.text((340, 24), "de esta casa", font=fs, fill=(163, 18, 44))
+    capa = capa.rotate(-giro, resample=Image.BICUBIC, expand=True)
+    img.paste(capa, (int(ex - capa.width / 2), int(ey - capa.height / 2)), capa)
+
+    # A 1600 de ancho: Discord la enseña a ~550 y así pesa la mitad.
+    img = img.resize((1600, int(H * 1600 / W)), Image.LANCZOS)
+    os.makedirs(SALIDA, exist_ok=True)
+    ruta = os.path.join(SALIDA, archivo)
+    img.save(ruta, "PNG", optimize=True)
+    return ruta
+
+
 def tarjeta_bienvenida(nombre, avatar_url, numero, color, archivo,
                        lema=None, w=1200, h=420):
     """La tarjeta de quien acaba de entrar: su cara, su nombre y qué número hace.
@@ -157,8 +227,13 @@ def tarjeta_bienvenida(nombre, avatar_url, numero, color, archivo,
     persona 41» convierte una cifra en un sitio en la fila**, y en un servidor
     pequeño eso juega a favor. Lo que cambia es que ahora entra por la misma
     puerta visual que el resto: rayos, neón y el filete de dientes.
+
+    Desde el 22-sep, si está el decorado de la marquesina, sale la marquesina;
+    lo de abajo queda de reserva por si falta el archivo.
     """
     nombre = sin_emoji(nombre or "")
+    if os.path.exists(DECORADO_BIENVENIDA):
+        return _bienvenida_marquesina(nombre or "?", avatar_url, numero, archivo)
     img = _fondo_neon(w, h, MORADO, (w*.17, h*.5))
 
     # el aro del avatar, en neón: es lo que ata la cara al lenguaje del logo
