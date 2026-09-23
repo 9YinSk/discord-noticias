@@ -1,52 +1,7 @@
 {
   "_que_es": "Paneles de reaccion que reparte nuestro propio bot con discord_reacciones.py. Los IDs de mensaje se sacan con: discord_servidor.py leer <guild> <canal>",
   "guild": "1539896304178823282",
-  "paneles": [
-    {
-      "que_es": "Colores del nombre. Solo uno a la vez.",
-      "canal_id": "1540616201716367402",
-      "mensaje": "1543512539021713570",
-      "exclusivo": true,
-      "quitar": true,
-      "reacciones": {
-        "🔴": "🔴 Rojo",
-        "🟠": "🟠 Naranja",
-        "🟡": "🟡 Amarillo",
-        "🟢": "🟢 Verde",
-        "🩵": "🩵 Turquesa",
-        "🔵": "🔵 Azul",
-        "🟣": "🟣 Morado",
-        "🩷": "🩷 Rosa",
-        "🤍": "🤍 Blanco",
-        "🖤": "🖤 Negro",
-        "🤎": "🤎 Marron",
-        "💗": "💗 Pastel"
-      }
-    },
-    {
-      "que_es": "De dónde eres. Solo uno a la vez.",
-      "canal_id": "1540616201716367402",
-      "mensaje": "1543512594353102858",
-      "exclusivo": true,
-      "quitar": true,
-      "reacciones": {
-        "🇲🇽": "🇲🇽 México",
-        "🇬🇹": "🇬🇹 Centroamérica",
-        "🇨🇴": "🇨🇴 Colombia",
-        "🇻🇪": "🇻🇪 Venezuela",
-        "🇪🇨": "🇪🇨 Ecuador",
-        "🇵🇪": "🇵🇪 Perú",
-        "🇧🇴": "🇧🇴 Bolivia",
-        "🇨🇱": "🇨🇱 Chile",
-        "🇦🇷": "🇦🇷 Argentina",
-        "🇺🇾": "🇺🇾 Uruguay",
-        "🇵🇾": "🇵🇾 Paraguay",
-        "🇩🇴": "🇩🇴 Rep. Dominicana",
-        "🇪🇸": "🇪🇸 España",
-        "🌎": "🌎 Otro país"
-      }
-    }
-  ],
+  "paneles": [],
   "al_publicar": [
     {
       "que_es": "Red de seguridad: si alguien se presenta sin haber aceptado las reglas, tambien entra",
@@ -192,5 +147,6 @@
     ]
   },
   "_nota_paso1": "El panel de Paso 1 se quito el 25-ago: existia para abrir reglas, y reglas ya se ve desde el principio porque Discord obliga a aceptarlas en la puerta. Era un peaje sin puerta detras.",
-  "_nota_una_puerta": "16-sep-2026: se quitaron los paneles ➡️ (Paso 1) y ✅ (Paso 2). La encuesta de entrada ya da ✅ Verificado; las reacciones eran una segunda puerta para la misma llave. Ver discord_una_puerta.py."
+  "_nota_una_puerta": "16-sep-2026: se quitaron los paneles ➡️ (Paso 1) y ✅ (Paso 2). La encuesta de entrada ya da ✅ Verificado; las reacciones eran una segunda puerta para la misma llave. Ver discord_una_puerta.py.",
+  "_nota_paneles_22sep": "22-sep-2026: fuera los paneles de colores y países de #autoroles. Repetían la encuesta de entrada, que ya tiene las dos preguntas; se cambian en «Canales y roles». Ver discord_orden_y_encuesta.py."
 }
