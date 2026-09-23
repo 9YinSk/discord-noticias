@@ -147,7 +147,9 @@ def icono_de(dominio):
     d = ICONOS.get(dominio, dominio)
     if "." not in d or " " in d or "/" in d:
         return None
-    return f"https://icons.duckduckgo.com/ip3/{d}.ico"
+    # PNG y no .ico: el .ico de Anime News Network salía roto en Discord aunque
+    # la URL contestaba 200 (visto el 22-sep). Un PNG lo pinta siempre.
+    return f"https://www.google.com/s2/favicons?domain={d}&sz=64"
 
 
 def de_donde(url):
@@ -200,8 +202,18 @@ _IMG = re.compile(r'<img[^>]+src="([^"]+)"', re.I)
 _TAG = re.compile(r"<[^>]+>")
 
 
-_OG = re.compile(rb'<meta[^>]+property="og:image"[^>]+content="([^"]+)"', re.I)
-_OG2 = re.compile(rb'<meta[^>]+content="([^"]+)"[^>]+property="og:image"', re.I)
+# og:image primero, twitter:image después y el JSON-LD de último: son tres sitios
+# donde una página pone su foto, y cada medio usa uno distinto.
+_FOTO_EN_PAGINA = [
+    re.compile(rb'<meta[^>]+property="og:image"[^>]+content="([^"]+)"', re.I),
+    re.compile(rb'<meta[^>]+content="([^"]+)"[^>]+property="og:image"', re.I),
+    re.compile(rb'<meta[^>]+name="twitter:image"[^>]+content="([^"]+)"', re.I),
+    re.compile(rb'<meta[^>]+content="([^"]+)"[^>]+name="twitter:image"', re.I),
+    re.compile(rb'"image":\s*\{[^{}]*?"url":\s*"([^"]+)"'),
+]
+# una página de Billboard pesa 900 KB y su og:image está a 571 KB del principio
+_TOPE_PAGINA = 1_600_000
+PAGINA = dict(CABECERAS, Accept="text/html,application/xhtml+xml")
 
 # lo que ya se ha mirado, para no pedir la misma página dos veces en una corrida
 _PORTADAS = {}
@@ -215,27 +227,73 @@ def portada(enlace):
     foto y otras sin. Pero todas esas páginas tienen `og:image`, que es la
     etiqueta que usan WhatsApp y Twitter para la vista previa.
 
-    Solo se pide la página **cuando el feed no trae nada**, y como mucho tres
-    veces por feed. No es un rastreo: es completar lo que falta.
+    **Se lee a trozos hasta encontrarla, no los primeros 80 KB.** Con ese tope
+    Billboard no daba nunca foto —la suya está a 571 KB— y todas sus noticias
+    salían con la tarjeta genérica que se dibuja de reserva.
+
+    Solo se pide la página **cuando el feed no trae nada**. No es un rastreo: es
+    completar lo que falta.
     """
     if enlace in _PORTADAS:
         return _PORTADAS[enlace]
     img = None
     try:
-        req = urllib.request.Request(enlace, headers=CABECERAS)
-        with urllib.request.urlopen(req, timeout=15) as r:
-            crudo = r.read(80000)      # con el <head> basta, no hace falta la página
-            if (r.headers.get("Content-Encoding") or "").lower() == "gzip":
-                import gzip
-                import io as _io
-                crudo = gzip.GzipFile(fileobj=_io.BytesIO(crudo)).read()
-        m = _OG.search(crudo) or _OG2.search(crudo)
-        if m:
-            img = html.unescape(m.group(1).decode("utf-8", "replace"))
+        import zlib
+        req = urllib.request.Request(enlace, headers=PAGINA)
+        with urllib.request.urlopen(req, timeout=20) as r:
+            gz = (r.headers.get("Content-Encoding") or "").lower() == "gzip"
+            descomp = zlib.decompressobj(16 + zlib.MAX_WBITS) if gz else None
+            crudo = b""
+            while len(crudo) < _TOPE_PAGINA and img is None:
+                trozo = r.read(65536)
+                if not trozo:
+                    break
+                crudo += descomp.decompress(trozo) if descomp else trozo
+                for patron in _FOTO_EN_PAGINA:
+                    m = patron.search(crudo)
+                    if m:
+                        img = html.unescape(m.group(1).decode("utf-8", "replace"))
+                        img = img.replace("\\/", "/")
+                        break
     except Exception:                                   # noqa: BLE001
         pass                                            # sin imagen se vive
     _PORTADAS[enlace] = img
     return img
+
+
+def foto_adjunta(url, referer=None):
+    """La foto bajada por nosotros, lista para subirla **adjunta**. O None.
+
+    Anime News Network no deja que Discord le pida sus imágenes: el mensaje
+    llevaba la URL buena y Discord la dejaba en 0×0, sin foto (medido el
+    22-sep). Bajándola aquí —con la noticia como `Referer`, que es lo que mira
+    un sitio para dejar ver sus fotos— y subiéndola con el mensaje, se ve
+    siempre, venga de donde venga.
+    """
+    if not url:
+        return None
+    try:
+        from PIL import Image
+        import io as _io
+        cab = dict(CABECERAS, Accept="image/avif,image/webp,image/*,*/*")
+        if referer:
+            cab["Referer"] = referer
+        with urllib.request.urlopen(urllib.request.Request(url, headers=cab), timeout=20) as r:
+            if not (r.headers.get("Content-Type") or "").startswith("image/"):
+                return None
+            datos = r.read(8_000_000)
+        foto = Image.open(_io.BytesIO(datos)).convert("RGB")
+        if foto.width < 320:
+            return None                 # un icono no es una foto de noticia
+        if foto.width > 1280:
+            foto = foto.resize((1280, round(foto.height * 1280 / foto.width)), Image.LANCZOS)
+        import tempfile
+        ruta = os.path.join(tempfile.gettempdir(),
+                            "foto_%09d.jpg" % (abs(hash(url)) % 10 ** 9))
+        foto.save(ruta, "JPEG", quality=88)
+        return ruta
+    except Exception:                                   # noqa: BLE001
+        return None
 
 
 def _imagen(it, descripcion):
@@ -455,6 +513,8 @@ def con_la_gente(e, titulo, tema, extra, ver=None, appid=None):
 
     if ver and ver.get("voces"):
         voces += ver["voces"]
+    # las mismas voces escriben después la pregunta del hilo (ver `embed`)
+    e["_voces"] = voces[:20]
 
     # **El enlace a la tienda es el único botón que se añade aquí.** Nada de
     # botones a Reddit ni a la ficha: la discusión se lee dentro de Discord, y
@@ -530,7 +590,7 @@ def _es_el_mismo(titular, nombre_juego):
     return len(comunes) >= 2 or (len(pesadas(nombre_juego)) == 1 and comunes)
 
 
-def abrir_debate(canal_id, mensaje, titular, r=None):
+def abrir_debate(canal_id, mensaje, titular, r=None, p=None):
     """Le abre a la noticia su propio hilo, con la pregunta y una encuesta.
 
     **Por qué un hilo y no responder debajo.** En un canal de noticias que
@@ -554,24 +614,28 @@ def abrir_debate(canal_id, mensaje, titular, r=None):
                {"name": "💬 " + nombre, "auto_archive_duration": 1440})
     if not hilo:
         return None
+    # **La pregunta es de esta noticia** (`p`, de `ia.debate`): nombra lo que
+    # pasó y sus respuestas son las posturas que tomó la gente fuera. La de tres
+    # botones «me gusta / me da igual / no me gusta» queda sólo de reserva, para
+    # cuando no hay IA — él la vio repetida en todas y con razón no le servía.
+    if p:
+        pregunta, respuestas = p["pregunta"], p["respuestas"]
+        arranque = p.get("arranque") or ""
+    else:
+        pregunta, respuestas, arranque = "¿Y tú qué opinas?", \
+            ["Me gusta", "Me da igual", "No me gusta"], "**¿Y tú qué opinas?** Aquí abajo, sin filtro."
     if r:
         g, i, n = r["pct"]
         muestra = f"{r['n']:,}".replace(",", ".")
-        arranque = (f"Ahí fuera se partió **{g}/{n}** entre {muestra} opiniones "
-                    f"({r['fuente']}).\n"
-                    "**¿Y aquí?**")
-    else:
-        arranque = "**¿Y tú qué opinas?** Aquí abajo, sin filtro."
+        cifra = (f"Ahí fuera se partió **{g}/{n}** entre {muestra} opiniones "
+                 f"({r['fuente']}).")
+        arranque = cifra + ("\n" + arranque if p and arranque else "\n**¿Y aquí?**")
+    colores = ["🟢", "🟣", "🟠", "🔵"] if p else ["🟩", "🟨", "🟥"]
     api("POST", f"/channels/{hilo['id']}/messages", {
-        "content": arranque,
-        "poll": {"question": {"text": "¿Y tú qué opinas?"},
-                 "answers": [
-                     {"poll_media": {"text": "Me gusta",
-                                     "emoji": {"name": "🟩"}}},
-                     {"poll_media": {"text": "Me da igual",
-                                     "emoji": {"name": "🟨"}}},
-                     {"poll_media": {"text": "No me gusta",
-                                     "emoji": {"name": "🟥"}}}],
+        "content": arranque or f"**{pregunta}**",
+        "poll": {"question": {"text": pregunta[:300]},
+                 "answers": [{"poll_media": {"text": t[:55], "emoji": {"name": c}}}
+                             for t, c in zip(respuestas, colores)],
                  "duration": 168, "allow_multiselect": False}})
     return hilo
 
@@ -668,6 +732,12 @@ def embed(item, url_feed, canal=""):
     # mitad» cuenta la noticia antes de que nadie la lea.
     if imagen:
         e["image"] = {"url": imagen}
+        # Subida adjunta, no enlazada: así la ve Discord aunque el sitio le
+        # cierre la puerta. Si no se puede bajar, queda el enlace de antes.
+        ruta = foto_adjunta(imagen, item["enlace"])
+        if ruta:
+            e["image"] = {"url": "attachment://" + os.path.basename(ruta)}
+            e["_tarjeta"] = ruta
     else:
         # Ni el feed ni la página tienen foto. En vez de dejar la noticia como un
         # renglón de texto con un enlace azul —que al lado de una con portada se
@@ -688,6 +758,12 @@ def embed(item, url_feed, canal=""):
         e["fields"] = [{"name": "Por qué te puede interesar", "value": porque}]
         pie.append(ia.AVISO)
     con_la_gente(e, e["title"], tema, extra, ver, appid)
+
+    # **La pregunta de ESTA noticia**, con las posturas de la gente que la
+    # comentó fuera. Sin IA o sin respuesta válida, el hilo abre como antes.
+    voces = e.pop("_voces", None)
+    if ia.disponible():
+        e["_pregunta"] = ia.debate(e["title"], desc, voces)
 
     # **Aquí y no antes**: el reparto lo calcula `con_la_gente`, así que en el
     # bloque de la imagen todavía no existe. Se intentó allí y salía siempre
@@ -809,6 +885,7 @@ def _pasada(FEEDS, ch, vistas, args, guardar):
                 extra = e.pop("_extra", None)
                 ruta = e.pop("_tarjeta", None)
                 debate = e.pop("_debate", None)
+                pregunta = e.pop("_pregunta", None)
                 if ruta:
                     # Con adjunto no vale el POST de siempre: la imagen y el
                     # embed tienen que ir en la MISMA peticion multipart, o el
@@ -825,7 +902,7 @@ def _pasada(FEEDS, ch, vistas, args, guardar):
                     msg = publicar(cid, e, extra)
                 # su propio hilo, con la pregunta y la encuesta dentro
                 try:
-                    abrir_debate(cid, msg, e["title"], debate)
+                    abrir_debate(cid, msg, e["title"], debate, pregunta)
                 except Exception as x:                  # noqa: BLE001
                     print(f"      (sin hilo: {x})")
                 publicados += 1

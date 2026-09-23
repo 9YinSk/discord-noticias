@@ -989,7 +989,8 @@ def subir_con_imagen(canal_id, ruta, payload, endpoint="messages", metodo="POST"
     partes.append(f"--{limite}\r\n".encode())
     partes.append(f'Content-Disposition: form-data; name="files[0]"; filename="{nombre}"\r\n'
                   .encode())
-    partes.append(b"Content-Type: image/png\r\n\r\n")
+    tipo = "image/jpeg" if nombre.lower().endswith((".jpg", ".jpeg")) else "image/png"
+    partes.append(f"Content-Type: {tipo}\r\n\r\n".encode())
     partes.append(binario + b"\r\n")
     partes.append(f"--{limite}--\r\n".encode())
     cuerpo = b"".join(partes)

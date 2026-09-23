@@ -268,6 +268,76 @@ def como_se_dividio(titular, comentarios):
     return r
 
 
+# ─────────────────────────────────────────────── la pregunta de cada noticia
+#
+# Pedido del 22-sep-2026: «te di un ejemplo de preguntas de ¿te gustó?, ¿me da
+# igual?, y se lo pusiste a todo; deben ser preguntas únicas de acuerdo a la
+# opinión de la gente de donde buscas las noticias». Hasta hoy cada hilo abría
+# con «¿Y tú qué opinas?» y la misma encuesta de tres botones.
+#
+# Aquí no hay cifras que inventar: la IA escribe una pregunta y nombra
+# **posturas**, y las posturas salen de los comentarios reales cuando los hay.
+# Los porcentajes siguen siendo cosa de `discord_reparto.py`.
+_DEBATE = (
+    "Animas el debate de un servidor de Discord hispanohablante de doblaje, "
+    "anime, series, juegos y música. Te paso UNA noticia y, si las hay, "
+    "opiniones reales de gente que la comentó fuera (Reddit, reseñas).\n"
+    "Escribe la pregunta de debate de ESTA noticia y las respuestas de su "
+    "encuesta. Reglas:\n"
+    "- La pregunta nombra la obra, la persona o el hecho concreto. Prohibido "
+    "«¿qué opinas?», «¿qué opinan?», «¿te gusta?» o cualquier pregunta que "
+    "sirva para otra noticia. Mejor una disyuntiva o una apuesta: «¿…o…?», "
+    "«¿vale la pena…?», «¿quién…?».\n"
+    "- Si hay opiniones de fuera, las respuestas son las POSTURAS que de verdad "
+    "aparecen en ellas, resumidas. Si no hay, las posturas razonables que "
+    "tendría la gente ante esta noticia.\n"
+    "- Entre 2 y 4 respuestas, distintas entre sí, de 45 caracteres como mucho "
+    "cada una, sin numerar.\n"
+    "- La pregunta, de 100 caracteres como mucho.\n"
+    "- «arranque»: una frase de 160 caracteres como mucho que ponga el debate "
+    "en contexto. Si hay opiniones de fuera, di en qué se partió la gente, sin "
+    "inventar cifras. Si no hay, un gancho propio de esta noticia.\n"
+    "- Español neutro de Latinoamérica, cercano. Nada de spoilers ni insultos.\n"
+    "Devuelve SOLO este JSON, sin nada alrededor:\n"
+    '{"pregunta": "...", "respuestas": ["...", "..."], "arranque": "..."}')
+
+
+def debate(titular, extracto="", voces=None):
+    """{pregunta, respuestas, arranque} para el hilo de una noticia, o None.
+
+    Todo se comprueba antes de devolverlo —largos, número de respuestas,
+    repetidas— porque Discord rechaza la encuesta entera si una sola respuesta
+    pasa de 55 caracteres, y entonces el hilo se quedaría sin nada.
+    """
+    material = f"NOTICIA: {titular}"
+    if extracto:
+        material += f"\nEXTRACTO: {extracto[:600]}"
+    junto = "\n---\n".join(v for v in (voces or []) if v)[:5000]
+    material += f"\n\nOPINIONES DE FUERA:\n{junto}" if junto else "\n\nOPINIONES DE FUERA: ninguna"
+    r = pedir(_DEBATE, material, tope=500, temperatura=0.8)
+    if not r:
+        return None
+    r = r.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
+    try:
+        d = json.loads(r[r.index("{"): r.rindex("}") + 1])
+    except (ValueError, json.JSONDecodeError):
+        return None
+    pregunta = " ".join(str(d.get("pregunta", "")).split())
+    vistas, respuestas = set(), []
+    for x in d.get("respuestas") or []:
+        x = " ".join(str(x).split()).strip("-•· ")
+        if x and len(x) <= 55 and x.lower() not in vistas:
+            vistas.add(x.lower())
+            respuestas.append(x)
+    arranque = " ".join(str(d.get("arranque", "")).split())
+    genericas = ("qué opinas", "que opinas", "te gusta", "te gustó")
+    if (not pregunta or len(pregunta) > 150 or len(respuestas) < 2
+            or any(g in pregunta.lower() for g in genericas)):
+        return None
+    return {"pregunta": pregunta, "respuestas": respuestas[:4],
+            "arranque": arranque[:220] or None}
+
+
 if __name__ == "__main__":
     if not disponible():
         sys.exit("No hay GEMINI_API_KEY. Sácala gratis en aistudio.google.com/apikey\n"
