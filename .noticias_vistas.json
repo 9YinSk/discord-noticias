@@ -1,5 +1,7 @@
 {
  "https://www.animenewsnetwork.com/newsroom/rss.xml": [
+  "https://www.animenewsnetwork.com/news/2026-09-26/future-gpx-cyber-formula-new-anime-short-reveals-cast-staff-screening-on-february-19/.242205",
+  "https://www.animenewsnetwork.com/interest/2026-09-25/starbucks-japan-introduces-1st-pokemon-collaboration/.242180",
   "https://www.animenewsnetwork.com/press-release/2026-09-25/remow-expands-us-reach-with-dual-launch-of-its-anime-and-samurai-vs-ninja-on-sling-freestream/.242204",
   "https://www.animenewsnetwork.com/press-release/2026-09-25/kazuso-oda-to-make-north-american-concert-debut-in-new-york-city-this-november/.242203",
   "https://www.animenewsnetwork.com/news/2026-09-25/north-american-anime-manga-releases-september-20-26/.242064",
@@ -28,8 +30,8 @@
   "https://www.animenewsnetwork.com/interest/2026-09-24/konami-offers-official-metal-gear-solid-boxes/.242140",
   "https://www.animenewsnetwork.com/interest/2026-09-24/stop-president-dramp-ambitions-in-new-mahjong-game-for-switch/.241975",
   "https://www.animenewsnetwork.com/news/2026-09-24/chiikawa-anime-to-temporarily-halt-new-episodes/.242160",
-  "https://www.animenewsnetwork.com/press-release/2026-09-24/pac-man-and-blink-182-crank-up-the-volume-with-new-collab-merch-content-and-a-band-inspired-take-on-/.242155",
   "https://www.animenewsnetwork.com/news/2026-09-24/fatal-fury-city-of-the-wolves-game-new-animated-trailer-by-masami-obari-highlights-kim-kaphwan/.242154",
+  "https://www.animenewsnetwork.com/press-release/2026-09-24/pac-man-and-blink-182-crank-up-the-volume-with-new-collab-merch-content-and-a-band-inspired-take-on-/.242155",
   "https://www.animenewsnetwork.com/news/2026-09-24/disney-hulu-raise-monthly-pricing-on-streaming-plans-in-u.s-again/.242153",
   "https://www.animenewsnetwork.com/news/2026-09-24/crunchyroll-screens-dive-in-wonderland-film-on-november-16-in-u.s-as-part-of-anime-nights-program/.242152",
   "https://www.animenewsnetwork.com/news/2026-09-24/global-stage-hollywood-screens-world-premiere-of-psyren-tv-anime-2nd-episode-on-october-3-with-/.242150",
@@ -37,9 +39,7 @@
   "https://www.animenewsnetwork.com/news/2026-09-24/sekiro-no-defeat-anime-airs-in-january-as-8-episode-tv-series/.242149",
   "https://www.animenewsnetwork.com/news/2026-09-24/norimitsu-kaiho-kurageso-akarui-mirai-manga-ends-in-next-chapter/.242118",
   "https://www.animenewsnetwork.com/news/2026-09-24/hotel-inhumans-anime-2nd-season-casts-shoya-chiba/.242145",
-  "https://www.animenewsnetwork.com/news/2026-09-24/fairy-tail-re-fantasia-manga-miniseries-ends-in-next-chapter/.242119",
-  "https://www.animenewsnetwork.com/news/2026-09-24/webtoon-launches-1st-global-drop-with-the-warrior-ballad/.242128",
-  "https://www.animenewsnetwork.com/news/2026-09-24/snowball-earth-manga-heads-to-final-arc-exceeds-1-million-copies-in-circulation/.242134"
+  "https://www.animenewsnetwork.com/news/2026-09-24/fairy-tail-re-fantasia-manga-miniseries-ends-in-next-chapter/.242119"
  ],
  "https://www.animenewsnetwork.com/all/rss.xml": [
   "https://www.animenewsnetwork.com/interest/2026-09-02/inuyasha-sketch-auctioned-to-help-african-kids-orphaned-by-aids/.241227",
@@ -269,6 +269,8 @@
   "https://www.espinof.com/proyectos/vuelve-companeros-25-anos-despues-final-sabremos-que-fue-quimi-valle-secuela-nostalgica-para-cuarentones"
  ],
  "https://www.sensacine.com/rss/noticias.xml": [
+  "https://www.sensacine.com/noticias/cine/noticia-1000224651/",
+  "https://www.sensacine.com/noticias/series/noticia-1000223755/",
   "https://www.sensacine.com/noticias/cine/noticia-1000224401/",
   "https://www.sensacine.com/noticias/cine/noticia-1000224587/",
   "https://www.sensacine.com/noticias/cine/noticia-1000224624/",
@@ -286,9 +288,7 @@
   "https://www.sensacine.com/noticias/cine/noticia-1000224400/",
   "https://www.sensacine.com/noticias/cine/noticia-1000224445/",
   "https://www.sensacine.com/noticias/series/noticia-1000224180/",
-  "https://www.sensacine.com/noticias/series/noticia-1000224397/",
-  "https://www.sensacine.com/noticias/cine/noticia-1000224383/",
-  "https://www.sensacine.com/noticias/series/noticia-1000224385/"
+  "https://www.sensacine.com/noticias/series/noticia-1000224397/"
  ],
  "https://isthereanydeal.com/feeds/PE/giveaways.rss": [
   "https://isthereanydeal.com/giveaways/16607/",
@@ -307,6 +307,33 @@
   "https://isthereanydeal.com/giveaways/7433/"
  ],
  "https://isthereanydeal.com/feeds/PE/USD/deals.rss": [
+  "https://isthereanydeal.com/game/sneaky-fishy/info/",
+  "https://isthereanydeal.com/game/fechtbucher/info/",
+  "https://isthereanydeal.com/game/call-of-duty-modern-warfare-4-vault-edition-pre-purchase-launch-day/info/",
+  "https://isthereanydeal.com/game/call-of-duty-modern-warfare-4/info/",
+  "https://isthereanydeal.com/game/nin-ninja-rescue-mission-2/info/",
+  "https://isthereanydeal.com/game/ore-and-ordnance/info/",
+  "https://isthereanydeal.com/game/myths-and-folklore-bundle/info/",
+  "https://isthereanydeal.com/game/asura-vengeance-edition/info/",
+  "https://isthereanydeal.com/game/blanky-soundtrack/info/",
+  "https://isthereanydeal.com/game/jackpot-dungeon--1/info/",
+  "https://isthereanydeal.com/game/blanky-soundtrack-bundle/info/",
+  "https://isthereanydeal.com/game/blanky/info/",
+  "https://isthereanydeal.com/game/the-door-factory-x-sector-13-haunted-woods/info/",
+  "https://isthereanydeal.com/game/sector-13-haunted-woods/info/",
+  "https://isthereanydeal.com/game/pathfinder-wrath-of-the-righteous-the-treasure-of-the-midnight-isles/info/",
+  "https://isthereanydeal.com/game/dying-land/info/",
+  "https://isthereanydeal.com/game/yan-suan-nai-luo-guan-ce-zhe/info/",
+  "https://isthereanydeal.com/game/nebula-blink/info/",
+  "https://isthereanydeal.com/game/tomb-nightmares/info/",
+  "https://isthereanydeal.com/game/kumada-gaon-collection/info/",
+  "https://isthereanydeal.com/game/hook-line-ball/info/",
+  "https://isthereanydeal.com/game/stranded-with-you/info/",
+  "https://isthereanydeal.com/game/low-space-race/info/",
+  "https://isthereanydeal.com/game/neon-wire/info/",
+  "https://isthereanydeal.com/game/breakout-13-gratitude/info/",
+  "https://isthereanydeal.com/game/breakout-13-fight/info/",
+  "https://isthereanydeal.com/game/breakout-13-complete-edition/info/",
   "https://isthereanydeal.com/game/free-mp3-cutter-joiner/info/",
   "https://isthereanydeal.com/game/tails-of-iron-2-deluxe-double-pack/info/",
   "https://isthereanydeal.com/game/infinite-minesweeper/info/",
@@ -318,7 +345,6 @@
   "https://isthereanydeal.com/game/trap-yuri-tempest-theme-song-edition/info/",
   "https://isthereanydeal.com/game/trap-yuri-tempest-theme-song/info/",
   "https://isthereanydeal.com/game/trap-series-complete-edition/info/",
-  "https://isthereanydeal.com/game/trove-eclipse-pack/info/",
   "https://isthereanydeal.com/game/fell-in-love-with-a-california-girl/info/",
   "https://isthereanydeal.com/game/killdozer--1/info/",
   "https://isthereanydeal.com/game/solo-dev-survivors/info/",
@@ -430,33 +456,7 @@
   "https://isthereanydeal.com/game/pathfinder-collectors-edition/info/",
   "https://isthereanydeal.com/game/the-king-of-the-pathfinders/info/",
   "https://isthereanydeal.com/game/baldurs-pathfinder-bundle/info/",
-  "https://isthereanydeal.com/game/cateia-games-premium-hidden-object-puzzle-adventure-bundle/info/",
-  "https://isthereanydeal.com/game/anime-shop-x-taverna/info/",
-  "https://isthereanydeal.com/game/gacha-capsule-shop-simulator-akihabara-and-anime-shop-simulator/info/",
-  "https://isthereanydeal.com/game/captain-whiskers-incremental-seas-and-moon-garden/info/",
-  "https://isthereanydeal.com/game/incremental-2026-ultimate-pack/info/",
-  "https://isthereanydeal.com/game/vainsane-psychological-horror-mystery/info/",
-  "https://isthereanydeal.com/game/hidden-object-puzzle-adventure-games-collection/info/",
-  "https://isthereanydeal.com/game/yuri-kissaten-triple-pack/info/",
-  "https://isthereanydeal.com/game/dreambyte-laugh-and-scream/info/",
-  "https://isthereanydeal.com/game/dice-a-million-x-decklings/info/",
-  "https://isthereanydeal.com/game/shard-squad-x-decklings/info/",
-  "https://isthereanydeal.com/game/flow-of-war-x-wavecrashers/info/",
-  "https://isthereanydeal.com/game/wave-x-survival-machine/info/",
-  "https://isthereanydeal.com/game/demon-hunt-x-wavecrashers/info/",
-  "https://isthereanydeal.com/game/wave-x-angst/info/",
-  "https://isthereanydeal.com/game/wavecrashers-x-rustler/info/",
-  "https://isthereanydeal.com/game/bastionos-x-wavecrashers/info/",
-  "https://isthereanydeal.com/game/underboard-x-decklings/info/",
-  "https://isthereanydeal.com/game/winmon-x-the-dream-globe/info/",
-  "https://isthereanydeal.com/game/meng-zhi-hua-yuan/info/",
-  "https://isthereanydeal.com/game/a-little-age-and-verde/info/",
-  "https://isthereanydeal.com/game/music-and-literature/info/",
-  "https://isthereanydeal.com/game/the-spotter-x-dig-raider-anomaly-extraction/info/",
-  "https://isthereanydeal.com/game/echoes-of-red-and-mineral-defense/info/",
-  "https://isthereanydeal.com/game/pro-jank-soundtrack/info/",
-  "https://isthereanydeal.com/game/growth-and-verde/info/",
-  "https://isthereanydeal.com/game/beacon-patrol-and-verde/info/"
+  "https://isthereanydeal.com/game/cateia-games-premium-hidden-object-puzzle-adventure-bundle/info/"
  ],
  "https://www.musicbutler.io/users/feeds/95f44df4-78eb-4ed1-b2e2-85b9003b9540/": [],
  "apple:pe/songs": [
@@ -466,8 +466,8 @@
   "https://music.apple.com/pe/album/efecto/1622045624?i=1622045954",
   "https://music.apple.com/pe/album/ojitos-lindos/1622045624?i=1622045962",
   "https://music.apple.com/pe/album/vete/1500776322?i=1500776923",
-  "https://music.apple.com/pe/album/patient-zero/6814995859?i=6814996157",
   "https://music.apple.com/pe/album/dichavate/1865959222?i=1865959223",
+  "https://music.apple.com/pe/album/patient-zero/6814995859?i=6814996157",
   "https://music.apple.com/pe/album/calla%C3%ADta/1465503234?i=1465503235",
   "https://music.apple.com/pe/album/dile-a-el/1536861742?i=1536861744"
  ],
@@ -480,20 +480,20 @@
   "https://music.apple.com/pe/album/deb%C3%AD-tirar-m%C3%A1s-fotos/1787022393",
   "https://music.apple.com/pe/album/you-seem-pretty-sad-for-a-girl-so-in-love/1889992111",
   "https://music.apple.com/pe/album/arirang/1868862375",
-  "https://music.apple.com/pe/album/para-cuando-sean-mayores/6805150378",
-  "https://music.apple.com/pe/album/primera-musa/1760193416"
+  "https://music.apple.com/pe/album/primera-musa/1760193416",
+  "https://music.apple.com/pe/album/prima/6792883860"
  ],
  "apple:jp/albums": [
   "https://music.apple.com/jp/album/love-eng-ne/6803798492",
   "https://music.apple.com/jp/album/amenity/6802879262",
   "https://music.apple.com/jp/album/rebon-bugs-life-digital-girl-ep/6807250730",
   "https://music.apple.com/jp/album/watch-me-ep/6794262922",
-  "https://music.apple.com/jp/album/%E3%81%90%E3%81%A3%E3%81%99%E3%82%8A%E7%9C%A0%E3%82%8C%E3%82%8B%CE%B1%E6%B3%A2-%E3%83%87%E3%82%A3%E3%82%BA%E3%83%8B%E3%83%BC-%E3%83%97%E3%83%AC%E3%83%9F%E3%82%A2%E3%83%A0-%E3%82%AA%E3%83%AB%E3%82%B4%E3%83%BC%E3%83%AB-%E3%83%99%E3%82%B9%E3%83%88/1054914398",
   "https://music.apple.com/jp/album/cats/6789426431",
+  "https://music.apple.com/jp/album/the-life-of-a-showgirl-the-encore/6814997249",
   "https://music.apple.com/jp/album/vaundy-dome-tour-2026-silence-live-selection-from-tokyo/6806511332",
   "https://music.apple.com/jp/album/chiikawa-the-movie-the-secret-of-the/6792290933",
-  "https://music.apple.com/jp/album/arirang/1869053670",
-  "https://music.apple.com/jp/album/the-life-of-a-showgirl-the-encore/6814997249"
+  "https://music.apple.com/jp/album/%E3%81%90%E3%81%A3%E3%81%99%E3%82%8A%E7%9C%A0%E3%82%8C%E3%82%8B%CE%B1%E6%B3%A2-%E3%83%87%E3%82%A3%E3%82%BA%E3%83%8B%E3%83%BC-%E3%83%97%E3%83%AC%E3%83%9F%E3%82%A2%E3%83%A0-%E3%82%AA%E3%83%AB%E3%82%B4%E3%83%BC%E3%83%AB-%E3%83%99%E3%82%B9%E3%83%88/1054914398",
+  "https://music.apple.com/jp/album/arirang/1869053670"
  ],
  "https://es.rollingstone.com/feed/": [
   "https://es.rollingstone.com/critica-el-gran-falsificador-laffaire-bojarski/",
@@ -510,6 +510,8 @@
   "https://es.rollingstone.com/arg-high-vis-debuta-en-buenos-aires-la-historia-de-la-banda-que-redefinio-el-hardcore-britanico/"
  ],
  "https://www.billboard.com/feed/": [
+  "https://www.billboard.com/music/pop/kylie-minogue-afl-grand-final-show-1236348210/",
+  "https://www.billboard.com/lists/olivia-rodrigo-setlist-unraveled-tour-2026-songs/",
   "https://www.billboard.com/pro/common-patti-labelle-honored-black-music-action-coalition/",
   "https://www.billboard.com/pro/music-industry-events-calendar-festivals-awards-conferences/",
   "https://www.billboard.com/music/pop/taylor-swift-spotify-record-single-day-patient-zero-1236348113/",
@@ -517,8 +519,6 @@
   "https://www.billboard.com/pro/common-honored-sag-aftra-soundexchange-artist-impact-award/",
   "https://www.billboard.com/music/rb-hip-hop/victoria-monet-frequency-of-love-track-list-bruno-mars-sza-1236347914/",
   "https://www.billboard.com/music/pop/gilded-age-cast-christmas-album-audra-mcdonald-baranski-1236347953/",
-  "https://www.billboard.com/pro/grand-ole-opry-celebrate-canadian-country-music-canada-news/",
-  "https://www.billboard.com/pro/lady-gaga-mayhem-lawsuit-surf-brand-legal-fees/",
-  "https://www.billboard.com/music/chart-beat/stella-lefty-boston-number-1-country-airplay-second-week-1236347962/"
+  "https://www.billboard.com/pro/grand-ole-opry-celebrate-canadian-country-music-canada-news/"
  ]
 }
